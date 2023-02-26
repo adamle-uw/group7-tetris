@@ -7,7 +7,6 @@ import java.awt.event.WindowEvent;
 import javax.swing.*;
 
 
-
 public class TempGUI extends JPanel {
     /**The window title.*/
     private static final String TITLE = "Tetris";
@@ -31,15 +30,28 @@ public class TempGUI extends JPanel {
         final JMenu gameMenu = new JMenu("Game");
         final JMenu aboutMenu = new JMenu("About");
         final JMenu optionsMenu = new JMenu("Options");
+        final JMenu newGameMenu = new JMenu("New Game");
         JMenuItem menuItem;
-        menuItem = new JMenuItem("New Game");
+        menuItem = new JMenuItem("This Window");
         //Sets a hotkey of CTRL + N to activate the event
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
         //Activates the event upon clicking the button or pressing the hotkey
-        menuItem.addActionListener(theEvent -> System.out.println("Starting a new game!"));
+        menuItem.addActionListener(
+                theEvent -> System.out.println("Starting a new game in this window!"));
+        newGameMenu.add(menuItem);
+        menuItem = new JMenuItem("New Window");
+        menuItem.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_N,
+                        InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK));
+        //Activates the event upon clicking the button or pressing the hotkey
+        menuItem.addActionListener(theEvent -> loadMainGui());
+        menuItem.addActionListener(
+                theEvent -> System.out.println("Starting a new game in a new window!"));
+        newGameMenu.add(menuItem);
+        gameMenu.add(newGameMenu);
         //Adds item to the menu
-        gameMenu.add(menuItem);
+        //gameMenu.add(menuItem);
         menuItem = new JMenuItem("Pause Game");
         menuItem.addActionListener(theEvent -> System.out.println("Pausing game!"));
         gameMenu.add(menuItem);
@@ -51,6 +63,10 @@ public class TempGUI extends JPanel {
         gameMenu.add(menuItem);
         menuItem = new JMenuItem("Controls");
         menuItem.addActionListener(theEvent -> System.out.println("List controls here"));
+        menuItem.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
+        menuItem.addActionListener(
+                theEvent -> loadControlsGui());
         aboutMenu.add(menuItem);
         menuItem = new JMenuItem("Help");
         menuItem.setAccelerator(
@@ -71,9 +87,18 @@ public class TempGUI extends JPanel {
         return fileMenu;
     }
 
-
-    /**Main method used to create the window and file menu.*/
-    public static void main(final String[] theArgs) {
+    private static void loadControlsGui() {
+        SwingUtilities.invokeLater(() -> {
+            final TempGUI controlsPanel = new TempGUI();
+            final JFrame window = new JFrame(TITLE);
+            window.setSize(WINDOW_SIZE, WINDOW_SIZE);
+            window.add(controlsPanel);
+            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            window.pack();
+            window.setVisible(true);
+        });
+    }
+    private static void loadMainGui() {
         SwingUtilities.invokeLater(() -> {
             final TempGUI mainPanel = new TempGUI();
             final JFrame window = new JFrame(TITLE);
@@ -84,5 +109,9 @@ public class TempGUI extends JPanel {
             window.setVisible(true);
             window.setJMenuBar(mainPanel.createFileMenu(window));
         });
+    }
+    /**Main method used to create the window and file menu.*/
+    public static void main(final String[] theArgs) {
+        loadMainGui();
     }
 }
