@@ -9,11 +9,11 @@ import javax.swing.JPanel;
 
 public class Main extends JPanel {
     /**
-     * comment is free.
+     * Avoid checkstyle 'magic error' number.
      */
     private static final int TWO = 2;
     /**
-     * comment here.
+     * Avoid checkstyle 'magic error' number.
      */
     private static final int FOUR = 4;
     public static void main(final String[] theArgs) {
