@@ -26,7 +26,6 @@ public class Main extends JPanel {
         final int userHeight = (int) size.getHeight();
         frame.setSize(userWidth, userHeight);
         frame.setJMenuBar(createFileMenu(frame));
-        frame.setVisible(true);
 
         //panels
         final JPanel tetrisBoard = new JPanel();
@@ -106,6 +105,7 @@ public class Main extends JPanel {
         fileMenu.add(gameMenu);
         fileMenu.add(aboutMenu);
         fileMenu.add(optionsMenu);
+        theFrame.setVisible(true);
 
         return fileMenu;
     }
