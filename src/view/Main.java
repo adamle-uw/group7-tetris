@@ -115,9 +115,12 @@ public class Main extends JPanel {
             final Main controlsPanel = new Main();
             final JFrame frame = new JFrame("Controls Menu");
             final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-            final int userWidth =  (int) size.getWidth();
-            final int userHeight = (int) size.getHeight();
-            frame.setSize(userWidth, userHeight);
+            final int userWidth =  (int) size.getWidth() / 2;
+            final int userHeight = (int) size.getHeight() / 2;
+            System.out.print(" size " + size);
+            System.out.print(" userWidth " + userWidth);
+            System.out.print(" userHeight " + userHeight);
+            frame.setMinimumSize(new Dimension(userWidth, userHeight));
             frame.add(controlsPanel);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
