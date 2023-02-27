@@ -20,4 +20,4 @@
 + **Keegan:** Added a submenu to the new game section of the menu bar and functionality for the new game in new window button and the controls button to open new windows. Formatted and styled the readme file in GitHub.
 
 ### Sprint 1 Comments:
-+ We formed two programming teams this week: Evan and Keegan worked together on the menu, and Aryan and Martha worked together on the GUI. Initially ran into GitHub issues with different group members not being able to see the colors on the GUI, but made sure to merge branches ahead of time so we had timee to fix those issues.
++ We formed two programming teams this week: Evan and Keegan worked together on the menu, and Aryan and Martha worked together on the GUI. Initially ran into GitHub issues with different group members not being able to see the colors on the GUI, but made sure to merge branches ahead of time so we had time to fix those issues.
