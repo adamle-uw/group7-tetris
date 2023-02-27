@@ -142,7 +142,7 @@ public class Main extends JPanel {
             System.out.print(" userHeight " + userHeight);
             frame.setMinimumSize(new Dimension(userWidth, userHeight));
             frame.add(controlsPanel);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
         });
