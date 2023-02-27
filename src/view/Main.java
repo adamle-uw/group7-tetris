@@ -7,7 +7,15 @@ import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+
+
 
 public class Main extends JPanel {
     /**
@@ -50,6 +58,11 @@ public class Main extends JPanel {
         frame.setVisible(true);
     }
 
+    /**
+     * Creates the file menu.
+     * @param theFrame the object onto which all the menu items are loaded onto.
+     * @return returns the fileMenu object that is created in this method.
+     */
     public static JMenuBar createFileMenu(final JFrame theFrame) {
         final JMenuBar fileMenu = new JMenuBar();
         final JMenu gameMenu = new JMenu("Game");
@@ -112,6 +125,11 @@ public class Main extends JPanel {
         return fileMenu;
     }
 
+    /**
+     * This method is invoked when the user activates
+     * the controls option in the menu bar. It creates
+     * a second GUI to hold all the control information.
+     */
     private static void loadControlsGui() {
         SwingUtilities.invokeLater(() -> {
             final Main controlsPanel = new Main();
