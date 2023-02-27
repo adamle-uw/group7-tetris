@@ -46,6 +46,8 @@ public class Main extends JPanel {
         rightRegion.setPreferredSize(new Dimension(userWidth / FOUR, userHeight));
         nextPiece.setPreferredSize(new Dimension(userWidth / FOUR, userWidth / FOUR));
         userInfo.setPreferredSize(new Dimension(userWidth / FOUR, userHeight));
+
+        frame.setVisible(true);
     }
 
     public static JMenuBar createFileMenu(final JFrame theFrame) {
