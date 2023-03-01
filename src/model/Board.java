@@ -32,7 +32,7 @@ import model.wallkicks.WallKick;
  * @author Alan Fowler
  * @version 1.3
  */
-public class Board {
+public class Board implements BoardInterface{
 
     // Class constants
     
@@ -108,7 +108,7 @@ public class Board {
 
     /**
      * Tetris board constructor for non-default sized boards.
-     * 
+     *
      * @param theWidth Width of the Tetris game board.
      * @param theHeight Height of the Tetris game board.
      */
@@ -128,32 +128,17 @@ public class Board {
     
 
     // public queries
-    
-    /**
-     * Get the width of the board.
-     * 
-     * @return Width of the board.
-     */
+
     public int getWidth() {
         return myWidth;
     }
 
-    /**
-     * Get the height of the board.
-     * 
-     * @return Height of the board.
-     */
     public int getHeight() {
         return myHeight;
     }
     
 
 
-    /**
-     * Resets the board for a new game.
-     * This method must be called before the first game
-     * and before each new game.
-     */
     public void newGame() {
         
         mySequenceIndex = 0;
@@ -169,25 +154,12 @@ public class Board {
         // TODO Publish Update!
     }
 
-    /**
-     * Sets a non random sequence of pieces to loop through.
-     * 
-     * @param thePieces the List of non random TetrisPieces.
-     */
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
         myNonRandomPieces = new ArrayList<TetrisPiece>(thePieces);
         mySequenceIndex = 0;
         myCurrentPiece = nextMovablePiece(true);
     }
-    
-    /**
-     * Advances the board by one 'step'.
-     * 
-     * This could include
-     * - moving the current piece down 1 line
-     * - freezing the current piece if appropriate
-     * - clearing full lines as needed
-     */
+
     public void step() {
         /*
          * Calling the down() method from here should be sufficient
@@ -197,12 +169,7 @@ public class Board {
          */
         down();
     }
-    
-    /**
-     * Try to move the movable piece down.
-     * Freeze the Piece in position if down tries to move into an illegal state.
-     * Clear full lines.
-     */
+
     public void down() {
         if (!move(myCurrentPiece.down())) {
             // the piece froze, so clear lines and update current piece
@@ -215,27 +182,18 @@ public class Board {
         }
     }
 
-    /**
-     * Try to move the movable piece left.
-     */
     public void left() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.left());
         }
     }
 
-    /**
-     * Try to move the movable piece right.
-     */
     public void right() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.right());
         }
     }
 
-    /**
-     * Try to rotate the movable piece in the clockwise direction.
-     */
     public void rotateCW() {
         if (myCurrentPiece != null) {
             if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
@@ -255,10 +213,7 @@ public class Board {
             }
         }
     }
-    
-    /**
-     * Try to rotate the movable piece in the counter-clockwise direction.
-     */
+
     public void rotateCCW() {
         if (myCurrentPiece != null) {
             if (myCurrentPiece.getTetrisPiece() == TetrisPiece.O) {
@@ -279,9 +234,6 @@ public class Board {
         }
     }
 
-    /**
-     * Drop the piece until piece is set.
-     */
     public void drop() {
         if (!myGameOver) {
             myDrop = true;
