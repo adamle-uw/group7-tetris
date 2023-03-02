@@ -4,16 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 
 
 
@@ -56,6 +48,7 @@ public class Main extends JPanel {
         userInfo.setPreferredSize(new Dimension(userWidth / FOUR, userHeight));
 
         frame.setVisible(true);
+
     }
 
 }
