@@ -4,10 +4,12 @@ import model.Board;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import static view.MenuBar.createFileMenu;
 
-public class GameGUI {
+public class GameGUI implements PropertyChangeListener {
     /**Frame is user screen height*/
     private int myUserHeight = 0;
     /**Frame is user screen width*/
@@ -20,6 +22,8 @@ public class GameGUI {
      * Avoid checkstyle 'magic error' number.
      */
     private static final int FOUR = 4;
+
+    private static final String NEW_PIECE_PROPERTY = "NewPieceCreate";
     /**GUI frame.*/
     private JFrame myFrame;
     /**make tetris board.*/
@@ -31,6 +35,9 @@ public class GameGUI {
     /**Right side region of Frame.*/
     private JPanel myRightRegion;
     private Board myBoard;
+
+    private Color myNextPieceColor;
+
     /**Constructor*/
     public GameGUI() {
         init();
@@ -63,11 +70,13 @@ public class GameGUI {
 
         //panels
         final JPanel tetrisBoard = new JPanel();
-        final JPanel nextPiece = new JPanel();
+        myNextPiece = new JPanel();
         final JPanel userInfo = new JPanel();
         final JPanel rightRegion = new JPanel();
         tetrisBoard.setBackground(Color.red);
-        nextPiece.setBackground(Color.blue);
+        myNextPiece.setBackground(Color.blue);
+        myNextPiece.addPropertyChangeListener(this);
+        myNextPieceColor = Color.red;
         userInfo.setBackground(Color.green);
         rightRegion.setLayout(new BorderLayout());
 
@@ -75,12 +84,18 @@ public class GameGUI {
         myFrame.add(tetrisBoard, BorderLayout.CENTER);
         myFrame.add(rightRegion, BorderLayout.EAST);
         myFrame.add(userInfo, BorderLayout.WEST);
-        rightRegion.add(nextPiece, BorderLayout.NORTH);
+        rightRegion.add(myNextPiece, BorderLayout.NORTH);
         tetrisBoard.setPreferredSize(new Dimension(myUserWidth / TWO, myUserHeight));
         rightRegion.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
-        nextPiece.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight / FOUR));
+        myNextPiece.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight / FOUR));
         userInfo.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
 
         myFrame.setVisible(true);
+    }
+
+    public void propertyChange(PropertyChangeEvent theEvent) {
+        if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
+            myNextPiece.setBackground(Color.red);
+        }
     }
 }
