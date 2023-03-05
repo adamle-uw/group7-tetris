@@ -6,6 +6,8 @@
 
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,12 +34,12 @@ import model.wallkicks.WallKick;
  * @author Alan Fowler
  * @version 1.3
  */
-public class Board implements BoardInterface{
+public class Board implements BoardInterface {
 
     // Class constants
     
     /**
-     * Default width of a Tetris game board.
+     * Default width of a Tetris game board.w
      */
     private static final int DEFAULT_WIDTH = 10;
 
@@ -536,6 +538,8 @@ public class Board implements BoardInterface{
         }
         
     } // end inner class BoardData
+
+
 
     
 }
