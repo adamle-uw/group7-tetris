@@ -2,6 +2,8 @@ package view;
 
 import model.Board;
 import model.ModelTimer;
+import model.NextPiece;
+import model.TetrisBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,14 +34,6 @@ public class GameGUI implements Observer {
      * GUI frame.
      */
     private JFrame myFrame;
-    /**
-     * make tetris board.
-     */
-    private JPanel myTetrisBoard;
-    /**
-     * Next piece panel.
-     */
-    private JPanel myNextPiece;
     /**
      * User info panel.
      */
@@ -86,23 +80,28 @@ public class GameGUI implements Observer {
 
         //panels
         final JPanel tetrisBoard = new JPanel();
-        final JPanel nextPiece = new JPanel();
+        TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
+        NextPiece np = new NextPiece(myUserWidth);
         final JPanel userInfo = new JPanel();
         final JPanel rightRegion = new JPanel();
-        tetrisBoard.setBackground(Color.red);
-        nextPiece.setBackground(Color.blue);
         userInfo.setBackground(Color.green);
         rightRegion.setLayout(new BorderLayout());
 
         //make the regions
-        myFrame.add(tetrisBoard, BorderLayout.CENTER);
+        myFrame.add(tb.getTetrisBoard(), BorderLayout.CENTER);
         myFrame.add(rightRegion, BorderLayout.EAST);
         myFrame.add(userInfo, BorderLayout.WEST);
-        rightRegion.add(nextPiece, BorderLayout.NORTH);
-        tetrisBoard.setPreferredSize(new Dimension(myUserWidth / TWO, myUserHeight));
+        rightRegion.add(np.getNextPiece(), BorderLayout.NORTH);
         rightRegion.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
-        nextPiece.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight / FOUR));
         userInfo.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
+
+        //add property change listeners to the board
+        final Board b = new Board();
+        b.addPropertyChangeListener(np);
+        b.addPropertyChangeListener(tb);
+
+        //b.prepareNextMovablePiece(); //Set method to public in Board.java, tests NextPiecePCL
+        //b.step();  //Comment out down() on step() in Board.java, tests TetrisBoardPCL
 
         myFrame.setVisible(true);
     }

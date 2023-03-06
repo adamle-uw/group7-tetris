@@ -6,14 +6,12 @@
 
 package model;
 
-import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import model.wallkicks.WallKick;
-import view.GameGUI;
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
@@ -179,7 +177,7 @@ public class Board implements BoardInterface{
          * However, more code could be added to this method
          * to implement additional functionality
          */
-        notifyObserversOfPositionChange("TetrisBoardChange", myNextPiece.getPoints()[0]);
+        notifyObserversOfPositionChange("TetrisBoardChange", myCurrentPiece.getPosition());
         down();
     }
 
