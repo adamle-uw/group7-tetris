@@ -2,8 +2,6 @@ package view;
 
 import model.Board;
 import model.ModelTimer;
-import model.NextPiece;
-import model.TetrisBoard;
 
 import javax.swing.*;
 import java.awt.*;
