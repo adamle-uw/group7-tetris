@@ -1,22 +1,22 @@
 package model;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 
-public class ModelTimer extends Board {
+public class ModelTimer implements ActionListener {
 
-    /**Timer controls how often step() is called.*/
-    private final Timer myTimer;
+   private Board myBoard;
+   public ModelTimer(final Board theBoard) {
+       super();
+       myBoard = theBoard;
+   }
 
-    public ModelTimer(Timer myTimer) {
-        this.myTimer = new Timer(60, this::handleTimer);
-    }
-
-
-    private void handleTimer(final ActionEvent theEvent) {
-        step();
-    }
+   @Override
+    public void actionPerformed(final ActionEvent theEvent) {
+       myBoard.step();
+   }
 
 
 
