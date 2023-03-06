@@ -1,6 +1,8 @@
 package view;
 
 import model.Board;
+import model.NextPiece;
+import model.TetrisBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +11,7 @@ import java.beans.PropertyChangeListener;
 
 import static view.MenuBar.createFileMenu;
 
-public class GameGUI implements PropertyChangeListener {
+public class GameGUI {
     /**Frame is user screen height*/
     private int myUserHeight = 0;
     /**Frame is user screen width*/
@@ -26,17 +28,11 @@ public class GameGUI implements PropertyChangeListener {
     private static final String NEW_PIECE_PROPERTY = "NewPieceCreate";
     /**GUI frame.*/
     private JFrame myFrame;
-    /**make tetris board.*/
-    private JPanel myTetrisBoard;
-    /**Next piece panel.*/
-    private JPanel myNextPiece;
     /**User info panel.*/
     private JPanel myUserInfo;
     /**Right side region of Frame.*/
     private JPanel myRightRegion;
     private Board myBoard;
-
-    private Color myNextPieceColor;
 
     /**Constructor*/
     public GameGUI() {
@@ -70,32 +66,31 @@ public class GameGUI implements PropertyChangeListener {
 
         //panels
         final JPanel tetrisBoard = new JPanel();
-        myNextPiece = new JPanel();
+        TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
+        NextPiece np = new NextPiece(myUserWidth);
         final JPanel userInfo = new JPanel();
         final JPanel rightRegion = new JPanel();
-        tetrisBoard.setBackground(Color.red);
-        myNextPiece.setBackground(Color.blue);
-        myNextPiece.addPropertyChangeListener(this);
-        myNextPieceColor = Color.red;
         userInfo.setBackground(Color.green);
         rightRegion.setLayout(new BorderLayout());
 
         //make the regions
-        myFrame.add(tetrisBoard, BorderLayout.CENTER);
+        myFrame.add(tb.getTetrisBoard(), BorderLayout.CENTER);
         myFrame.add(rightRegion, BorderLayout.EAST);
         myFrame.add(userInfo, BorderLayout.WEST);
-        rightRegion.add(myNextPiece, BorderLayout.NORTH);
-        tetrisBoard.setPreferredSize(new Dimension(myUserWidth / TWO, myUserHeight));
+        rightRegion.add(np.getNextPiece(), BorderLayout.NORTH);
         rightRegion.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
-        myNextPiece.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight / FOUR));
         userInfo.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
+
+        //add property change listeners to the board
+        final Board b = new Board();
+        b.addPropertyChangeListener(np);
+        b.addPropertyChangeListener(tb);
+
+        //b.prepareNextMovablePiece();  //Set method to public in Board.java, tests NextPiecePCL
+        //b.step();  //Comment out down() on step() in Board.java, tests TetrisBoardPCL
 
         myFrame.setVisible(true);
     }
 
-    public void propertyChange(PropertyChangeEvent theEvent) {
-        if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
-            myNextPiece.setBackground(Color.red);
-        }
-    }
+
 }
