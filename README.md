@@ -21,3 +21,22 @@
 
 ### Sprint 1 Comments:
 + We formed two programming teams this week: Evan and Keegan worked together on the menu, and Aryan and Martha worked together on the GUI. Initially ran into GitHub issues with different group members not being able to see the colors on the GUI, but made sure to merge branches ahead of time so we had time to fix those issues.
+
+### Sprint 2 Contribution:
++ **Aryan:** Worked with the top-most GUI class, adding an ActionListener and a KeyListener, as well as optimizing the Timer. Worked with Martha to optimize the Main class. Served as meeting scribe.
+
++ **Martha:** Did some pair programming with Evan and decided to create two new classes (TetrisBoard and NextPiece) to implement PropertyChangeListener. Worked with Aryan to optimize the Main class. Completed the readme for Sprint 2.
+
++ **Evan:** Created the Board interface. Did some pair programming with Martha and created the GUI view classes for the TetrisBoard and NextPiece to implement PropertyChangeListener. Wrote a test to ensure that the Objects respond when informed of a state change.
+
++ **Keegan:** Implemented the Observer Design Pattern in the Board class. Served as Project Manager and worked with Aryan to refactor and optimize the existing program.
+
+### Sprint 2 Meetings:
++ Meeting minutes: https://docs.google.com/document/d/1CimpqTYNHXGqp6zbbmZ82j1iLlfdSAdGsUTmqnws-gU/edit?usp=sharing
++ We met as a group on Monday, Wednesday, Saturday, and Sunday via Zoom.
++ **Monday, February 27th:** We met on Zoom and discussed the deliverables, deciding to keep the same team arrangement as in Sprint 1, with Aryan and Martha focused on the GUI and with Evan and Keegan focused on the model. Martha nominated Keegan to act as project manager (PM) for the week, because the group recognized that it would be beneficial to have one person making sure that all parts of the program were working well together. Keegan agreed to act as PM for Sprint 2.
++ **Sunday, March 5th:** We met to complete the final merge and troubleshoot any merge problems together. The merge was successful.
++ Primary forms of communication included Discord messages, Discord calls, and Zoom meetings.
+
+### Sprint 2 Comments:
++ No major issues this week.
