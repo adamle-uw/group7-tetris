@@ -177,7 +177,8 @@ public class Board implements BoardInterface{
          * However, more code could be added to this method
          * to implement additional functionality
          */
-        notifyObserversOfPositionChange("TetrisBoardChange", myCurrentPiece.getPosition());
+        // Will be changed to myCurrentPiece.getPosition() or similar, temporary
+        notifyObserversOfPositionChange("TetrisBoardChange", myNextPiece.getPoints()[0]);
         down();
     }
 
