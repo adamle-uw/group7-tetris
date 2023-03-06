@@ -6,12 +6,14 @@
 
 package model;
 
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import model.wallkicks.WallKick;
+import view.GameGUI;
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
@@ -34,12 +36,12 @@ import model.wallkicks.WallKick;
  * @author Alan Fowler
  * @version 1.3
  */
-public class Board implements BoardInterface {
+public class Board implements BoardInterface{
 
     // Class constants
     
     /**
-     * Default width of a Tetris game board.w
+     * Default width of a Tetris game board.
      */
     private static final int DEFAULT_WIDTH = 10;
 
@@ -48,7 +50,6 @@ public class Board implements BoardInterface {
      */
     private static final int DEFAULT_HEIGHT = 20;
 
-    
     // Instance fields
     
     /**
@@ -97,6 +98,15 @@ public class Board implements BoardInterface {
      * down movement in the drop.
      */
     private boolean myDrop;
+
+    private final PropertyChangeSupport myPcs;
+
+    //Property vars
+
+    public final String PROPERTY_PIECE_LOCATION = "Piece Location";
+    public final String PROPERTY_PIECE_ORIENTATION = "Piece Orientation";
+    public final String PROPERTY_ROW_LOCATION = "Row Location";
+    public final String PROPERTY_GAME_STATE = "Game State";
     
     // Constructors
 
@@ -122,7 +132,7 @@ public class Board implements BoardInterface {
          
         myNonRandomPieces = new ArrayList<TetrisPiece>();
         mySequenceIndex = 0;
-        
+        myPcs = new PropertyChangeSupport(this);
         /*  myNextPiece and myCurrentPiece
          *  are initialized by the newGame() method.
          */
@@ -138,8 +148,6 @@ public class Board implements BoardInterface {
     public int getHeight() {
         return myHeight;
     }
-    
-
 
     public void newGame() {
         
@@ -154,6 +162,8 @@ public class Board implements BoardInterface {
         myDrop = false;
         
         // TODO Publish Update!
+        notifyObserversOfNewGame(PROPERTY_GAME_STATE, "New Game");
+
     }
 
     public void setPieceSequence(final List<TetrisPiece> thePieces) {
@@ -169,6 +179,7 @@ public class Board implements BoardInterface {
          * However, more code could be added to this method
          * to implement additional functionality
          */
+        notifyObserversOfPositionChange("TetrisBoardChange", myNextPiece.getPoints()[0]);
         down();
     }
 
@@ -180,19 +191,21 @@ public class Board implements BoardInterface {
             if (!myGameOver) {
                 myCurrentPiece = nextMovablePiece(false);
             }
-            // TODO Publish Update!
+            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
     public void left() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.left());
+            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
     public void right() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.right());
+            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
@@ -214,6 +227,7 @@ public class Board implements BoardInterface {
                 }
             }
         }
+        notifyObserversOfOrientationChange(PROPERTY_PIECE_ORIENTATION, myCurrentPiece.getRotation());
     }
 
     public void rotateCCW() {
@@ -234,6 +248,7 @@ public class Board implements BoardInterface {
                 }
             }
         }
+        notifyObserversOfOrientationChange(PROPERTY_PIECE_ORIENTATION, myCurrentPiece.getRotation());
     }
 
     public void drop() {
@@ -245,9 +260,8 @@ public class Board implements BoardInterface {
             myDrop = false;
             down();  // move down one more time to freeze in place
         }
+        notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
     }
-    
-
 
     @Override
     public String toString() {
@@ -287,7 +301,6 @@ public class Board implements BoardInterface {
         return sb.toString();
     }
 
-    
     // private helper methods
     
     /**
@@ -303,7 +316,7 @@ public class Board implements BoardInterface {
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
-                // TODO Publish Update!
+                notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
             }
         }
         return result;
@@ -364,7 +377,7 @@ public class Board implements BoardInterface {
             }
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
-             // TODO Publish Update!
+                notifyObserversOfCompleteRow(PROPERTY_ROW_LOCATION, myFrozenBlocks.indexOf(row));
             }
         }
         // loop through list backwards removing items by index
@@ -418,7 +431,7 @@ public class Board implements BoardInterface {
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
-            // TODO Publish Update!
+            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
@@ -483,7 +496,7 @@ public class Board implements BoardInterface {
      * Prepares the Next movable piece for preview.
      */
     private void prepareNextMovablePiece() {
-        
+
         final boolean share = myNextPiece != null;
         if (myNonRandomPieces == null || myNonRandomPieces.isEmpty()) {
             myNextPiece = TetrisPiece.getRandomPiece();
@@ -491,8 +504,9 @@ public class Board implements BoardInterface {
             mySequenceIndex %= myNonRandomPieces.size();
             myNextPiece = myNonRandomPieces.get(mySequenceIndex++);
         }
+        notifyObserversOfPositionChange("NewPieceCreate", myNextPiece.getPoints()[0]);
         if (share && !myGameOver) {
-            // TODO Publish Update!
+            myCurrentPiece = (new MovableTetrisPiece(myNextPiece, new Point(0, 0)));
         }
     }    
 
@@ -539,7 +553,38 @@ public class Board implements BoardInterface {
         
     } // end inner class BoardData
 
+    //Beginning of property change methods
 
+    private void notifyObserversOfPositionChange(final String theProperty, final Point thePosition) {
+        myPcs.firePropertyChange(theProperty, null, thePosition);
+    }
 
-    
+    private void notifyObserversOfOrientationChange(final String theProperty, final Rotation theOrientation) {
+        myPcs.firePropertyChange(theProperty, null, theOrientation);
+    }
+
+    private void notifyObserversOfCompleteRow(final String theProperty, final int theRow) {
+        myPcs.firePropertyChange(theProperty, null, theRow);
+    }
+
+    private void notifyObserversOfNewGame(final String theProperty, final String theNewGame) {
+        myPcs.firePropertyChange(theProperty, null, theNewGame);
+    }
+
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+
+    public void addPropertyChangeListener(final String thePropertyName,
+                                          final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+    public void removePropertyChangeListener(final String thePropertyName,
+                                             final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+
 }
