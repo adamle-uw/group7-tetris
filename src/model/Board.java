@@ -34,7 +34,25 @@ import model.wallkicks.WallKick;
  * @author Alan Fowler
  * @version 1.3
  */
-public class Board implements BoardInterface{
+public class Board implements BoardInterface {
+
+    //Property vars
+    /**
+     * Constant Property var for Piece Location.
+     */
+    public static final String PROPERTY_PIECE_LOCATION = "Piece Location";
+    /**
+     * Constant Property var for Piece Orientation.
+     */
+    public static final String PROPERTY_PIECE_ORIENTATION = "Piece Orientation";
+    /**
+     * Constant Property var for Row Location.
+     */
+    public static final String PROPERTY_ROW_LOCATION = "Row Location";
+    /**
+     * Constant Property var for Game State.
+     */
+    public static final String PROPERTY_GAME_STATE = "Game State";
 
     // Class constants
     
@@ -96,15 +114,10 @@ public class Board implements BoardInterface{
      * down movement in the drop.
      */
     private boolean myDrop;
-
+    /**
+     * Property Change Support variable for the Board class.
+     */
     private final PropertyChangeSupport myPcs;
-
-    //Property vars
-
-    public final String PROPERTY_PIECE_LOCATION = "Piece Location";
-    public final String PROPERTY_PIECE_ORIENTATION = "Piece Orientation";
-    public final String PROPERTY_ROW_LOCATION = "Row Location";
-    public final String PROPERTY_GAME_STATE = "Game State";
     
     // Constructors
 
@@ -160,7 +173,7 @@ public class Board implements BoardInterface{
         myDrop = false;
         
         // TODO Publish Update!
-        notifyObserversOfNewGame(PROPERTY_GAME_STATE, "New Game");
+        notifyObserversOfNewGame();
 
     }
 
@@ -190,21 +203,24 @@ public class Board implements BoardInterface{
             if (!myGameOver) {
                 myCurrentPiece = nextMovablePiece(false);
             }
-            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
+            notifyObserversOfPositionChange(
+                    PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
     public void left() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.left());
-            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
+            notifyObserversOfPositionChange(
+                    PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
     public void right() {
         if (myCurrentPiece != null) {
             move(myCurrentPiece.right());
-            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
+            notifyObserversOfPositionChange(
+                    PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
@@ -226,7 +242,8 @@ public class Board implements BoardInterface{
                 }
             }
         }
-        notifyObserversOfOrientationChange(PROPERTY_PIECE_ORIENTATION, myCurrentPiece.getRotation());
+        notifyObserversOfOrientationChange(
+                myCurrentPiece.getRotation());
     }
 
     public void rotateCCW() {
@@ -247,7 +264,8 @@ public class Board implements BoardInterface{
                 }
             }
         }
-        notifyObserversOfOrientationChange(PROPERTY_PIECE_ORIENTATION, myCurrentPiece.getRotation());
+        notifyObserversOfOrientationChange(
+                myCurrentPiece.getRotation());
     }
 
     public void drop() {
@@ -315,7 +333,8 @@ public class Board implements BoardInterface{
             myCurrentPiece = theMovedPiece;
             result = true;
             if (!myDrop) {
-                notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
+                notifyObserversOfPositionChange(
+                        PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
             }
         }
         return result;
@@ -347,7 +366,6 @@ public class Board implements BoardInterface{
 
     /**
      * Adds a movable Tetris piece into a list of board data.
-     * 
      * Allows a single data structure to represent the current piece
      * and the frozen blocks.
      * 
@@ -376,7 +394,8 @@ public class Board implements BoardInterface{
             }
             if (complete) {
                 completeRows.add(myFrozenBlocks.indexOf(row));
-                notifyObserversOfCompleteRow(PROPERTY_ROW_LOCATION, myFrozenBlocks.indexOf(row));
+                notifyObserversOfCompleteRow(
+                        myFrozenBlocks.indexOf(row));
             }
         }
         // loop through list backwards removing items by index
@@ -430,7 +449,8 @@ public class Board implements BoardInterface{
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
-            notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
+            notifyObserversOfPositionChange(
+                    PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
         }
     }
 
@@ -505,10 +525,44 @@ public class Board implements BoardInterface{
         }
         notifyObserversOfPositionChange("NewPieceCreate", myNextPiece.getPoints()[0]);
         if (share && !myGameOver) {
-            myCurrentPiece = (new MovableTetrisPiece(myNextPiece, new Point(0, 0)));
+            myCurrentPiece = new MovableTetrisPiece(myNextPiece, new Point(0, 0));
         }
-    }    
+    }
 
+    //Beginning of property change methods
+
+    private void notifyObserversOfPositionChange(final String theProperty,
+                                                 final Point thePosition) {
+        myPcs.firePropertyChange(theProperty, null, thePosition);
+    }
+
+    private void notifyObserversOfOrientationChange(final Rotation theOrientation) {
+        myPcs.firePropertyChange(Board.PROPERTY_PIECE_ORIENTATION, null, theOrientation);
+    }
+
+    private void notifyObserversOfCompleteRow(final int theRow) {
+        myPcs.firePropertyChange(Board.PROPERTY_ROW_LOCATION, null, theRow);
+    }
+
+    private void notifyObserversOfNewGame() {
+        myPcs.firePropertyChange(Board.PROPERTY_GAME_STATE, null, "New Game");
+    }
+
+    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+
+    public void addPropertyChangeListener(final String thePropertyName,
+                                          final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
+    public void removePropertyChangeListener(final String thePropertyName,
+                                             final PropertyChangeListener theListener) {
+        myPcs.addPropertyChangeListener(theListener);
+    }
     
     // Inner classes
 
@@ -551,39 +605,5 @@ public class Board implements BoardInterface{
         }
         
     } // end inner class BoardData
-
-    //Beginning of property change methods
-
-    private void notifyObserversOfPositionChange(final String theProperty, final Point thePosition) {
-        myPcs.firePropertyChange(theProperty, null, thePosition);
-    }
-
-    private void notifyObserversOfOrientationChange(final String theProperty, final Rotation theOrientation) {
-        myPcs.firePropertyChange(theProperty, null, theOrientation);
-    }
-
-    private void notifyObserversOfCompleteRow(final String theProperty, final int theRow) {
-        myPcs.firePropertyChange(theProperty, null, theRow);
-    }
-
-    private void notifyObserversOfNewGame(final String theProperty, final String theNewGame) {
-        myPcs.firePropertyChange(theProperty, null, theNewGame);
-    }
-
-    public void addPropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(theListener);
-    }
-
-    public void addPropertyChangeListener(final String thePropertyName,
-                                          final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(theListener);
-    }
-    public void removePropertyChangeListener(final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(theListener);
-    }
-    public void removePropertyChangeListener(final String thePropertyName,
-                                             final PropertyChangeListener theListener) {
-        myPcs.addPropertyChangeListener(theListener);
-    }
 
 }

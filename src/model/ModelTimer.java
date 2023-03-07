@@ -6,18 +6,17 @@ import javax.swing.Timer;
 
 
 public class ModelTimer implements ActionListener {
+    /**
+     * Board instance.
+     */
+    private final Board myBoard;
+    public ModelTimer(final Board theBoard) {
+        super();
+        myBoard = theBoard;
+    }
 
-   private Board myBoard;
-   public ModelTimer(final Board theBoard) {
-       super();
-       myBoard = theBoard;
-   }
-
-   @Override
+    @Override
     public void actionPerformed(final ActionEvent theEvent) {
-       myBoard.step();
-   }
-
-
-
+        myBoard.step();
+    }
 }
