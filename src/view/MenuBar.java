@@ -39,7 +39,7 @@ public class MenuBar extends JPanel {
                         InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK));
         //Activates the event upon clicking the button or pressing the hotkey
         menuItem.addActionListener(
-                theEvent -> System.out.println("Starting a new game in a new window!"));
+                theEvent -> new GameGUI().start());
         newGameMenu.add(menuItem);
         gameMenu.add(newGameMenu);
         //Adds item to the menu

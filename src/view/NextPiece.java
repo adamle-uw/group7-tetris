@@ -33,6 +33,7 @@ public class NextPiece implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
             this.myNextPiece.setBackground(Color.yellow);
+            this.myNextPiece.setToolTipText("Next Piece: " + theEvent.getNewValue());
         }
     }
 }

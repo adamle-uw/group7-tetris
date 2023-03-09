@@ -4,6 +4,7 @@ import static view.MenuBar.createFileMenu;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -15,15 +16,11 @@ public class GameGUI implements Observer {
     /**
      * Avoid checkstyle 'magic number' error.
      */
-    private static final int TWO = 2;
-    /**
-     * Avoid checkstyle 'magic number' error.
-     */
     private static final int FOUR = 4;
     /**
      * Avoid checkstyle 'magic number' error.
      */
-    private static final int SIXTY = 60;
+    private static final int TIMER_TICK = 600;
     /**
      * Frame is user screen height.
      */
@@ -63,12 +60,46 @@ public class GameGUI implements Observer {
     private void init() {
         myBoard = new Board();
         myBoard.newGame();
-        myTimer = new Timer(SIXTY, new ModelTimer(myBoard));
+        myTimer = new Timer(TIMER_TICK, new ModelTimer(myBoard));
         myFrame = new JFrame();
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myUserWidth = (int) size.getWidth();
         myUserHeight = (int) size.getHeight();
+        myFrame.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(final KeyEvent thePressedKey) {
+                //arrow key events
+                switch (thePressedKey.getKeyCode()) {
+                    case KeyEvent.VK_LEFT -> myBoard.left();
+                    case KeyEvent.VK_RIGHT -> myBoard.right();
+                    case KeyEvent.VK_UP -> myBoard.rotateCW();
+                    case KeyEvent.VK_DOWN -> myBoard.down();
+                    case KeyEvent.VK_ENTER -> start();
+                    case KeyEvent.VK_SPACE -> myBoard.drop();
+                    default -> {
+                        break;
+                    }
+                }
+
+                switch (thePressedKey.getKeyChar()) {
+                    case 'a', 'A' -> myBoard.left();
+                    case 'd', 'D' -> myBoard.right();
+                    case 'w', 'W' -> myBoard.rotateCW();
+                    case 's', 'S' -> myBoard.down();
+                    default -> {
+                        break;
+                    }
+                }
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         myFrame.setSize(myUserWidth, myUserHeight);
         myFrame.setJMenuBar(createFileMenu(myFrame));
 
@@ -108,28 +139,6 @@ public class GameGUI implements Observer {
         myBoard.addPropertyChangeListener(tb);
 
         myFrame.setVisible(true);
-    }
-
-
-    public void keyPressed(final KeyEvent thePressedKey) {
-        //arrow key events
-        switch (thePressedKey.getKeyCode()) {
-            case KeyEvent.VK_LEFT -> myBoard.left();
-            case KeyEvent.VK_RIGHT -> myBoard.right();
-            case KeyEvent.VK_ENTER -> start();
-
-            default -> {
-                break;
-            }
-        }
-
-        switch (thePressedKey.getKeyChar()) {
-            case 'a', 'A' -> myBoard.left();
-            case 'd', 'D' -> myBoard.right();
-            default -> {
-                break;
-            }
-        }
     }
 
     @Override
