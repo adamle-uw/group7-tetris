@@ -61,6 +61,8 @@ public class GameGUI implements Observer {
     }
 
     private void init() {
+        myBoard = new Board();
+        myBoard.newGame();
         myTimer = new Timer(SIXTY, new ModelTimer(myBoard));
         myFrame = new JFrame();
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,7 +89,6 @@ public class GameGUI implements Observer {
         myFrame.setJMenuBar(createFileMenu(myFrame));
 
         //panels
-        final JPanel tetrisBoard = new JPanel();
         final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
         final NextPiece np = new NextPiece(myUserWidth);
         final JPanel userInfo = new JPanel();
@@ -103,13 +104,8 @@ public class GameGUI implements Observer {
         rightRegion.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
         userInfo.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
 
-        //add property change listeners to the board
-        final Board b = new Board();
-        b.addPropertyChangeListener(np);
-        b.addPropertyChangeListener(tb);
-
-        //b.prepareNextMovablePiece(); //Set method to public in Board.java, tests NextPiecePCL
-        //b.step();  //Comment out down() on step() in Board.java, tests TetrisBoardPCL
+        myBoard.addPropertyChangeListener(np);
+        myBoard.addPropertyChangeListener(tb);
 
         myFrame.setVisible(true);
     }
@@ -121,6 +117,7 @@ public class GameGUI implements Observer {
             case KeyEvent.VK_LEFT -> myBoard.left();
             case KeyEvent.VK_RIGHT -> myBoard.right();
             case KeyEvent.VK_ENTER -> start();
+
             default -> {
                 break;
             }
@@ -134,7 +131,6 @@ public class GameGUI implements Observer {
             }
         }
     }
-
 
     @Override
     public void update(final Observable theObservable, final Object theArg) {

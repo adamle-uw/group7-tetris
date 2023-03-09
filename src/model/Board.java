@@ -190,8 +190,6 @@ public class Board implements BoardInterface {
          * However, more code could be added to this method
          * to implement additional functionality
          */
-        // Will be changed to myCurrentPiece.getPosition() or similar, temporary
-        notifyObserversOfPositionChange("TetrisBoardChange", myNextPiece.getPoints()[0]);
         down();
     }
 
@@ -336,6 +334,8 @@ public class Board implements BoardInterface {
                 notifyObserversOfPositionChange(
                         PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
             }
+            notifyObserversOfPositionChange("TetrisBoardChange",
+                    myCurrentPiece.getPosition());
         }
         return result;
     }

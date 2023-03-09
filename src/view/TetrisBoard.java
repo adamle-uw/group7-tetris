@@ -19,7 +19,7 @@ public class TetrisBoard implements PropertyChangeListener {
 
     public TetrisBoard(final int theUserWidth, final int theUserHeight) {
         myTetrisBoard = new JPanel();
-        this.myTetrisBoard.setBackground(Color.red);
+        this.myTetrisBoard.setBackground(Color.black);
         this.myTetrisBoard.addPropertyChangeListener(this);
         myTetrisBoard.setPreferredSize(new Dimension(theUserWidth / FOUR, theUserHeight));
     }
@@ -30,7 +30,7 @@ public class TetrisBoard implements PropertyChangeListener {
 
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (TETRIS_BOARD_PROPERTY.equals(theEvent.getPropertyName())) {
-            this.myTetrisBoard.setBackground(Color.magenta);
+            
         }
     }
 }
