@@ -235,13 +235,13 @@ public class Board implements BoardInterface {
                     final Point offsetLocation = cwPiece.getPosition().transform(p);
                     final MovableTetrisPiece temp = cwPiece.setPosition(offsetLocation);
                     if (move(temp)) {
+                        notifyObserversOfOrientationChange(
+                                myCurrentPiece.getRotation());
                         break;
                     }
                 }
             }
         }
-        notifyObserversOfOrientationChange(
-                myCurrentPiece.getRotation());
     }
 
     public void rotateCCW() {
@@ -257,13 +257,13 @@ public class Board implements BoardInterface {
                     final Point offsetLocation = ccwPiece.getPosition().transform(p);
                     final MovableTetrisPiece temp = ccwPiece.setPosition(offsetLocation);
                     if (move(temp)) {
+                        notifyObserversOfOrientationChange(
+                                myCurrentPiece.getRotation());
                         break;
                     }
                 }
             }
         }
-        notifyObserversOfOrientationChange(
-                myCurrentPiece.getRotation());
     }
 
     public void drop() {
@@ -275,7 +275,6 @@ public class Board implements BoardInterface {
             myDrop = false;
             down();  // move down one more time to freeze in place
         }
-        notifyObserversOfPositionChange(PROPERTY_PIECE_LOCATION, myCurrentPiece.getPosition());
     }
 
     @Override
