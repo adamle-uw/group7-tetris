@@ -52,6 +52,8 @@ public class MenuBar extends JPanel {
         //gameMenu.add(menuItem);
         myIsPaused = false;
         final JMenuItem pauseMenuItem = new JMenuItem("Pause Game");
+        pauseMenuItem.setAccelerator(
+                KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
         pauseMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent theEvent) {
                 if (myIsPaused) {

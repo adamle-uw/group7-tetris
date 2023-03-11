@@ -3,7 +3,6 @@ package view;
 import static view.MenuBar.createFileMenu;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -24,7 +23,7 @@ public class GameGUI implements Observer {
     /**
      * Avoid checkstyle 'magic number' error.
      */
-    private static final int TIMER_TICK = 600;
+    private static final int BASE_TIMER_TICK = 600;
     /**
      * Frame is user screen height.
      */
@@ -50,9 +49,13 @@ public class GameGUI implements Observer {
      */
     private Board myBoard;
     /**
-     * TImer instance variable.
+     * Timer instance variable.
      */
     private Timer myTimer;
+    /**
+     * Timer delay instance variable.
+     */
+    private int myTimerTick;
 
     /**
      * Constructor.
@@ -64,7 +67,8 @@ public class GameGUI implements Observer {
     private void init() {
         myBoard = new Board();
         myBoard.newGame();
-        myTimer = new Timer(TIMER_TICK, new ModelTimer(myBoard));
+        myTimerTick = BASE_TIMER_TICK;
+        myTimer = new Timer(myTimerTick, new ModelTimer(myBoard));
         myFrame = new JFrame();
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -73,26 +77,28 @@ public class GameGUI implements Observer {
         myFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(final KeyEvent thePressedKey) {
-                //arrow key events
-                switch (thePressedKey.getKeyCode()) {
-                    case KeyEvent.VK_LEFT -> myBoard.left();
-                    case KeyEvent.VK_RIGHT -> myBoard.right();
-                    case KeyEvent.VK_UP -> myBoard.rotateCW();
-                    case KeyEvent.VK_DOWN -> myBoard.down();
-                    case KeyEvent.VK_ENTER -> start();
-                    case KeyEvent.VK_SPACE -> myBoard.drop();
-                    default -> {
-                        break;
+                if (myTimer.isRunning()) {
+                    //arrow key events
+                    switch (thePressedKey.getKeyCode()) {
+                        case KeyEvent.VK_LEFT -> myBoard.left();
+                        case KeyEvent.VK_RIGHT -> myBoard.right();
+                        case KeyEvent.VK_UP -> myBoard.rotateCW();
+                        case KeyEvent.VK_DOWN -> myBoard.down();
+                        case KeyEvent.VK_ENTER -> start();
+                        case KeyEvent.VK_SPACE -> myBoard.drop();
+                        default -> {
+                            break;
+                        }
                     }
-                }
 
-                switch (thePressedKey.getKeyChar()) {
-                    case 'a', 'A' -> myBoard.left();
-                    case 'd', 'D' -> myBoard.right();
-                    case 'w', 'W' -> myBoard.rotateCW();
-                    case 's', 'S' -> myBoard.down();
-                    default -> {
-                        break;
+                    switch (thePressedKey.getKeyChar()) {
+                        case 'a', 'A' -> myBoard.left();
+                        case 'd', 'D' -> myBoard.right();
+                        case 'w', 'W' -> myBoard.rotateCW();
+                        case 's', 'S' -> myBoard.down();
+                        default -> {
+                            break;
+                        }
                     }
                 }
             }
@@ -126,21 +132,20 @@ public class GameGUI implements Observer {
         //panels
         final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
         final NextPiece np = new NextPiece(myUserWidth);
-        final JPanel userInfo = new JPanel();
+        final UserInfo ui = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
         final JPanel rightRegion = new JPanel();
-        userInfo.setBackground(Color.green);
         rightRegion.setLayout(new BorderLayout());
 
         //make the regions
         myFrame.add(tb.getTetrisBoard(), BorderLayout.CENTER);
         myFrame.add(rightRegion, BorderLayout.EAST);
-        myFrame.add(userInfo, BorderLayout.WEST);
+        myFrame.add(ui.getUserInfo(), BorderLayout.WEST);
         rightRegion.add(np.getNextPiece(), BorderLayout.NORTH);
         rightRegion.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
-        userInfo.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
 
         myBoard.addPropertyChangeListener(np);
         myBoard.addPropertyChangeListener(tb);
+        myBoard.addPropertyChangeListener(ui);
 
         myFrame.setVisible(true);
     }
