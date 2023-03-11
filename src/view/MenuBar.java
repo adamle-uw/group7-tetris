@@ -72,11 +72,10 @@ public class MenuBar extends JPanel {
                 new WindowEvent(theFrame, WindowEvent.WINDOW_CLOSING)));
         gameMenu.add(menuItem);
         menuItem = new JMenuItem("Controls");
-        menuItem.addActionListener(theEvent -> System.out.println("List controls here"));
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         menuItem.addActionListener(
-                theEvent -> loadControlsGui());
+                theEvent -> new ControlsGUI());
         aboutMenu.add(menuItem);
         menuItem = new JMenuItem("Help");
         menuItem.setAccelerator(
@@ -96,28 +95,5 @@ public class MenuBar extends JPanel {
         theFrame.setVisible(true);
 
         return fileMenu;
-    }
-
-    /**
-     * This method is invoked when the user activates
-     * the controls option in the menu bar. It creates
-     * a second GUI to hold all the control information.
-     */
-    static void loadControlsGui() {
-        SwingUtilities.invokeLater(() -> {
-            final Main controlsPanel = new Main();
-            final JFrame frame = new JFrame("Controls Menu");
-            final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
-            final int userWidth =  (int) size.getWidth() / 2;
-            final int userHeight = (int) size.getHeight() / 2;
-            System.out.print(" size " + size);
-            System.out.print(" userWidth " + userWidth);
-            System.out.print(" userHeight " + userHeight);
-            frame.setMinimumSize(new Dimension(userWidth, userHeight));
-            frame.add(controlsPanel);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
-        });
     }
 }
