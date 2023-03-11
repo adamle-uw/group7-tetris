@@ -1,9 +1,10 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.*;
+import javax.swing.JPanel;
 
 public class TetrisBoard implements PropertyChangeListener {
     /**
@@ -30,7 +31,7 @@ public class TetrisBoard implements PropertyChangeListener {
 
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (TETRIS_BOARD_PROPERTY.equals(theEvent.getPropertyName())) {
-            
+
         }
     }
 }

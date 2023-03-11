@@ -1,9 +1,10 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.*;
+import javax.swing.JPanel;
 
 public class NextPiece implements PropertyChangeListener {
     /**

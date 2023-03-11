@@ -2,15 +2,19 @@ package view;
 
 import static view.MenuBar.createFileMenu;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 import model.Board;
 import model.ModelTimer;
-
 
 public class GameGUI implements Observer {
     /**
