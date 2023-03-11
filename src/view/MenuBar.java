@@ -1,6 +1,8 @@
 package view;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
@@ -11,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 public class MenuBar extends JPanel {
     /**
@@ -18,7 +21,9 @@ public class MenuBar extends JPanel {
      * @param theFrame the object onto which all the menu items are loaded onto.
      * @return returns the fileMenu object that is created in this method.
      */
-    public static JMenuBar createFileMenu(final JFrame theFrame) {
+
+    static boolean myIsPaused;
+    public static JMenuBar createFileMenu(final JFrame theFrame, final Timer theTimer) {
         final JMenuBar fileMenu = new JMenuBar();
         final JMenu gameMenu = new JMenu("Game");
         final JMenu aboutMenu = new JMenu("About");
@@ -44,9 +49,22 @@ public class MenuBar extends JPanel {
         gameMenu.add(newGameMenu);
         //Adds item to the menu
         //gameMenu.add(menuItem);
-        menuItem = new JMenuItem("Pause Game");
-        menuItem.addActionListener(theEvent -> System.out.println("Pausing game!"));
-        gameMenu.add(menuItem);
+        myIsPaused = false;
+        final JMenuItem pauseMenuItem = new JMenuItem("Pause Game");
+        pauseMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent theEvent) {
+                if (myIsPaused) {
+                    theTimer.start();
+                    pauseMenuItem.setText("Pause Game");
+                    myIsPaused = false;
+                } else {
+                    theTimer.stop();
+                    pauseMenuItem.setText("Unpause Game");
+                    myIsPaused = true;
+                }
+            }
+        });
+        gameMenu.add(pauseMenuItem);
         menuItem = new JMenuItem("Exit Game");
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK));

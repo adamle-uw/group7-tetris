@@ -101,7 +101,7 @@ public class GameGUI implements Observer {
             }
         });
         myFrame.setSize(myUserWidth, myUserHeight);
-        myFrame.setJMenuBar(createFileMenu(myFrame));
+        myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
         //panels
 
@@ -117,7 +117,7 @@ public class GameGUI implements Observer {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myFrame.setSize(myUserWidth, myUserHeight);
-        myFrame.setJMenuBar(createFileMenu(myFrame));
+        myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
         //panels
         final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
