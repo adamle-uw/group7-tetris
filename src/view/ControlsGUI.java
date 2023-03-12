@@ -15,7 +15,36 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+/**
+ * This program ...
+ *
+ * @author Evan Abrahamson
+ * @author Aryan Damle
+ * @author Martha Emerson
+ * @author Keegan Sanders
+ * @version Winter 2023
+ */
 public class ControlsGUI {
+    /**
+     * Avoid magic number checkstyle error.
+     */
+    private static final int THREE = 3;
+    /**
+     * ...
+     */
+    private static final String A = "A";
+    /**
+     * ...
+     */
+    private static final String D = "D";
+    /**
+     * ...
+     */
+    private static final String S = "S";
+    /**
+     * ...
+     */
+    private static final String W = "W";
     /**
      * ArrayList of Buttons (butts).
      */
@@ -38,6 +67,9 @@ public class ControlsGUI {
         loadControlsGui();
     }
 
+    /**
+     * ...
+     */
     void loadControlsGui() {
         SwingUtilities.invokeLater(() -> {
             final Font newButtonFont = new Font("Controls", Font.PLAIN, myFontSize);
@@ -45,10 +77,10 @@ public class ControlsGUI {
             final JFrame controlsFrame = new JFrame("Controls Menu");
             final JPanel controlsPanel = new JPanel(new GridLayout(2, 3));
             controlsFrame.setMinimumSize(mySize);
-            myButts.add(new Button("W"));
-            myButts.add(new Button("A"));
-            myButts.add(new Button("S"));
-            myButts.add(new Button("D"));
+            myButts.add(new Button(A));
+            myButts.add(new Button(S));
+            myButts.add(new Button(D));
+            myButts.add(new Button(W));
             myButts.forEach(butt -> butt.addKeyListener(kList));
             myButts.forEach(butt -> butt.setFont(newButtonFont));
             controlsPanel.add(new Box(1));
@@ -56,12 +88,19 @@ public class ControlsGUI {
             controlsPanel.add(new Box(1));
             controlsPanel.add(myButts.get(1));
             controlsPanel.add(myButts.get(2));
-            controlsPanel.add(myButts.get(3));
+            controlsPanel.add(myButts.get(THREE));
             controlsFrame.add(controlsPanel);
             controlsFrame.setVisible(true);
         });
     }
 
+    /**
+     * ...
+     *
+     * @param theButtKey ...
+     * @param theButtControl ...
+     * @param theCount ...
+     */
     private void pressButt(final String theButtKey, final String theButtControl,
                            final int theCount) {
         for (Button butt : myButts) {
@@ -72,6 +111,10 @@ public class ControlsGUI {
             }
         }
     }
+
+    /**
+     * ...
+     */
     private final class ControlsKeyListener extends KeyAdapter {
         /**
          * Map of Keys.
@@ -82,17 +125,29 @@ public class ControlsGUI {
          */
         private int myCount;
 
+        /***
+         * ...
+         */
         private ControlsKeyListener() {
             myKeyMap = new HashMap<>();
             mapKeys();
         }
 
+        /**
+         * ...
+         */
         private void mapKeys() {
-            myKeyMap.put(KeyEvent.VK_W, () -> this.keyPress("W", "Rotate"));
-            myKeyMap.put(KeyEvent.VK_A, () -> this.keyPress("A", "Left"));
-            myKeyMap.put(KeyEvent.VK_S, () -> this.keyPress("S", "Down"));
-            myKeyMap.put(KeyEvent.VK_D, () -> this.keyPress("D", "Right"));
+            myKeyMap.put(KeyEvent.VK_W, () -> this.keyPress(W, "Rotate"));
+            myKeyMap.put(KeyEvent.VK_A, () -> this.keyPress(A, "Left"));
+            myKeyMap.put(KeyEvent.VK_S, () -> this.keyPress(S, "Down"));
+            myKeyMap.put(KeyEvent.VK_D, () -> this.keyPress(D, "Right"));
         }
+
+        /**
+         * ...
+         *
+         * @param theEvent the event to be processed
+         */
         @Override
         public void keyPressed(final KeyEvent theEvent) {
             if (myKeyMap.containsKey(theEvent.getKeyCode())) {
@@ -101,6 +156,11 @@ public class ControlsGUI {
             }
         }
 
+        /**
+         * ...
+         *
+         * @param theEvent the event to be processed
+         */
         @Override
         public void keyReleased(final KeyEvent theEvent) {
             if (myKeyMap.containsKey(theEvent.getKeyCode())) {
@@ -109,6 +169,12 @@ public class ControlsGUI {
             }
         }
 
+        /**
+         * ...
+         *
+         * @param theKey ...
+         * @param theControl ...
+         */
         private void keyPress(final String theKey, final String theControl) {
             pressButt(theKey, theControl, myCount);
         }

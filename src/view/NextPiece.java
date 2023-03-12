@@ -6,6 +6,15 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
+/**
+ * This program ...
+ *
+ * @author Evan Abrahamson
+ * @author Aryan Damle
+ * @author Martha Emerson
+ * @author Keegan Sanders
+ * @version Winter 2023
+ */
 public class NextPiece implements PropertyChangeListener {
     /**
      * Property value for New Piece Create.
@@ -18,7 +27,11 @@ public class NextPiece implements PropertyChangeListener {
     /**Next piece panel.*/
     private final JPanel myNextPiece;
 
-
+    /**
+     * ...
+     *
+     * @param theUserWidth ...
+     */
     public NextPiece(final int theUserWidth) {
         myNextPiece = new JPanel();
         this.myNextPiece.setBackground(Color.blue);
@@ -27,10 +40,21 @@ public class NextPiece implements PropertyChangeListener {
                 new Dimension(theUserWidth / FOUR, theUserWidth / FOUR));
     }
 
+    /**
+     * ...
+     *
+     * @return ...
+     */
     public JPanel getNextPiece() {
         return myNextPiece;
     }
 
+    /**
+     * ...
+     *
+     * @param theEvent A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
             this.myNextPiece.setBackground(Color.yellow);

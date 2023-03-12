@@ -15,6 +15,15 @@ import javax.swing.Timer;
 import model.Board;
 import model.ModelTimer;
 
+/**
+ * This program ...
+ *
+ * @author Evan Abrahamson
+ * @author Aryan Damle
+ * @author Martha Emerson
+ * @author Keegan Sanders
+ * @version Winter 2023
+ */
 public class GameGUI implements Observer {
     /**
      * Avoid checkstyle 'magic number' error.
@@ -64,6 +73,9 @@ public class GameGUI implements Observer {
         init();
     }
 
+    /**
+     * ...
+     */
     private void init() {
         myBoard = new Board();
         myBoard.newGame();
@@ -106,11 +118,11 @@ public class GameGUI implements Observer {
                 }
             }
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(final KeyEvent theE) {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {
+            public void keyReleased(final KeyEvent theE) {
             }
         });
         myFrame.setSize(myUserWidth, myUserHeight);
@@ -120,12 +132,18 @@ public class GameGUI implements Observer {
 
     }
 
+    /**
+     * ...
+     */
     public void start() {
         setup();
         myTimer.start();
         myFrame.setVisible(true);
     }
 
+    /**
+     * ...
+     */
     public void setup() {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -153,6 +171,13 @@ public class GameGUI implements Observer {
         myFrame.setVisible(true);
     }
 
+    /**
+     * ...
+     *
+     * @param theObservable     the observable object.
+     * @param theArg   an argument passed to the {@code notifyObservers}
+     *                 method.
+     */
     @Override
     public void update(final Observable theObservable, final Object theArg) {
     }
