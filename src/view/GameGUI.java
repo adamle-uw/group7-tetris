@@ -1,6 +1,6 @@
 package view;
 
-import static view.ButtonsPanel.getSelectedMusic;
+
 import static view.ButtonsPanel.myGameStart;
 import static view.MenuBar.createFileMenu;
 
@@ -61,7 +61,9 @@ public class GameGUI implements Observer{
      */
     public GameGUI() {
         init();
+
     }
+
 
     private void init() {
         myBoard = new Board();
@@ -69,6 +71,7 @@ public class GameGUI implements Observer{
         myTimer = new Timer(TIMER_TICK, new ModelTimer(myBoard));
         myFrame = new JFrame();
         myGameOver = false;
+
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myUserWidth = (int) size.getWidth();
@@ -110,13 +113,13 @@ public class GameGUI implements Observer{
         myFrame.setSize(myUserWidth, myUserHeight);
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
-        ButtonsPanel bp = new ButtonsPanel();
 
     }
 
     public void start() {
         setup(myTimer);
-        myTetrisBoard.play(getSelectedMusic());
+        myTetrisBoard = new TetrisBoard(myUserWidth, myUserHeight);
+        myTetrisBoard.play("../music/Pacman_Introduction_Music-KP-826387403.wav");
         myFrame.setVisible(true);
         if (!myGameStart) {
             myTimer.start();

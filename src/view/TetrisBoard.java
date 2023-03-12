@@ -42,16 +42,15 @@ public class TetrisBoard implements PropertyChangeListener {
     }
 
     public void play(final String theFileName) {
+
         try {
+            System.out.println(theFileName);
             final Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(theFileName)));
             clip.start();
         }
-         catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-        {
-            System.out.println("Music not found");
-        }
+         catch (Exception e) {
+            System.out.println("File not found");
+         }
     }
 }

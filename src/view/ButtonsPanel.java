@@ -21,7 +21,7 @@ import javax.swing.Timer;
  * @author Keegan Sanders
  * @version Winter 2023
  */
-public class ButtonsPanel extends JPanel implements ItemListener {
+public class ButtonsPanel extends JPanel {
     /**
      * ...
      */
@@ -45,19 +45,7 @@ public class ButtonsPanel extends JPanel implements ItemListener {
     /**
      * ...
      */
-    private static final String MUSIC = "Choose your music";
-    /**
-     * ...
-     */
-    private static String selectedMusic = "";
-    /**
-     * ...
-     */
     private static boolean myIsPaused;
-    /**
-     * ...
-     */
-    private static JComboBox myMusicCheckBox;
     /**
      * ...
      */
@@ -105,29 +93,12 @@ public class ButtonsPanel extends JPanel implements ItemListener {
             theTimer.stop();
 
         });
-        final String[] musicChoices = {""};
-
-        final JComboBox musicCheckBox = new JComboBox(musicChoices);
-        final ItemListener musicListener = null;
-        myMusicCheckBox.addItemListener(null);
-        final JLabel musicLabel = new JLabel(MUSIC);
 
 
         myButtonsPanel.add(start);
         myButtonsPanel.add(pause);
         myButtonsPanel.add(end);
-        myButtonsPanel.add(musicLabel);
-        myButtonsPanel.add(myMusicCheckBox);
 
-    }
-
-    /**
-     * ...
-     *
-     * @param theButtonsPanel ...
-     */
-    public ButtonsPanel(final JPanel theButtonsPanel) {
-        this.myButtonsPanel = theButtonsPanel;
     }
 
     /**
@@ -146,25 +117,5 @@ public class ButtonsPanel extends JPanel implements ItemListener {
         return myButtonsPanel;
     }
 
-    /**
-     * ...
-     *
-     * @param theE the event to be processed
-     */
-    @Override
-    public void itemStateChanged(final ItemEvent theE) {
-        if (theE.getSource() == myMusicCheckBox) {
-            selectedMusic = myMusicCheckBox.getSelectedItem().toString();
-        }
-    }
-
-    /**
-     * ...
-     *
-     * @return ...
-     */
-    public static String getSelectedMusic() {
-        return selectedMusic;
-    }
 
 }
