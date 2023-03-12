@@ -1,5 +1,6 @@
 package view;
 
+import static view.ButtonsPanel.myGameStart;
 import static view.MenuBar.createFileMenu;
 
 import java.awt.*;
@@ -50,6 +51,8 @@ public class GameGUI implements Observer {
      * TImer instance variable.
      */
     private Timer myTimer;
+    private boolean myGameOver;
+    private GameGUI myGameGUI;
 
     /**
      * Constructor.
@@ -63,6 +66,7 @@ public class GameGUI implements Observer {
         myBoard.newGame();
         myTimer = new Timer(TIMER_TICK, new ModelTimer(myBoard));
         myFrame = new JFrame();
+        myGameOver = false;
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myUserWidth = (int) size.getWidth();
@@ -108,13 +112,13 @@ public class GameGUI implements Observer {
 
     }
 
-    public void launch() {
-        setup(myTimer);
-        myFrame.setVisible(true);
-    }
     public void start() {
         setup(myTimer);
-        myTimer.start();
+        myFrame.setVisible(true);
+        if (!myGameStart) {
+            myTimer.start();
+        }
+
     }
 
     public void setup(Timer theTimer) {
@@ -147,6 +151,7 @@ public class GameGUI implements Observer {
 
         myFrame.setVisible(true);
     }
+
 
     @Override
     public void update(final Observable theObservable, final Object theArg) {

@@ -12,6 +12,7 @@ public class ButtonsPanel extends JPanel {
     private JButton myPause;
     private JButton myEnd;
     private int myUserWidth;
+    public static boolean myGameStart;
     private static final int FOUR = 4;
 
     public ButtonsPanel(final Timer theTimer) {
@@ -26,7 +27,9 @@ public class ButtonsPanel extends JPanel {
         myPause = new JButton("Pause");
         myEnd = new JButton("End");
         myIsPaused = false;
-        myStart.addActionListener(e -> new GameGUI().start());
+        myStart.addActionListener(e -> {
+            myGameStart = true;
+        });
        myPause.addActionListener(e -> {
             if (myIsPaused) {
                 theTimer.start();
@@ -37,7 +40,7 @@ public class ButtonsPanel extends JPanel {
                 myPause.setText("Unpause");
                 myIsPaused = true;
             }
-        });
+       });
        myEnd.addActionListener(e -> {
            theTimer.stop();
 
