@@ -48,7 +48,7 @@
 ### Sprint 3 Contribution:
 + **Aryan:** ... Served as meeting scribe.
 
-+ **Martha:** ... Completed the readme for Sprint 2.
++ **Martha:** ... Completed the readme for Sprint 3.
 
 + **Evan:** ...
 
