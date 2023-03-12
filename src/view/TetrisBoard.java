@@ -23,46 +23,51 @@ import model.Point;
  */
 public class TetrisBoard implements PropertyChangeListener {
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant for dividing board measurements in half.
      */
     private static final int TWO = 2;
     /**
-     * Avoid checkstyle 'magic error' number for amount of columns.
+     * The number of columns on the Tetris game board.
      */
     private static final int COLUMNS = 10;
     /**
-     * Avoid checkstyle 'magic error' number for amount of rows.
+     * The number of rows on the Tetris game board.
      */
     private static final int ROWS = 20;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant for calculating measurements related to the board display.
      */
     private static final int FORTY_EIGHT = 48;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant for calculating measurements related to the board display.
      */
     private static final int FIFTY = 50;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant for calculating measurements related to the board display.
      */
     private static final int FIVE_HUNDRED_NINE = 509;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant for calculating measurements related to the board display.
      */
     private static final int NINE_HUNDRED_SIXTY_EIGHT = 968;
     /**
-     * Property value for Tetris Board Change.
+     * The property value for Tetris Board Change. //fix this description (unclear)
      */
     private static final String TETRIS_BOARD_PROPERTY = "TetrisBoardChange";
-    /**make tetris board.*/
-    private final JPanel myTetrisBoard = new JPanel();
-    /**panel width.*/
-    private final int myWidth;
-    /**panel height.*/
-    private final int myHeight;
-
     /**
-     * make board.
+     * The JPanel that displays the Tetris game board. //which does what?
+     */
+    private final JPanel myTetrisBoard = new JPanel();
+    /**
+     * The width of ...
+     */
+    private final int myWidth;
+    /**
+     * The height of ...
+     */
+    private final int myHeight;
+    /**
+     * The JPanel that displays the Tetris game board. //which does what?
      */
     private final TetrisBoardJPanel myTetrisBoardJPanel = new TetrisBoardJPanel();
 

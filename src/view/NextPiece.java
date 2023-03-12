@@ -17,14 +17,16 @@ import javax.swing.JPanel;
  */
 public class NextPiece implements PropertyChangeListener {
     /**
-     * Property value for New Piece Create.
+     * The property value for New Piece Create. //fix this description (unclear)
      */
     private static final String NEW_PIECE_PROPERTY = "NewPieceCreate";
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant for dividing the total height or width of the Board.
      */
     private static final int FOUR = 4;
-    /**Next piece panel.*/
+    /**
+     * The JPanel that displays the next Tetris piece.
+     */
     private final JPanel myNextPiece;
 
     /**
@@ -34,16 +36,16 @@ public class NextPiece implements PropertyChangeListener {
      */
     public NextPiece(final int theUserWidth) {
         myNextPiece = new JPanel();
-        this.myNextPiece.setBackground(Color.blue);
+        this.myNextPiece.setBackground(Color.BLUE);
         this.myNextPiece.addPropertyChangeListener(this);
         this.myNextPiece.setPreferredSize(
                 new Dimension(theUserWidth / FOUR, theUserWidth / FOUR));
     }
 
     /**
-     * ...
+     * Returns the next Tetris piece.
      *
-     * @return ...
+     * @return  the next Tetris piece.
      */
     public JPanel getNextPiece() {
         return myNextPiece;
@@ -57,7 +59,7 @@ public class NextPiece implements PropertyChangeListener {
      */
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
-            this.myNextPiece.setBackground(Color.yellow);
+            this.myNextPiece.setBackground(Color.YELLOW);
             this.myNextPiece.setToolTipText("Next Piece: " + theEvent.getNewValue());
         }
     }

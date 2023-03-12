@@ -24,71 +24,72 @@ import javax.swing.Timer;
  */
 public class MenuBar extends JPanel {
     /**
-     * ...
+     * The Menu label for the Game option.
      */
     private static final String GAME = "Game";
     /**
-     * ...
+     * The Menu label for the About menu.
      */
     private static final String ABOUT = "About";
     /**
-     * ...
+     * The Menu label for the Options menu.
      */
     private static final String OPTIONS = "Options";
     /**
-     * ...
+     * The Menu label for the New Game menu.
      */
     private static final String NEW_GAME = "New Game";
     /**
-     * ...
+     * The Menu label for the new game in This Window option.
      */
     private static final String THIS_WINDOW = "This Window";
     /**
-     * ...
+     * The Menu label for the new game in a New Window option.
      */
     private static final String NEW_WINDOW = "New Window";
     /**
-     * ...
+     * The Menu label for the Pause Game option.
      */
     private static final String PAUSE_GAME = "Pause Game";
     /**
-     * ...
+     * The Menu label for the Unpause Game option.
      */
     private static final String UNPAUSE_GAME = "Unpause Game";
     /**
-     * ...
+     * The text for Starting a new game in this Window! notification.
      */
     private static final String STARTING_NEW_GAME = "Starting a new game in this window!";
     /**
-     * ...
+     * The Menu label for the Help menu.
      */
     private static final String HELP = "Help";
     /**
-     * ...
+     * The Menu label for the Controls menu.
      */
     private static final String CONTROLS = "Controls";
     /**
-     * ...
+     * The Menu label for the Exit Game option.
      */
     private static final String EXIT_GAME = "Exit Game";
     /**
-     * ...
+     * The Menu label for the game info menu.
      */
     private static final String GAME_INFO = "Information about the game!";
     /**
-     * ...
+     * The Menu label for Option 1.
      */
     private static final String OPTION_1 = "Option 1";
     /**
-     * ...
+     * The text for Option 1 working as intended notification.
      */
     private static final String OPTION_1_WORKING = "Option 1 working as intended";
     /**
-     * ...
+     * Whether the game is paused.
      */
     private static boolean myIsPaused;
 
     /**
+     * Returns the fileMenu object that is created in this method.
      * Creates the file menu.
      *
      * @param theFrame the object onto which all the menu items are loaded onto.

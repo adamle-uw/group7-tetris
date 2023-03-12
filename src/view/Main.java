@@ -11,9 +11,14 @@ import javax.swing.JPanel;
  * @author Keegan Sanders
  * @version Winter 2023
  */
+
 public class Main extends JPanel {
+    /**
+     * Constructs the main GUI window frame.
+     *
+     * @param theArgs Command line arguments (ignored).
+     */
     public static void main(final String[] theArgs) {
         new GameGUI().start();
     }
-
 }

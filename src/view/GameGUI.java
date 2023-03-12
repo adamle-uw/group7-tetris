@@ -26,48 +26,48 @@ import model.ModelTimer;
  */
 public class GameGUI implements Observer {
     /**
-     * Avoid checkstyle 'magic number' error.
+     * A constant for dividing the total height or width of the Board.
      */
     private static final int FOUR = 4;
     /**
-     * Avoid checkstyle 'magic number' error.
+     * The base timer tick.
      */
     private static final int BASE_TIMER_TICK = 600;
     /**
-     * Frame is user screen height.
+     * The height of the user's screen.
      */
     private int myUserHeight;
     /**
-     * Frame is user screen width.
+     * The width of the user's screen.
      */
     private int myUserWidth;
     /**
-     * GUI frame.
+     * The main GUI frame.
      */
     private JFrame myFrame;
     /**
-     * User info panel.
+     * The panel that displays user info.
      */
     private UserInfo myUserInfo;
     /**
-     * Right side region of Frame.
+     * The right-side panel.
      */
     private JPanel myRightRegion;
     /**
-     * Board instance variable.
+     * The Board panel.
      */
     private Board myBoard;
     /**
-     * Timer instance variable.
+     * The game Timer.
      */
     private Timer myTimer;
     /**
-     * Timer delay instance variable.
+     * The rate at which the Timer ticks.
      */
     private int myTimerTick;
 
     /**
-     * Constructor.
+     * A constructor for class GameGUI.
      */
     public GameGUI() {
         init();

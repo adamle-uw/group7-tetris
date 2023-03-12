@@ -26,42 +26,66 @@ import javax.swing.SwingUtilities;
  */
 public class ControlsGUI {
     /**
-     * Avoid magic number checkstyle error.
+     * Constant for adding a third button.
      */
     private static final int THREE = 3;
     /**
-     * ...
+     * The String representation of pressing the A key.
      */
-    private static final String A = "A";
+    private static final String KEY_PRESS_A = "A";
     /**
-     * ...
+     * The String representation of pressing the D key.
      */
-    private static final String D = "D";
+    private static final String KEY_PRESS_D = "D";
     /**
-     * ...
+     * The String representation of pressing the S key.
      */
-    private static final String S = "S";
+    private static final String KEY_PRESS_S = "S";
     /**
-     * ...
+     * The String representation of pressing the W key.
      */
-    private static final String W = "W";
+    private static final String KEY_PRESS_W = "W";
     /**
-     * ArrayList of Buttons (butts).
+     * The Menu label for Controls.
+     */
+    private static final String CONTROLS = "Controls";
+    /**
+     * The Menu label for the Controls Menu.
+     */
+    private static final String CONTROLS_MENU = "Controls Menu";
+    /**
+     * The String representation of pressing the down arrow key.
+     */
+    private static final String DOWN = "Down";
+    /**
+     * The String representation of pressing the left arrow key.
+     */
+    private static final String LEFT = "Left";
+    /**
+     * The String representation of pressing the right arrow key.
+     */
+    private static final String RIGHT = "Right";
+    /**
+     * The String representation of pressing the up arrow key.
+     */
+    private static final String ROTATE = "Rotate";
+    /**
+     * The ArrayList of Buttons.
      */
     private final ArrayList<Button> myButts = new ArrayList<>();
     /**
-     * Dimension variable for window size.
+     * The dimensions (width and height) of the Window;
      */
     private final Dimension mySize = new Dimension(
             (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
             (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 4);
     /**
-     * int value for font size.
+     * The font size for the text.
      */
     private final int myFontSize = (int) (mySize.getWidth() / 10);
 
     /**
-     * Instance of KeyListener.
+     * A constructor for class ControlsGUI.
      */
     public ControlsGUI() {
         loadControlsGui();
@@ -72,15 +96,15 @@ public class ControlsGUI {
      */
     void loadControlsGui() {
         SwingUtilities.invokeLater(() -> {
-            final Font newButtonFont = new Font("Controls", Font.PLAIN, myFontSize);
+            final Font newButtonFont = new Font(CONTROLS, Font.PLAIN, myFontSize);
             final ControlsKeyListener kList = new ControlsKeyListener();
-            final JFrame controlsFrame = new JFrame("Controls Menu");
+            final JFrame controlsFrame = new JFrame(CONTROLS_MENU);
             final JPanel controlsPanel = new JPanel(new GridLayout(2, 3));
             controlsFrame.setMinimumSize(mySize);
-            myButts.add(new Button(A));
-            myButts.add(new Button(S));
-            myButts.add(new Button(D));
-            myButts.add(new Button(W));
+            myButts.add(new Button(KEY_PRESS_W));
+            myButts.add(new Button(KEY_PRESS_A));
+            myButts.add(new Button(KEY_PRESS_S));
+            myButts.add(new Button(KEY_PRESS_D));
             myButts.forEach(butt -> butt.addKeyListener(kList));
             myButts.forEach(butt -> butt.setFont(newButtonFont));
             controlsPanel.add(new Box(1));
@@ -137,10 +161,10 @@ public class ControlsGUI {
          * ...
          */
         private void mapKeys() {
-            myKeyMap.put(KeyEvent.VK_W, () -> this.keyPress(W, "Rotate"));
-            myKeyMap.put(KeyEvent.VK_A, () -> this.keyPress(A, "Left"));
-            myKeyMap.put(KeyEvent.VK_S, () -> this.keyPress(S, "Down"));
-            myKeyMap.put(KeyEvent.VK_D, () -> this.keyPress(D, "Right"));
+            myKeyMap.put(KeyEvent.VK_W, () -> this.keyPress(KEY_PRESS_W, ROTATE));
+            myKeyMap.put(KeyEvent.VK_A, () -> this.keyPress(KEY_PRESS_A, LEFT));
+            myKeyMap.put(KeyEvent.VK_S, () -> this.keyPress(KEY_PRESS_S, DOWN));
+            myKeyMap.put(KeyEvent.VK_D, () -> this.keyPress(KEY_PRESS_D, RIGHT));
         }
 
         /**
