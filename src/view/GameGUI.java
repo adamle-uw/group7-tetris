@@ -49,7 +49,7 @@ public class GameGUI implements Observer{
      */
     private Board myBoard;
     /**
-     * TImer instance variable.
+     * Timer instance variable.
      */
     private Timer myTimer;
     private boolean myGameOver;
