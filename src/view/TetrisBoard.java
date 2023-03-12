@@ -3,43 +3,70 @@ package view;
 import model.Board;
 import model.Point;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+/**
+ * This program ...
+ *
+ * @author Evan Abrahamson
+ * @author Aryan Damle
+ * @author Martha Emerson
+ * @author Keegan Sanders
+ * @version Winter 2023
+ */
+
 public class TetrisBoard implements PropertyChangeListener {
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant for dividing board measurements in half.
      */
     private static final int TWO = 2;
     /**
-     * Avoid checkstyle 'magic error' number for amount of columns.
+     * The number of columns on the Tetris game board.
      */
     private static final int COLUMNS = 10;
     /**
-     * Avoid checkstyle 'magic error' number for amount of rows.
+     * The number of rows on the Tetris game board.
      */
     private static final int ROWS = 20;
     /**
-     * Property value for Tetris Board Change.
+     * Property value for Tetris Board Change property listener.
      */
     private static final String TETRIS_BOARD_PROPERTY = "TetrisBoardChange";
     /**make tetris board.*/
     private final JPanel myTetrisBoard = new JPanel();
-    /**panel width.*/
+    /**The width of the baord.*/
     private int myWidth;
-    /**panel height.*/
+    /**The height of the board.*/
     private int myHeight;
+    /**X Offset of Cells in board.*/
     private int myXOffset;
+    /**Y Offset of Cells in board.*/
     private int myYOffset;
+    /**Cell width in board.*/
     private int myCellWidth;
+    /**Cell height in board.*/
     private int myCellHeight;
 
-    /**make board*/
+    /**
+     * The JPanel that displays the Tetris game board. //which does what?
+     */
     private final TetrisBoardJPanel myTetrisBoardJPanel = new TetrisBoardJPanel();
 
+    /**
+     * ...
+     *
+     * @param theUserWidth ...
+     * @param theUserHeight ...
+     * @param theBoard ...
+     */
     public TetrisBoard(final int theUserWidth, final int theUserHeight, final Board theBoard) {
         this.myTetrisBoard.setBackground(Color.black);
         this.myTetrisBoard.addPropertyChangeListener(this);
@@ -51,11 +78,21 @@ public class TetrisBoard implements PropertyChangeListener {
         myHeight = (int)myTetrisBoardJPanel.getCurrentSize().getHeight();
     }
 
-
+    /**
+     * ...
+     *
+     * @return ...
+     */
     public JPanel getTetrisBoard() {
         return myTetrisBoard;
     }
 
+    /**
+     * ...
+     *
+     * @param theEvent A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (TETRIS_BOARD_PROPERTY.equals(theEvent.getPropertyName())) {
             myTetrisBoardJPanel.repaint();
@@ -134,42 +171,87 @@ public class TetrisBoard implements PropertyChangeListener {
         }
     }
 
+    /**
+     * ...
+     *
+     * @return ...
+     */
     public ArrayList<Rectangle> getCells() {
         return myTetrisBoardJPanel.getMyCells();
     }
 
+    /**
+     * ...
+     */
     private static class TetrisBoardJPanel extends JPanel {
-
+        /**
+         * ...
+         */
         private int myColumnCount = 10;
+        /**
+         * ...
+         */
         private int myRowCount = 20;
+        /**
+         * ...
+         */
         private final ArrayList<Rectangle> myCells;
+        /**
+         * ...
+         */
         private final ArrayList<Rectangle> myMovingCells;
+        /**
+         * ...
+         */
         private final ArrayList<Rectangle> myPlacedCells;
+        /**
+         * ...
+         */
         TetrisBoardJPanel() {
             myCells = new ArrayList<Rectangle>(myColumnCount * myRowCount);
             myMovingCells = new ArrayList<Rectangle>(myColumnCount * myRowCount);
             myPlacedCells = new ArrayList<Rectangle>(myColumnCount * myRowCount);
         }
 
+        /**
+         * ...
+         * @return ...
+         */
         public ArrayList<Rectangle> getMyCells() {
             return myCells;
         }
 
+        /**
+         * ...
+         * @return ...
+         */
         @Override
         public Dimension getPreferredSize() {
             return new Dimension(this.getParent().getHeight() / 2,
                     this.getParent().getHeight() - 50);
         }
 
+        /**
+         * ...
+         * * @return ...
+         */
         public Dimension getCurrentSize() {
             return new Dimension(getWidth(), getHeight());
         }
 
+        /**
+         * ...
+         */
         @Override
         public void invalidate() {
             myCells.clear();
             super.invalidate();
         }
+        /**
+         * ...
+         *
+         * @param theG the <code>Graphics</code> object to protect
+         */
         protected void paintComponent(final Graphics theG) {
             super.paintComponent(theG);
             final Graphics2D g2d = (Graphics2D) theG.create();
