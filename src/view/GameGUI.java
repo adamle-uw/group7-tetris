@@ -133,7 +133,7 @@ public class GameGUI implements Observer {
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
         //panels
-        final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
+        final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight, myBoard);
         final NextPiece np = new NextPiece(myUserWidth);
         final UserInfo ui = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
         final JPanel rightRegion = new JPanel();

@@ -1,7 +1,5 @@
 package view;
 
-import model.Board;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -53,6 +51,9 @@ public class UserInfo implements PropertyChangeListener {
     /**
      * Label for the User Info text.
      */
+    private int mywait = 0;
+    private int tempLinesCleared = myLinesCleared;
+    private int myTempNum = 0;
     private JLabel myLabel;
 
     public UserInfo(final int theUserWidth, final int theUserHeight, final int theTimerTick) {
@@ -81,7 +82,6 @@ public class UserInfo implements PropertyChangeListener {
     }
 
     public void propertyChange(final PropertyChangeEvent theEvent) {
-        int tempLinesCleared = myLinesCleared;
         if (ROW_CLEAR.equals(theEvent.getPropertyName())) {
             myLinesCleared += 1;
             this.myLabel.setText("<html>Points: " + myUserPoints
@@ -100,14 +100,25 @@ public class UserInfo implements PropertyChangeListener {
                     + myLinesCleared + "<br/><br/>Lines until Next Level: "
                     + (LINES_TO_LEVELUP - (myLinesCleared % LINES_TO_LEVELUP)));
         }
-        if (myLinesCleared == tempLinesCleared + 1) {
-            myUserPoints += 40 * myLevel;
-        } else if (myLinesCleared == tempLinesCleared + 2) {
-            myUserPoints += 100 * myLevel;
-        } else if (myLinesCleared == tempLinesCleared + 3) {
-            myUserPoints += 300 * myLevel;
-        } else if (myLinesCleared == tempLinesCleared + 4) {
-            myUserPoints += 1200 * myLevel;
+        if (myLinesCleared == tempLinesCleared && myLinesCleared != 0) {
+            myTempNum++;
+            System.out.println("tempy num" + myTempNum);
+        }
+        if (myTempNum == 3) {
+            if (myLinesCleared == tempLinesCleared + 1) {
+                myUserPoints += 40 * myLevel;
+                tempLinesCleared = myLinesCleared;
+            } else if (myLinesCleared == tempLinesCleared + 2) {
+                myUserPoints += 100 * myLevel;
+                tempLinesCleared = myLinesCleared;
+            } else if (myLinesCleared == tempLinesCleared + 3) {
+                myUserPoints += 300 * myLevel;
+                tempLinesCleared = myLinesCleared;
+            } else if (myLinesCleared == tempLinesCleared + 4) {
+                myUserPoints += 1200 * myLevel;
+                tempLinesCleared = myLinesCleared;
+            }
+            myTempNum = 0;
         }
     }
 }
