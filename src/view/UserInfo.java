@@ -25,6 +25,10 @@ public class UserInfo implements PropertyChangeListener {
      */
     private static final int LINES_TO_LEVELUP = 5;
     /**
+     * The multiplier of how much each level speeds up the game.
+     */
+    private static final double LEVEL_SPEEDUP_RATE = 1.2;
+    /**
      * Property value for Row Clear Change.
      */
     private static final String ROW_CLEAR = "Row Location";
@@ -86,7 +90,7 @@ public class UserInfo implements PropertyChangeListener {
                     + (LINES_TO_LEVELUP - (myLinesCleared % LINES_TO_LEVELUP)));
             if ((myLinesCleared % LINES_TO_LEVELUP) == 0 && myLinesCleared != 0) {
                 myLevel++;
-                myTimerTick = (int)((double)myTimerTick / 1.5);
+                myTimerTick = (int)((double)myTimerTick / LEVEL_SPEEDUP_RATE);
             }
         }
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {

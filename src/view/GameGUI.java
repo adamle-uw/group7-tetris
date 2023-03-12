@@ -39,7 +39,7 @@ public class GameGUI implements Observer {
     /**
      * User info panel.
      */
-    private JPanel myUserInfo;
+    private UserInfo myUserInfo;
     /**
      * Right side region of Frame.
      */
@@ -69,11 +69,14 @@ public class GameGUI implements Observer {
         myBoard.newGame();
         myTimerTick = BASE_TIMER_TICK;
         myTimer = new Timer(myTimerTick, new ModelTimer(myBoard));
+        myTimer.addActionListener(theEvent -> myTimer.setDelay(myUserInfo.getTimerTick()));
         myFrame = new JFrame();
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myUserWidth = (int) size.getWidth();
         myUserHeight = (int) size.getHeight();
+        myUserInfo = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
+        myBoard.addPropertyChangeListener(myUserInfo);
         myFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(final KeyEvent thePressedKey) {
@@ -152,7 +155,6 @@ public class GameGUI implements Observer {
 
     @Override
     public void update(final Observable theObservable, final Object theArg) {
-
     }
 }
 
