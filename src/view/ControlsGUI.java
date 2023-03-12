@@ -57,7 +57,6 @@ public class ControlsGUI {
             controlsPanel.add(myButts.get(1));
             controlsPanel.add(myButts.get(2));
             controlsPanel.add(myButts.get(3));
-
             controlsFrame.add(controlsPanel);
             controlsFrame.setVisible(true);
         });
@@ -91,7 +90,7 @@ public class ControlsGUI {
         private void mapKeys() {
             myKeyMap.put(KeyEvent.VK_W, () -> this.keyPress("W", "Rotate"));
             myKeyMap.put(KeyEvent.VK_A, () -> this.keyPress("A", "Left"));
-            myKeyMap.put(KeyEvent.VK_S, () -> this.keyPress("S", "Drop"));
+            myKeyMap.put(KeyEvent.VK_S, () -> this.keyPress("S", "Down"));
             myKeyMap.put(KeyEvent.VK_D, () -> this.keyPress("D", "Right"));
         }
         @Override
