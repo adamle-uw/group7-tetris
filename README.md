@@ -32,7 +32,7 @@
 + **Keegan:** Implemented the Observer Design Pattern in the Board class. Served as Project Manager and worked with Aryan to refactor and optimize the existing program.
 
 ### Sprint 2 Meetings:
-+ Meeting minutes: https://docs.google.com/document/d/1CimpqTYNHXGqp6zbbmZ82j1iLlfdSAdGsUTmqnws-gU/edit?usp=sharing
++ Meeting minutes (for Wednesday and Saturday): https://docs.google.com/document/d/1CimpqTYNHXGqp6zbbmZ82j1iLlfdSAdGsUTmqnws-gU/edit?usp=sharing
  
 + We met as a group on Monday, Wednesday, Saturday, and Sunday via Zoom.
 
@@ -44,3 +44,29 @@
 
 ### Sprint 2 Comments:
 + No major issues this week.
+
+### Sprint 3 Contribution:
++ **Aryan:** ... Served as meeting scribe.
+
++ **Martha:** ... Completed the readme for Sprint 2.
+
++ **Evan:** ...
+
++ **Keegan:** ...
+
+### Sprint 3 Meetings:
++ Meeting minutes (for Monday, Wednesday, and Friday): https://docs.google.com/document/d/1CimpqTYNHXGqp6zbbmZ82j1iLlfdSAdGsUTmqnws-gU/edit?usp=sharing
+ 
++ We met as a group on Monday, Wednesday, Friday, Saturday, and Sunday via Zoom.
+
++ **Saturday, March 11th:** We met on Zoom and ...
+
++ **Sunday, March 12th:** We met on Zoom and ...
+
++ Primary forms of communication included Discord messages, Discord calls, and Zoom meetings.
+
+### Sprint 3 Comments:
++ Need to include: 
++ (1) list of sources for any graphics, images, or sound files we did not create ourselves; list credit in the GUI (maybe in an "about" dialogue); discuss the process of creating any graphics, images, or sound files that we create ourselves
++ (2) list and provide a numbered list with a brief description of every change OR addition made to the provided code
++ (3) state the class and line number where the single-line statement can be found that causes the game to animate faster at higher levels
