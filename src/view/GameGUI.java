@@ -2,10 +2,7 @@ package view;
 
 import static view.MenuBar.createFileMenu;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
@@ -111,13 +108,16 @@ public class GameGUI implements Observer {
 
     }
 
-    public void start() {
-        setup();
-        myTimer.start();
+    public void launch() {
+        setup(myTimer);
         myFrame.setVisible(true);
     }
+    public void start() {
+        setup(myTimer);
+        myTimer.start();
+    }
 
-    public void setup() {
+    public void setup(Timer theTimer) {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myFrame.setSize(myUserWidth, myUserHeight);
@@ -126,8 +126,10 @@ public class GameGUI implements Observer {
         //panels
         final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
         final NextPiece np = new NextPiece(myUserWidth);
+        final ButtonsPanel bp = new ButtonsPanel(theTimer);
         final JPanel userInfo = new JPanel();
         final JPanel rightRegion = new JPanel();
+
         userInfo.setBackground(Color.green);
         rightRegion.setLayout(new BorderLayout());
 
@@ -135,6 +137,7 @@ public class GameGUI implements Observer {
         myFrame.add(tb.getTetrisBoard(), BorderLayout.CENTER);
         myFrame.add(rightRegion, BorderLayout.EAST);
         myFrame.add(userInfo, BorderLayout.WEST);
+        rightRegion.add(bp.getMyButtonsPanel(), BorderLayout.SOUTH);
         rightRegion.add(np.getNextPiece(), BorderLayout.NORTH);
         rightRegion.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
         userInfo.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));

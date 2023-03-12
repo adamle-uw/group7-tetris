@@ -23,7 +23,6 @@ public class MenuBar extends JPanel {
      * @return returns the fileMenu object that is created in this method.
      */
 
-    static boolean myIsPaused;
     public static JMenuBar createFileMenu(final JFrame theFrame, final Timer theTimer) {
         final JMenuBar fileMenu = new JMenuBar();
         final JMenu gameMenu = new JMenu("Game");
@@ -50,22 +49,6 @@ public class MenuBar extends JPanel {
         gameMenu.add(newGameMenu);
         //Adds item to the menu
         //gameMenu.add(menuItem);
-        myIsPaused = false;
-        final JMenuItem pauseMenuItem = new JMenuItem("Pause Game");
-        pauseMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent theEvent) {
-                if (myIsPaused) {
-                    theTimer.start();
-                    pauseMenuItem.setText("Pause Game");
-                    myIsPaused = false;
-                } else {
-                    theTimer.stop();
-                    pauseMenuItem.setText("Unpause Game");
-                    myIsPaused = true;
-                }
-            }
-        });
-        gameMenu.add(pauseMenuItem);
         menuItem = new JMenuItem("Exit Game");
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK));
