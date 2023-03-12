@@ -4,10 +4,12 @@ import model.Board;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.JLabel;
 
 public class UserInfo implements PropertyChangeListener {
     /**
@@ -36,7 +38,6 @@ public class UserInfo implements PropertyChangeListener {
      * User Lines Cleared.
      */
     private int myLinesCleared;
-    private Board myBoard;
     /**
      * Timer delay instance variable.
      */
@@ -45,6 +46,10 @@ public class UserInfo implements PropertyChangeListener {
      * Difficulty level instance variable.
      */
     private int myLevel;
+    /**
+     * Label for the User Info text.
+     */
+    private JLabel myLabel;
 
     public UserInfo(final int theUserWidth, final int theUserHeight, final int theTimerTick) {
         myUserInfo = new JPanel();
@@ -54,6 +59,13 @@ public class UserInfo implements PropertyChangeListener {
         myUserPoints = 0;
         myTimerTick = theTimerTick;
         myLevel = 1;
+        myUserInfo.setLayout(new BoxLayout(myUserInfo, BoxLayout.X_AXIS));
+        myLabel = new JLabel("<html>Points: " + myUserPoints
+                + "<br/><br/>Level: " + myLevel + "<br/><br/>Lines Cleared: "
+                + myLinesCleared + "<br/><br/>Lines until Next Level: "
+                + (5 - (myLinesCleared % 5)), JLabel.CENTER);
+        myLabel.setFont(new Font("Arial", Font.PLAIN, 40));
+        myUserInfo.add(myLabel);
     }
 
     public JPanel getUserInfo() {
@@ -68,8 +80,10 @@ public class UserInfo implements PropertyChangeListener {
         int tempLinesCleared = myLinesCleared;
         if (ROW_CLEAR.equals(theEvent.getPropertyName())) {
             myLinesCleared += 1;
-            this.myUserInfo.setToolTipText("Points: " + myUserPoints
-                    + " Level: " + myLevel + " Lines Cleared: " + myLinesCleared);
+            this.myLabel.setText("<html>Points: " + myUserPoints
+                    + "<br/><br/>Level: " + myLevel + "<br/><br/>Lines Cleared: "
+                    + myLinesCleared  + "<br/><br/>Lines until Next Level: "
+                    + (LINES_TO_LEVELUP - (myLinesCleared % LINES_TO_LEVELUP)));
             if ((myLinesCleared % LINES_TO_LEVELUP) == 0 && myLinesCleared != 0) {
                 myLevel++;
                 myTimerTick = (int)((double)myTimerTick / 1.5);
@@ -77,8 +91,10 @@ public class UserInfo implements PropertyChangeListener {
         }
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
             myUserPoints += 4;
-            this.myUserInfo.setToolTipText("Points: " + myUserPoints
-                    + " Level: " + myLevel + " Lines Cleared: " + myLinesCleared);
+            this.myLabel.setText("<html>Points: " + myUserPoints
+                    + "<br/><br/>Level: " + myLevel + "<br/><br/>Lines Cleared: "
+                    + myLinesCleared + "<br/><br/>Lines until Next Level: "
+                    + (LINES_TO_LEVELUP - (myLinesCleared % LINES_TO_LEVELUP)));
         }
         if (myLinesCleared == tempLinesCleared + 1) {
             myUserPoints += 40 * myLevel;
