@@ -40,11 +40,15 @@ public class TetrisBoard implements PropertyChangeListener {
         }
     }
 
+    public ArrayList<Rectangle> getCells() {
+        return myTetrisBoardJPanel.getMyCells();
+    }
+
     private static class TetrisBoardJPanel extends JPanel {
 
         private int myColumnCount = 10;
         private int myRowCount = 20;
-        private ArrayList<Rectangle> myCells;
+        private final ArrayList<Rectangle> myCells;
         TetrisBoardJPanel() {
             myCells = new ArrayList<Rectangle>(myColumnCount * myRowCount);
 
