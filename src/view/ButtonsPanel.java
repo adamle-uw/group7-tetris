@@ -10,6 +10,7 @@ public class ButtonsPanel extends JPanel {
     private final JPanel myButtonsPanel;
     private JButton myStart;
     private JButton myPause;
+    private JButton myEnd;
     private int myUserWidth;
     private static final int FOUR = 4;
 
@@ -23,6 +24,7 @@ public class ButtonsPanel extends JPanel {
         this.myButtonsPanel.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserWidth / FOUR));
         myStart = new JButton("Start");
         myPause = new JButton("Pause");
+        myEnd = new JButton("End");
         myIsPaused = false;
         myStart.addActionListener(e -> new GameGUI().start());
        myPause.addActionListener(e -> {
@@ -36,9 +38,14 @@ public class ButtonsPanel extends JPanel {
                 myIsPaused = true;
             }
         });
+       myEnd.addActionListener(e -> {
+           theTimer.stop();
+
+       });
 
         myButtonsPanel.add(myStart);
         myButtonsPanel.add(myPause);
+        myButtonsPanel.add(myEnd);
     }
 
     public JPanel getMyButtonsPanel() {
