@@ -1,5 +1,6 @@
 package view;
 
+import static view.ButtonsPanel.getSelectedMusic;
 import static view.ButtonsPanel.myGameStart;
 import static view.MenuBar.createFileMenu;
 
@@ -14,7 +15,7 @@ import javax.swing.Timer;
 import model.Board;
 import model.ModelTimer;
 
-public class GameGUI implements Observer {
+public class GameGUI implements Observer{
     /**
      * Avoid checkstyle 'magic number' error.
      */
@@ -53,6 +54,7 @@ public class GameGUI implements Observer {
     private Timer myTimer;
     private boolean myGameOver;
     private GameGUI myGameGUI;
+    private TetrisBoard myTetrisBoard;
 
     /**
      * Constructor.
@@ -108,12 +110,13 @@ public class GameGUI implements Observer {
         myFrame.setSize(myUserWidth, myUserHeight);
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
-        //panels
+        ButtonsPanel bp = new ButtonsPanel();
 
     }
 
     public void start() {
         setup(myTimer);
+        myTetrisBoard.play(getSelectedMusic());
         myFrame.setVisible(true);
         if (!myGameStart) {
             myTimer.start();

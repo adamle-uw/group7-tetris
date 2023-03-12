@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 public class TetrisBoard implements PropertyChangeListener {
@@ -32,6 +38,20 @@ public class TetrisBoard implements PropertyChangeListener {
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (TETRIS_BOARD_PROPERTY.equals(theEvent.getPropertyName())) {
 
+        }
+    }
+
+    public void play(final String theFileName) {
+        try {
+            final Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(theFileName)));
+            clip.start();
+        }
+         catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        {
+            System.out.println("Music not found");
         }
     }
 }
