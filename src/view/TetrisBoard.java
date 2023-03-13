@@ -146,25 +146,6 @@ public class TetrisBoard implements PropertyChangeListener {
             }
             myWidth = (int) myTetrisBoardJPanel.getCurrentSize().getWidth();
             myHeight = (int) myTetrisBoardJPanel.getCurrentSize().getHeight();
-            System.out.println("Width: " + myWidth + " Height: " + myHeight);
-
-            /*ArrayList<Rectangle> rList = new ArrayList(COLUMNS * ROWS);
-            for (Rectangle r : myTetrisBoardJPanel.myPlacedCells) {
-                System.out.println("x " + (int)r.getLocation().getX());
-                int x = ((int)r.getLocation().getX());
-                int y = ((int)r.getLocation().getY());
-                System.out.println("y " + y);
-                r.setLocation(x, (y));
-                r.setSize(myCellWidth, myCellHeight);
-                rList.add(r);
-                System.out.println(rList);
-            }
-            myTetrisBoardJPanel.myPlacedCells.clear();
-            for (Rectangle r : rList) {
-                myTetrisBoardJPanel.myPlacedCells.add(r);
-            }
-
-             */
 
             myTetrisBoardJPanel.repaint();
         }
@@ -182,9 +163,6 @@ public class TetrisBoard implements PropertyChangeListener {
                         (-(y - (myHeight - myCellHeight)) + (myCellHeight * myBoardClearLevel))
                                 != myYOffset + (myCellHeight * (ROWS - (myIsClearingBoard - 1)))) {
                     r.setLocation(x, (-(y - (myHeight - myCellHeight)) + (myCellHeight)));
-                    System.out.println(r);
-                    System.out.println(-(y - (myHeight - myCellHeight)) + (myCellHeight * myBoardClearLevel));
-                    System.out.println(myYOffset + (myCellHeight * (ROWS - (myIsClearingBoard - 1))));
                 } else {
                     canPass = false;
                 }
@@ -202,15 +180,12 @@ public class TetrisBoard implements PropertyChangeListener {
             ArrayList<Rectangle> rTemp = new ArrayList(COLUMNS * ROWS);
             myIsClearingBoard++;
             final int rowY = myHeight - myYOffset - (((int)theEvent.getNewValue() + 1) * (myCellHeight));
-            System.out.println(rowY);
-            System.out.println("b4 " + myTetrisBoardJPanel.myPlacedCells);
             for (Rectangle r : myTetrisBoardJPanel.myPlacedCells) {
                 int tempY = (int)r.getY();
                 if ((int)r.getY() < rowY) {
                     r.setLocation((int) r.getX(), ((int) r.getY()) + myCellHeight);
                 }
                 if (tempY != rowY) {
-                    System.out.println(rowY + " " + (int)r.getY());
                     r.setLocation((int)r.getX(), (int)r.getY());
                     rTemp.add(r);
                 }
@@ -219,10 +194,8 @@ public class TetrisBoard implements PropertyChangeListener {
             for (Rectangle r : rTemp) {
                 myTetrisBoardJPanel.myPlacedCells.add(r);
             }
-            System.out.println(myTetrisBoardJPanel.myPlacedCells);
             rTemp.clear();
 
-            System.out.println("myclearingboard " + myIsClearingBoard);
             myBoardClearLevel = (int)theEvent.getNewValue() + 1;
 
             myTetrisBoardJPanel.repaint();
