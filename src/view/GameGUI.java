@@ -146,7 +146,7 @@ public class GameGUI implements Observer {
      */
     public void start() {
         setup(myTimer);
-        myTetrisBoard = new TetrisBoard(myUserWidth, myUserHeight);
+        myTetrisBoard = new TetrisBoard(myUserWidth, myUserHeight, myBoard);
         myTetrisBoard.play("../music/Pacman_Introduction_Music-KP-826387403.wav");
         myFrame.setVisible(true);
         if (!myGameStart) {
