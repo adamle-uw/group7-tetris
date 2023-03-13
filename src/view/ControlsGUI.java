@@ -129,11 +129,11 @@ public class ControlsGUI {
     }
 
     /**
-     * ...
+     * Switches the button label back and forth.
      *
-     * @param theButtKey        ...
-     * @param theButtControl    ...
-     * @param theCount          ...
+     * @param theButtKey        the key that is pressed.
+     * @param theButtControl    the control for each key.
+     * @param theCount          0 or 1 - functions as an on/off switch.
      */
     private void pressButt(final String theButtKey, final String theButtControl,
                            final int theCount) {
@@ -147,7 +147,7 @@ public class ControlsGUI {
     }
 
     /**
-     * ...
+     * Listens for Key events and passes the info to the GUI.
      */
     private final class ControlsKeyListener extends KeyAdapter {
         /**
@@ -177,11 +177,6 @@ public class ControlsGUI {
             myKeyMap.put(KeyEvent.VK_D, () -> this.keyPress(KEY_PRESS_D, RIGHT));
         }
 
-        /**
-         * ...
-         *
-         * @param theEvent the event to be processed.
-         */
         @Override
         public void keyPressed(final KeyEvent theEvent) {
             if (myKeyMap.containsKey(theEvent.getKeyCode())) {
@@ -190,11 +185,6 @@ public class ControlsGUI {
             }
         }
 
-        /**
-         * Changes the state when the key is released.
-         *
-         * @param theEvent the event to be processed
-         */
         @Override
         public void keyReleased(final KeyEvent theEvent) {
             if (myKeyMap.containsKey(theEvent.getKeyCode())) {
