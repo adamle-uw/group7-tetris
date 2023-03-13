@@ -13,6 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import model.wallkicks.WallKick;
 
+import javax.swing.*;
+
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
  * <p>Clients can expect Board objects to call norifyObservers with four different 
@@ -447,6 +449,8 @@ public class Board implements BoardInterface {
             row[thePoint.x()] = theBlock;
         } else if (!myGameOver) {
             myGameOver = true;
+            //SHow message for game over
+            JOptionPane.showMessageDialog(null, "Game over!");
             notifyObserversOfPositionChange(
                     PROPERTY_PIECE_LOCATION, myCurrentPiece.getBoardPoints());
         }
@@ -525,7 +529,7 @@ public class Board implements BoardInterface {
             notifyObserversOfPositionChange(
                     "PlacedBlock", myCurrentPiece.getBoardPoints());
         }
-        notifyObserversOfBlockChange("NewPieceCreate", myNextPiece.getBlock());
+        notifyObserversOfBlockChange(myNextPiece.getBlock());
         if (share && !myGameOver) {
             myCurrentPiece = new MovableTetrisPiece(myNextPiece, new Point(0, 0));
         }
@@ -538,9 +542,8 @@ public class Board implements BoardInterface {
         myPcs.firePropertyChange(theProperty, null, thePosition);
     }
 
-    private void notifyObserversOfBlockChange(final String theProperty,
-                                                 final Block theBlock) {
-        myPcs.firePropertyChange(theProperty, null, theBlock);
+    private void notifyObserversOfBlockChange(final Block theBlock) {
+        myPcs.firePropertyChange("NewPieceCreate", null, theBlock);
     }
     private void notifyObserversOfOrientationChange(final Rotation theOrientation) {
         myPcs.firePropertyChange(Board.PROPERTY_PIECE_ORIENTATION, null, theOrientation);
@@ -574,7 +577,7 @@ public class Board implements BoardInterface {
         /**
          * Constructor of the Board Data object.
          */
-        protected BoardData() {
+        private BoardData() {
             myBoardData = getBoard();
             myBoardData.add(new Block[myWidth]);
             myBoardData.add(new Block[myWidth]);
@@ -590,7 +593,7 @@ public class Board implements BoardInterface {
          * 
          * @return Copy of the Board Data.
          */
-        protected List<Block[]> getBoardData() {
+        private List<Block[]> getBoardData() {
             final List<Block[]> board = new ArrayList<Block[]>();
             for (final Block[] row : myBoardData) {
                 board.add(row.clone());
