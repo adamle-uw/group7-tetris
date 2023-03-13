@@ -11,6 +11,12 @@ import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
 /**
@@ -291,5 +297,18 @@ public class TetrisBoard implements PropertyChangeListener {
             g2d.dispose();
         }
 
+    }
+
+    public void play(final String theFileName) {
+
+        try {
+            System.out.println(theFileName);
+            final Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(theFileName)));
+            clip.start();
+        }
+         catch (Exception e) {
+            System.out.println("File not found");
+         }
     }
 }
