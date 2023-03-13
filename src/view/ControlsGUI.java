@@ -74,7 +74,7 @@ public class ControlsGUI {
      */
     private final ArrayList<Button> myButts = new ArrayList<>();
     /**
-     * The dimensions (width and height) of the Window;
+     * The dimensions (width and height) of the Window.
      */
     private final Dimension mySize = new Dimension(
             (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
@@ -141,16 +141,16 @@ public class ControlsGUI {
      */
     private final class ControlsKeyListener extends KeyAdapter {
         /**
-         * Map of Keys.
+         * A Map of Keys.
          */
         private final Map<Integer, Runnable> myKeyMap;
         /**
-         * Int that increments per KeyEvent.
+         * Counter for the number of KeyEvents.
          */
         private int myCount;
 
-        /***
-         * ...
+        /**
+         * Creates a HashMap of KeyListener controls.
          */
         private ControlsKeyListener() {
             myKeyMap = new HashMap<>();
@@ -158,7 +158,7 @@ public class ControlsGUI {
         }
 
         /**
-         * ...
+         * Inserts KeyEvents into myKeyMap.
          */
         private void mapKeys() {
             myKeyMap.put(KeyEvent.VK_W, () -> this.keyPress(KEY_PRESS_W, ROTATE));
@@ -170,7 +170,7 @@ public class ControlsGUI {
         /**
          * ...
          *
-         * @param theEvent the event to be processed
+         * @param theEvent  the event to be processed.
          */
         @Override
         public void keyPressed(final KeyEvent theEvent) {
