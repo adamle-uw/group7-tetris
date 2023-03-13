@@ -2,7 +2,6 @@ package model;
 
 /**
  * The different types of blocks that can be stored in a Board's grid.
- *
  * TCSS 305 - Project Tetris
  *
  * @author Alan Fowler
