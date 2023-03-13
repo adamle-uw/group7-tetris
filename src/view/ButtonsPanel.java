@@ -80,8 +80,7 @@ public class ButtonsPanel extends JPanel {
         final JButton end = new JButton(END);
         myIsPaused = false;
 
-        start.addActionListener(e -> {
-            myGameStart = true; });
+        start.addActionListener(e -> myGameStart = true);
 
         pause.addActionListener(e -> {
             if (myIsPaused) {
