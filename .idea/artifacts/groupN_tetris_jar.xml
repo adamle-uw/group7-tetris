@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="groupN-tetris:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/groupN_tetris_jar</output-path>
+    <root id="archive" name="groupN-tetris_jar.jar">
+      <element id="archive" name="groupN-tetris.jar">
+        <element id="module-output" name="groupN-tetris" />
+      </element>
+      <element id="library" level="module" name="wk.jar" module-name="groupN-tetris" />
+      <element id="library" level="module" name="junit4" module-name="groupN-tetris" />
+    </root>
+  </artifact>
+</component>
