@@ -109,17 +109,16 @@ public class UserInfo implements PropertyChangeListener {
      */
     private int myLevel;
     /**
+     * Label for the User Info text.
+     */
+    private final JLabel myLabel;
+    /**
      * ...
      */
     private int myTempLinesCleared = myLinesCleared;
-    /**
-     * ...
-     */
-    private int myTempNum;
-    /**
-     * ...
-     */
-    private final JLabel myLabel;
+    private int myLastPoints = 0;
+
+
 
     /**
      * A constructor for the class UserInfo.
@@ -136,6 +135,10 @@ public class UserInfo implements PropertyChangeListener {
         myUserPoints = 0;
         myTimerTick = theTimerTick;
         myLevel = 1;
+        for(int i = 1; i < myLevel; i++) {
+            myTimerTick = (int) ((double) myTimerTick / LEVEL_SPEEDUP_RATE);
+            System.out.println(myTimerTick);
+        }
         myUserInfo.setLayout(new BoxLayout(myUserInfo, BoxLayout.X_AXIS));
         myLabel = new JLabel(POINTS + myUserPoints
                 + LEVEL + myLevel + LINES_CLEARED
@@ -183,30 +186,29 @@ public class UserInfo implements PropertyChangeListener {
         }
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
             myUserPoints += FOUR;
+            myLastPoints = myUserPoints;
             this.myLabel.setText(POINTS + myUserPoints
                     + LEVEL + myLevel + LINES_CLEARED
                     + myLinesCleared + LINES_UNTIL_NEXT_LEVEL
                     + (LINES_TO_LEVEL_UP - (myLinesCleared % LINES_TO_LEVEL_UP)));
         }
-        if (myLinesCleared == myTempLinesCleared && myLinesCleared != 0) {
-            myTempNum++;
-            System.out.println("temp num" + myTempNum);
+        if (myLinesCleared == myTempLinesCleared + 1) {
+            myUserPoints += FORTY * myLevel;
+            myTempLinesCleared = myLinesCleared;
         }
-        if (myTempNum == THREE) {
-            if (myLinesCleared == myTempLinesCleared + 1) {
-                myUserPoints += FORTY * myLevel;
-                myTempLinesCleared = myLinesCleared;
-            } else if (myLinesCleared == myTempLinesCleared + 2) {
-                myUserPoints += ONE_HUNDRED * myLevel;
-                myTempLinesCleared = myLinesCleared;
-            } else if (myLinesCleared == myTempLinesCleared + THREE) {
-                myUserPoints += THREE_HUNDRED * myLevel;
-                myTempLinesCleared = myLinesCleared;
-            } else if (myLinesCleared == myTempLinesCleared + FOUR) {
-                myUserPoints += TWELVE_HUNDRED * myLevel;
-                myTempLinesCleared = myLinesCleared;
-            }
-            myTempNum = 0;
+        if (myLastPoints == (myUserPoints) - (160 * myLevel)) {
+            myUserPoints -= (160 * myLevel);
+            myUserPoints += (TWELVE_HUNDRED * myLevel);
+            myLastPoints = myUserPoints;
+        } else if (myLastPoints == (myUserPoints) - (120 * myLevel)) {
+            myUserPoints -= (120 * myLevel);
+            myUserPoints += (THREE_HUNDRED * myLevel);
+            myLastPoints = myUserPoints;
+        } else if (myLastPoints == (myUserPoints) - (80 * myLevel)) {
+            myUserPoints -= (80 * myLevel);
+            myUserPoints += (ONE_HUNDRED * myLevel);
+            myLastPoints = myUserPoints;
         }
+
     }
 }
