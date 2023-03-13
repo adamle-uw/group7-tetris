@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
@@ -140,7 +141,7 @@ public class GameGUI implements PropertyChangeListener {
 
         //panels
         final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
-        final NextPiece np = new NextPiece(myUserWidth, myUserHeight, myBoard);
+        final NextPiece np = new NextPiece(myUserWidth);
         final ButtonsPanel bp = new ButtonsPanel();
         final JPanel userInfo = new JPanel();
         final UserInfo ui = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
@@ -182,6 +183,12 @@ public class GameGUI implements PropertyChangeListener {
 
 
 
+    /**
+     *
+     *
+     * @param theEvt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
     public void propertyChange(final PropertyChangeEvent theEvt) {
 

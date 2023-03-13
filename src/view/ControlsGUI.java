@@ -129,11 +129,11 @@ public class ControlsGUI {
     }
 
     /**
-     * ...
+     * Switches the button label back and forth.
      *
-     * @param theButtKey        ...
-     * @param theButtControl    ...
-     * @param theCount          ...
+     * @param theButtKey        the key that is pressed.
+     * @param theButtControl    the control for each key.
+     * @param theCount          0 or 1 - functions as an on/off switch.
      */
     private void pressButt(final String theButtKey, final String theButtControl,
                            final int theCount) {
@@ -147,7 +147,7 @@ public class ControlsGUI {
     }
 
     /**
-     * ...
+     * Listens for Key events and passes the info to the GUI.
      */
     private final class ControlsKeyListener extends KeyAdapter {
         /**
@@ -177,11 +177,6 @@ public class ControlsGUI {
             myKeyMap.put(KeyEvent.VK_D, () -> this.keyPress(KEY_PRESS_D, RIGHT));
         }
 
-        /**
-         * ...
-         *
-         * @param theEvent the event to be processed.
-         */
         @Override
         public void keyPressed(final KeyEvent theEvent) {
             if (myKeyMap.containsKey(theEvent.getKeyCode())) {
@@ -190,11 +185,6 @@ public class ControlsGUI {
             }
         }
 
-        /**
-         * ...
-         *
-         * @param theEvent the event to be processed
-         */
         @Override
         public void keyReleased(final KeyEvent theEvent) {
             if (myKeyMap.containsKey(theEvent.getKeyCode())) {
@@ -204,10 +194,10 @@ public class ControlsGUI {
         }
 
         /**
-         * ...
+         * Passes information from the inner class to the outer class.
          *
-         * @param theKey        ...
-         * @param theControl    ...
+         * @param theKey        the key that is being typed.
+         * @param theControl    the second value for what each key is.
          */
         private void keyPress(final String theKey, final String theControl) {
             pressButt(theKey, theControl, myCount);

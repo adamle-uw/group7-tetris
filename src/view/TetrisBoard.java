@@ -81,11 +81,14 @@ public class TetrisBoard implements PropertyChangeListener {
      * The height of the Cells in the Tetris board.
      */
     private int myCellHeight;
-    /**Holds whether the block being placed is clearing the board.*/
+    /**
+     * Holds whether the block being placed is clearing the board.
+     */
     private int myIsClearingBoard;
-    /**Holds what row the board is being cleared.*/
+    /**
+     * Holds what row the board is being cleared.
+     */
     private int myBoardClearLevel;
-
     /**
      * The JPanel that displays the Tetris game board.
      */

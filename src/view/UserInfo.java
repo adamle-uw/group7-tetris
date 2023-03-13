@@ -133,8 +133,6 @@ public class UserInfo implements PropertyChangeListener {
      */
     private int myLastPoints;
 
-
-
     /**
      * A constructor for the class UserInfo.
      *
@@ -182,7 +180,8 @@ public class UserInfo implements PropertyChangeListener {
     }
 
     /**
-     * ...
+     * Inputs points from the PropertyListeners.
+     * Calculates the points earned by the user.
      *
      * @param theEvent A PropertyChangeEvent object describing the event source
      *          and the property that has changed.
@@ -224,6 +223,5 @@ public class UserInfo implements PropertyChangeListener {
             myUserPoints += ONE_HUNDRED * myLevel;
             myLastPoints = myUserPoints;
         }
-
     }
 }
