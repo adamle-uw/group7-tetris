@@ -14,7 +14,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
@@ -108,7 +107,6 @@ public class GameGUI implements PropertyChangeListener {
                         case 'w', 'W' -> myBoard.rotateCW();
                         case 's', 'S' -> myBoard.down();
                         default -> {
-                            break;
                         }
                     }
                 }
@@ -174,7 +172,6 @@ public class GameGUI implements PropertyChangeListener {
             case KeyEvent.VK_DOWN -> myBoard.down();
             case KeyEvent.VK_SPACE -> myBoard.drop();
             default -> {
-                break;
             }
         }
 

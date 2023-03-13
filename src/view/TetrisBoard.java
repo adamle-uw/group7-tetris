@@ -160,7 +160,6 @@ public class TetrisBoard implements PropertyChangeListener {
                         + (myCellHeight * (ROWS - (myIsClearingBoard - 1)))) {
                     r.setLocation(x, -(y - (myHeight - myCellHeight)
                             - myCellHeight));
-                    System.out.println(myIsClearingBoard);
                 } else {
                     canPass = false;
                 }
@@ -205,7 +204,7 @@ public class TetrisBoard implements PropertyChangeListener {
     }
 
     /**
-     * ...
+     * Repaints the JPanel when receiving a Property Change.
      *
      * @param theEvent  A PropertyChangeEvent object describing the event source
      *                  and the property that has changed.
@@ -237,7 +236,7 @@ public class TetrisBoard implements PropertyChangeListener {
     }
 
     /**
-     * ...
+     * Holds the JPanel for the Tetris Board.
      */
     private static class TetrisBoardJPanel extends JPanel {
         /**
@@ -290,7 +289,7 @@ public class TetrisBoard implements PropertyChangeListener {
         }
 
         /**
-         * ...
+         * Clears the board if invalidated.
          */
         @Override
         public void invalidate() {
