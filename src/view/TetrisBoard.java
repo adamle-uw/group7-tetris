@@ -162,7 +162,7 @@ public class TetrisBoard implements PropertyChangeListener {
                         + (myCellHeight * myBoardClearLevel)) != myYOffset
                         + (myCellHeight * (ROWS - (myIsClearingBoard - 1)))) {
                     r.setLocation(x, -(y - (myHeight - myCellHeight)
-                            - (myCellHeight * myIsClearingBoard - 1)));
+                            - myCellHeight));
                     System.out.println(myIsClearingBoard);
                 } else {
                     canPass = false;
