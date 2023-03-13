@@ -13,9 +13,12 @@ import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 import model.Point;
 
@@ -116,16 +119,7 @@ public class TetrisBoard implements PropertyChangeListener {
         return myTetrisBoard;
     }
 
-    /**
-     * ...
-     *
-     * @param theEvent  A PropertyChangeEvent object describing the event source
-     *                  and the property that has changed.
-     */
-    public void propertyChange(final PropertyChangeEvent theEvent) {
-        if (TETRIS_BOARD_PROPERTY.equals(theEvent.getPropertyName())) {
-            myTetrisBoardJPanel.repaint();
-        }
+    private void propertyToChange(final PropertyChangeEvent theEvent) {
         if ("Piece Location".equals(theEvent.getPropertyName())) {
             myXOffset = (myWidth - (COLUMNS * (myWidth / COLUMNS))) / TWO;
             myYOffset = (myHeight - (ROWS * (myHeight / ROWS))) / TWO;
@@ -177,6 +171,11 @@ public class TetrisBoard implements PropertyChangeListener {
 
 
         }
+        propertyRowLocation(theEvent);
+
+    }
+
+    private void propertyRowLocation(final PropertyChangeEvent theEvent) {
         if ("Row Location".equals(theEvent.getPropertyName())) {
             final ArrayList<Rectangle> rTemp = new ArrayList<>(COLUMNS * ROWS);
             myIsClearingBoard++;
@@ -199,6 +198,38 @@ public class TetrisBoard implements PropertyChangeListener {
             myBoardClearLevel = (int) theEvent.getNewValue() + 1;
 
             myTetrisBoardJPanel.repaint();
+        }
+    }
+
+    /**
+     * ...
+     *
+     * @param theEvent  A PropertyChangeEvent object describing the event source
+     *                  and the property that has changed.
+     */
+    public void propertyChange(final PropertyChangeEvent theEvent) {
+        if (TETRIS_BOARD_PROPERTY.equals(theEvent.getPropertyName())) {
+            myTetrisBoardJPanel.repaint();
+        }
+        propertyToChange(theEvent);
+    }
+
+
+    /**
+     * Plays background music during the Tetris game.
+     *
+     * @param theFileName the name of the music file.
+     */
+    public void play(final String theFileName) {
+
+        try {
+            final Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(theFileName)));
+            clip.start();
+        } catch (final IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        } catch (final UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -308,20 +339,4 @@ public class TetrisBoard implements PropertyChangeListener {
         }
     }
 
-    /**
-     * Plays background music during the Tetris game.
-     *
-     * @param theFileName the name of the music file.
-     */
-    public void play(final String theFileName) {
-
-        try {
-            System.out.println(theFileName);
-            final Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File(theFileName)));
-            clip.start();
-        } catch (final Exception e) {
-            System.out.println("File not found");
-        }
-    }
 }

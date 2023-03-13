@@ -12,8 +12,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
@@ -68,18 +68,6 @@ public class GameGUI implements PropertyChangeListener {
      * The rate at which the Timer ticks.
      */
     private int myTimerTick;
-    /**
-     * Whether the game has ended.
-     */
-    private boolean myGameOver;
-    /**
-     * The GUI Object which shows the user's view of the Tetris game.
-     */
-    private GameGUI myGameGUI;
-    /**
-     * The Tetris game board.
-     */
-    private TetrisBoard myTetrisBoard;
 
     /**
      * A constructor for class GameGUI.
@@ -98,7 +86,6 @@ public class GameGUI implements PropertyChangeListener {
         myTimer = new Timer(myTimerTick, new ModelTimer(myBoard));
         myTimer.addActionListener(theEvent -> myTimer.setDelay(myUserInfo.getTimerTick()));
         myFrame = new JFrame();
-        myGameOver = false;
 
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -106,21 +93,13 @@ public class GameGUI implements PropertyChangeListener {
         myUserHeight = (int) size.getHeight();
         myUserInfo = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
         myBoard.addPropertyChangeListener(myUserInfo);
-        myFrame.addKeyListener(new KeyListener() {
+
+        myFrame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent thePressedKey) {
                 if (myTimer.isRunning()) {
                     //arrow key events
-                    switch (thePressedKey.getKeyCode()) {
-                        case KeyEvent.VK_LEFT -> myBoard.left();
-                        case KeyEvent.VK_RIGHT -> myBoard.right();
-                        case KeyEvent.VK_UP -> myBoard.rotateCW();
-                        case KeyEvent.VK_DOWN -> myBoard.down();
-                        case KeyEvent.VK_SPACE -> myBoard.drop();
-                        default -> {
-                            break;
-                        }
-                    }
+                    control(thePressedKey.getKeyCode());
 
                     switch (thePressedKey.getKeyChar()) {
                         case 'a', 'A' -> myBoard.left();
@@ -133,13 +112,6 @@ public class GameGUI implements PropertyChangeListener {
                     }
                 }
             }
-            @Override
-            public void keyTyped(final KeyEvent theE) {
-            }
-
-            @Override
-            public void keyReleased(final KeyEvent theE) {
-            }
         });
         myFrame.setSize(myUserWidth, myUserHeight);
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
@@ -149,9 +121,9 @@ public class GameGUI implements PropertyChangeListener {
      * Starts the Tetris game.
      */
     public void start() {
-        setup(myTimer);
-        myTetrisBoard = new TetrisBoard(myUserWidth, myUserHeight);
-        myTetrisBoard.play("src/music/Pacman_Introduction_Music-KP-826387403.wav");
+        setup();
+        final TetrisBoard tetrisBoard = new TetrisBoard(myUserWidth, myUserHeight);
+        tetrisBoard.play("src/music/Pacman_Introduction_Music-KP-826387403.wav");
         myFrame.setVisible(true);
         if (!myGameStart) {
             myTimer.start();
@@ -161,9 +133,8 @@ public class GameGUI implements PropertyChangeListener {
     /**
      * Sets up the Tetris game.
      */
-    public void setup(final Timer theTimer) {
+    public void setup() {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myFrame.setSize(myUserWidth, myUserHeight);
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
@@ -194,8 +165,25 @@ public class GameGUI implements PropertyChangeListener {
         myFrame.setVisible(true);
     }
 
+    private void control(final int theKeyCode) {
+        switch (theKeyCode) {
+            case KeyEvent.VK_LEFT -> myBoard.left();
+            case KeyEvent.VK_RIGHT -> myBoard.right();
+            case KeyEvent.VK_UP -> myBoard.rotateCW();
+            case KeyEvent.VK_DOWN -> myBoard.down();
+            case KeyEvent.VK_SPACE -> myBoard.drop();
+            default -> {
+                break;
+            }
+        }
+
+
+    }
+
+
+
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent theEvt) {
 
     }
 }

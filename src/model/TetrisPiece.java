@@ -104,11 +104,6 @@ public enum TetrisPiece {
     private final int myWidth;
 
     /**
-     * The height of the TetrisPiece.
-     */
-    private final int myHeight;
-
-    /**
      * The 4 Points of the TetrisPiece.
      */
     private final Point[] myPoints;
@@ -138,7 +133,6 @@ public enum TetrisPiece {
                 final Point... thePoints) {
         myPointsByRotation = thePointsByRotation.clone();
         myWidth = theWidth;
-        myHeight = theHeight;
         myBlock = theBlock;
         myPoints = thePoints.clone();
     }
@@ -150,15 +144,6 @@ public enum TetrisPiece {
      */
     public int getWidth() {
         return myWidth;
-    }
-
-    /**
-     * Return the height of the TetrisPiece.
-     * 
-     * @return the height of the TetrisPiece.
-     */
-    public int getHeight() {
-        return myHeight;
     }
 
     /**
