@@ -169,7 +169,7 @@ public class GameGUI implements PropertyChangeListener {
 
         //panels
         final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
-        final NextPiece np = new NextPiece(myUserWidth, myUserHeight, myBoard);
+        final NextPiece np = new NextPiece(myUserWidth);
         final ButtonsPanel bp = new ButtonsPanel();
         final JPanel userInfo = new JPanel();
         final UserInfo ui = new UserInfo(myUserWidth, myUserHeight, myTimerTick);

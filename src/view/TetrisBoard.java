@@ -319,12 +319,11 @@ public class TetrisBoard implements PropertyChangeListener {
     public void play(final String theFileName) {
 
         try {
-            System.out.println(theFileName);
             final Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(theFileName)));
             clip.start();
         } catch (final Exception e) {
-            System.out.println("File not found");
+            e.printStackTrace();
         }
     }
 }
