@@ -161,10 +161,6 @@ public class UserInfo implements PropertyChangeListener {
     private void setTimerTick(final int theTimerTick) {
         myTimerTick = theTimerTick;
         myLevel = BASE_LEVEL;
-        for (int i = 1; i < myLevel; i++) {
-            myTimerTick = (int) ((double) myTimerTick / LEVEL_SPEEDUP_RATE);
-            System.out.println(myTimerTick);
-        }
     }
 
     /**
