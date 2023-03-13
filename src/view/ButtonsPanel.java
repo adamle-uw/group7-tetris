@@ -12,13 +12,9 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-//import java.awt.event.ItemEvent;
-//import java.awt.event.ItemListener;
-//import javax.swing.JComboBox;
-//import javax.swing.JLabel;
 
 /**
- * This program defines the methods and behavior for Objects of the ButtonsPanel class.*
+ * This program defines the methods and behavior for Objects of the ButtonsPanel class.
  * The ButtonsPanel contains Buttons that allow the Tetris game-player to start, pause,
  * unpause, and end the game.
  *
@@ -29,6 +25,10 @@ import javax.swing.Timer;
  * @version Winter 2023
  */
 public class ButtonsPanel extends JPanel {
+    /**
+     * Whether the game has started.
+     */
+    protected static boolean myGameStart;
     /**
      * A constant for dividing the total height or width of the Board.
      */
@@ -56,21 +56,11 @@ public class ButtonsPanel extends JPanel {
     /**
      * The Panel of Buttons.
      */
-    private JPanel myButtonsPanel;
+    private final JPanel myButtonsPanel;
     /**
      * The Pause Button.
      */
-    private JButton myPause = new JButton();
-    /**
-     * Whether the game has started.
-     */
-    public static boolean myGameStart;
-
-    /**
-     * A parameterless constructor for the class ButtonsPanel.
-     */
-    public ButtonsPanel() {
-    }
+    private final JButton myPause = new JButton();
 
     /**
      * A constructor for the class ButtonsPanel.
@@ -89,9 +79,9 @@ public class ButtonsPanel extends JPanel {
         final JButton pause = new JButton(PAUSE);
         final JButton end = new JButton(END);
         myIsPaused = false;
+
         start.addActionListener(e -> {
-            myGameStart = true;
-        });
+            myGameStart = true; });
 
         pause.addActionListener(e -> {
             if (myIsPaused) {
@@ -106,8 +96,7 @@ public class ButtonsPanel extends JPanel {
         });
 
         end.addActionListener(e -> {
-            theTimer.stop();
-        });
+            theTimer.stop(); });
 
         myButtonsPanel.add(start);
         myButtonsPanel.add(pause);
