@@ -151,8 +151,8 @@ public class GameGUI implements Observer {
      */
     public void start() {
         setup(myTimer);
-        myTetrisBoard = new TetrisBoard(myUserWidth, myUserHeight, myBoard);
-        myTetrisBoard.play("../music/Pacman_Introduction_Music-KP-826387403.wav");
+        myTetrisBoard = new TetrisBoard(myUserWidth, myUserHeight);
+        myTetrisBoard.play("src/music/Pacman_Introduction_Music-KP-826387403.wav");
         myFrame.setVisible(true);
         if (!myGameStart) {
             myTimer.start();
@@ -169,7 +169,7 @@ public class GameGUI implements Observer {
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
         //panels
-        final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight, myBoard);
+        final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
         final NextPiece np = new NextPiece(myUserWidth);
         final ButtonsPanel bp = new ButtonsPanel(theTimer);
         final JPanel userInfo = new JPanel();

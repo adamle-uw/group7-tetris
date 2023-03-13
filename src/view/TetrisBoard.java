@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JPanel;
-import model.Board;
 import model.Point;
 
 /**
@@ -94,9 +93,8 @@ public class TetrisBoard implements PropertyChangeListener {
      *
      * @param theUserWidth  the width of the user's computer monitor
      * @param theUserHeight the height of the user's computer monitor
-     * @param theBoard      ...
      */
-    public TetrisBoard(final int theUserWidth, final int theUserHeight, final Board theBoard) {
+    public TetrisBoard(final int theUserWidth, final int theUserHeight) {
         this.myTetrisBoard.setBackground(Color.BLACK);
         this.myTetrisBoard.addPropertyChangeListener(this);
 
@@ -104,8 +102,8 @@ public class TetrisBoard implements PropertyChangeListener {
         myTetrisBoard.add(myTetrisBoardJPanel);
         myTetrisBoardJPanel.setVisible(true);
         myTetrisBoard.setVisible(true);
-        myWidth = (int)myTetrisBoardJPanel.getCurrentSize().getWidth();
-        myHeight = (int)myTetrisBoardJPanel.getCurrentSize().getHeight();
+        myWidth = (int) myTetrisBoardJPanel.getCurrentSize().getWidth();
+        myHeight = (int) myTetrisBoardJPanel.getCurrentSize().getHeight();
         myIsClearingBoard = 0;
     }
 
@@ -150,24 +148,26 @@ public class TetrisBoard implements PropertyChangeListener {
             myTetrisBoardJPanel.repaint();
         }
         if ("PlacedBlock".equals(theEvent.getPropertyName())) {
-            Point p[] = (Point[])theEvent.getNewValue();
+            final Point[] p = (Point[]) theEvent.getNewValue();
             for (Point p2 : p) {
-                int x = myXOffset + (p2.x() * myCellWidth);
-                int y = myYOffset + (p2.y() * myCellHeight);
-                Rectangle r = new Rectangle(x,y);
+                final int x = myXOffset + (p2.x() * myCellWidth);
+                final int y = myYOffset + (p2.y() * myCellHeight);
+                final Rectangle r = new Rectangle(x, y);
                 boolean canPass = true;
                 if (myIsClearingBoard == 0) {
                     r.setLocation(x, -(y - (myHeight - myCellHeight)));
                 } else if (-(y - (myHeight - myCellHeight))
-                        != myYOffset + (myCellHeight * (ROWS + 1)) &&
-                        (-(y - (myHeight - myCellHeight)) + (myCellHeight * myBoardClearLevel))
-                                != myYOffset + (myCellHeight * (ROWS - (myIsClearingBoard - 1)))) {
-                    r.setLocation(x, (-(y - (myHeight - myCellHeight)) + (myCellHeight)));
+                        != myYOffset + (myCellHeight * (ROWS + 1))
+                        && (-(y - (myHeight - myCellHeight))
+                        + (myCellHeight * myBoardClearLevel)) != myYOffset
+                        + (myCellHeight * (ROWS - (myIsClearingBoard - 1)))) {
+                    r.setLocation(x, -(y - (myHeight - myCellHeight)
+                            + (myCellHeight * myIsClearingBoard)));
                 } else {
                     canPass = false;
                 }
                 r.setSize(myCellWidth, myCellHeight);
-                if (!(r.getLocation().getY() > myHeight - myYOffset) && canPass) {
+                if (canPass) {
                     myTetrisBoardJPanel.myPlacedCells.add(r);
                 }
             }
@@ -177,38 +177,28 @@ public class TetrisBoard implements PropertyChangeListener {
 
         }
         if ("Row Location".equals(theEvent.getPropertyName())) {
-            ArrayList<Rectangle> rTemp = new ArrayList(COLUMNS * ROWS);
+            final ArrayList<Rectangle> rTemp = new ArrayList<>(COLUMNS * ROWS);
             myIsClearingBoard++;
-            final int rowY = myHeight - myYOffset - (((int)theEvent.getNewValue() + 1) * (myCellHeight));
+            final int rowY = myHeight - myYOffset - (((int) theEvent.getNewValue() + 1)
+                    * myCellHeight);
             for (Rectangle r : myTetrisBoardJPanel.myPlacedCells) {
-                int tempY = (int)r.getY();
-                if ((int)r.getY() < rowY) {
+                final int tempY = (int) r.getY();
+                if ((int) r.getY() < rowY) {
                     r.setLocation((int) r.getX(), ((int) r.getY()) + myCellHeight);
                 }
                 if (tempY != rowY) {
-                    r.setLocation((int)r.getX(), (int)r.getY());
+                    r.setLocation((int) r.getX(), (int) r.getY());
                     rTemp.add(r);
                 }
             }
             myTetrisBoardJPanel.myPlacedCells.clear();
-            for (Rectangle r : rTemp) {
-                myTetrisBoardJPanel.myPlacedCells.add(r);
-            }
+            myTetrisBoardJPanel.myPlacedCells.addAll(rTemp);
             rTemp.clear();
 
-            myBoardClearLevel = (int)theEvent.getNewValue() + 1;
+            myBoardClearLevel = (int) theEvent.getNewValue() + 1;
 
             myTetrisBoardJPanel.repaint();
         }
-    }
-
-    /**
-     * Returns the Cells in the Tetris board.
-     *
-     * @return the Cells in the Tetris board.
-     */
-    public ArrayList<Rectangle> getCells() {
-        return myTetrisBoardJPanel.getMyCells();
     }
 
     /**
@@ -242,15 +232,6 @@ public class TetrisBoard implements PropertyChangeListener {
             myCells = new ArrayList<>(myColumnCount * myRowCount);
             myMovingCells = new ArrayList<>(myColumnCount * myRowCount);
             myPlacedCells = new ArrayList<>(myColumnCount * myRowCount);
-        }
-
-        /**
-         * Returns the Cells on the Tetris board.
-         *
-         * @return the Cells on the Tetris board.
-         */
-        public ArrayList<Rectangle> getMyCells() {
-            return myCells;
         }
 
         /**
