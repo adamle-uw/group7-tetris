@@ -1,24 +1,18 @@
 package view;
 
-import model.Board;
-import model.TetrisPiece;
-
-import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-import javax.sound.sampled.Line;
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
+import javax.swing.JPanel;
+import model.Point;
 
-import static java.awt.Color.RED;
 
-public class NextPiece implements PropertyChangeListener, Observer {
+public class NextPiece implements PropertyChangeListener {
     /**
      * Property value for New Piece Create.
      */
@@ -27,30 +21,32 @@ public class NextPiece implements PropertyChangeListener, Observer {
      * Avoid checkstyle 'magic error' number.
      */
     private static final int FOUR = 4;
+    /**
+     * Avoid checkstyle 'magic error' number.
+     */
     private static final int TEN = 10;
+    /**
+     * A constant for dividing board measurements in half.
+     */
+    private static final int TWO = 2;
     /**Next piece panel.*/
     private final JPanel myNextPiece;
-
-    private static final int COLUMNS = 5;
-    private static final int ROWS = 3;
-    private static final int TWO = 2;
-
+    /**The Width of the NextPiece panel.*/
     private int myWidth;
+    /**The Height of the NextPiece panel.*/
     private int myHeight;
-    private int myXOffset;
-    private int myYOffset;
-    private int myCellWidth;
-    private int myCellHeight;
+    /**The x Offset of the NextPiece panel.*/
 
 
     private final NextPieceJPanel myNextPieceJPanel = new NextPieceJPanel();
 
-    public NextPiece(final int theUserWidth, final int theUserHeight, final Board theBoard) {
+    public NextPiece(final int theUserWidth) {
         myNextPiece = new JPanel();
         this.myNextPiece.setBackground(Color.blue);
         this.myNextPiece.addPropertyChangeListener(this);
         this.myNextPiece.setPreferredSize(
                 new Dimension(theUserWidth / FOUR, theUserWidth / FOUR));
+        myNextPiece.add(myNextPieceJPanel);
         myWidth = (int) myNextPieceJPanel.getCurrentSize().getWidth();
         myHeight = (int) myNextPieceJPanel.getCurrentSize().getHeight();
 
@@ -65,36 +61,45 @@ public class NextPiece implements PropertyChangeListener, Observer {
 
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
-            this.myNextPiece.setToolTipText("Next Piece: " + theEvent.getNewValue());
+            final int cellWidth = myWidth / (TEN / TWO);
+            final int cellHeight = myHeight / TEN;
+            myNextPieceJPanel.myCells.clear();
+            final model.Point[] p = (model.Point[]) theEvent.getNewValue();
 
-            if ("Next Piece".equals(theEvent.getPropertyName())) {
-                myXOffset = (myWidth - (COLUMNS * (myWidth / COLUMNS))) / TWO;
-                myYOffset = (myHeight - (ROWS * (myHeight / ROWS))) / TWO;
-                myCellHeight = myHeight / ROWS;
-                myCellWidth = myWidth / COLUMNS;
-                myNextPieceJPanel.repaint();
-
-                myWidth = (int) myNextPieceJPanel.getCurrentSize().getWidth();
-                myHeight = (int) myNextPieceJPanel.getCurrentSize().getHeight();
-
-                myNextPieceJPanel.repaint();
-                System.out.println("fail");
+            for (Point p2 : p) {
+                final int xOffset = (myWidth - (TEN * (myWidth / TEN))) / TWO;
+                final int yOffset = (myHeight - ((TEN * TWO) * (myHeight
+                        / (TEN * TWO)))) / TWO;
+                final Rectangle r = new Rectangle(p2.x(), p2.y());
+                final int x = xOffset + (p2.x() * cellWidth);
+                final int y = yOffset + (p2.y() * cellHeight);
+                r.setLocation(x + (FOUR * TEN), -(y - (myHeight - cellHeight * FOUR)));
+                r.setSize(cellWidth, cellHeight);
+                myNextPieceJPanel.myCells.add(r);
             }
+            myWidth = (int) myNextPieceJPanel.getCurrentSize().getWidth();
+            myHeight = (int) myNextPieceJPanel.getCurrentSize().getHeight();
+
+            myNextPieceJPanel.repaint();
 
         }
     }
 
     public static class NextPieceJPanel extends JPanel {
-        private final int myColumnCount = 6;
-        private final int myRowCount = 3;
+        /**
+         * Avoid checkstyle 'magic error' number.
+         */
+        private static final int THREE = 3;
+        /**Container for all the cells.*/
         private final ArrayList<Rectangle> myCells;
 
         NextPieceJPanel() {
-            myCells = new ArrayList<>(myColumnCount * myRowCount);
+            myCells = new ArrayList<>((THREE * TWO) * THREE);
         }
         @Override
         public Dimension getPreferredSize() {
-            return new Dimension(this.getParent().getHeight() / 2, this.getParent().getHeight() - TEN);
+            return new Dimension(this.getParent().getHeight() / TWO,
+                    this.getParent().getHeight() - TEN);
         }
         public Dimension getCurrentSize() {
             return new Dimension(getWidth(), getHeight());
@@ -103,21 +108,7 @@ public class NextPiece implements PropertyChangeListener, Observer {
         protected void paintComponent(final Graphics theGraphics) {
             super.paintComponent(theGraphics);
             final Graphics2D g2d = (Graphics2D) theGraphics.create();
-            final int width = getWidth();
-            final int height = getHeight();
-            final int cellWidth = width / myColumnCount;
-            final int cellHeight = height / myRowCount;
 
-            final int xOffset = (width - (myColumnCount * cellWidth)) / 2;
-            final int yOffset = (height - (myRowCount * cellHeight)) / 2;
-
-            for (int row = 0; row < myRowCount; row++) {
-                for (int col = 0; col < myColumnCount; col++) {
-                    final Rectangle cell = new Rectangle(xOffset + (col * cellWidth),
-                            yOffset + (row * cellHeight), cellWidth, cellHeight);
-                    myCells.add(cell);
-                }
-            }
             g2d.setColor(Color.GRAY);
             for (Rectangle cell : myCells) {
                 g2d.fill(cell);
@@ -126,9 +117,6 @@ public class NextPiece implements PropertyChangeListener, Observer {
             g2d.dispose();
         }
 
-    }
-    @Override
-    public void update(Observable o, Object arg) {
     }
 }
 

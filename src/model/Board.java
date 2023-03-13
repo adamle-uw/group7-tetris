@@ -529,7 +529,7 @@ public class Board implements BoardInterface {
             notifyObserversOfPositionChange(
                     "PlacedBlock", myCurrentPiece.getBoardPoints());
         }
-        notifyObserversOfBlockChange(myNextPiece.getBlock());
+        notifyObserversOfBlockChange(myNextPiece.getPoints());
         if (share && !myGameOver) {
             myCurrentPiece = new MovableTetrisPiece(myNextPiece, new Point(0, 0));
         }
@@ -542,8 +542,8 @@ public class Board implements BoardInterface {
         myPcs.firePropertyChange(theProperty, null, thePosition);
     }
 
-    private void notifyObserversOfBlockChange(final Block theBlock) {
-        myPcs.firePropertyChange("NewPieceCreate", null, theBlock);
+    private void notifyObserversOfBlockChange(final Point[] thePosition) {
+        myPcs.firePropertyChange("NewPieceCreate", null, thePosition);
     }
     private void notifyObserversOfOrientationChange(final Rotation theOrientation) {
         myPcs.firePropertyChange(Board.PROPERTY_PIECE_ORIENTATION, null, theOrientation);
