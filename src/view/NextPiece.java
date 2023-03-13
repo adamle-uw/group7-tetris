@@ -1,7 +1,6 @@
 /*
- * TCSS 305
- *
- * An implementation of the classic game "Tetris".
+ * TCSS 305 - Winter 2023
+ * Final Group Project - Tetris
  */
 
 package view;

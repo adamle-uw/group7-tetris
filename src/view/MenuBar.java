@@ -1,7 +1,6 @@
 /*
- * TCSS 305
- *
- * An implementation of the classic game "Tetris".
+ * TCSS 305 - Winter 2023
+ * Final Group Project - Tetris
  */
 
 package view;
@@ -147,7 +146,6 @@ public class MenuBar extends JPanel {
         });
         gameMenu.add(pauseMenuItem);
         menuItem = new JMenuItem(EXIT_GAME);
-        menuItem = new JMenuItem("Exit Game");
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK));
         menuItem.addActionListener(theEvent -> theFrame.dispatchEvent(

@@ -1,7 +1,6 @@
 /*
- * TCSS 305
- *
- * An implementation of the classic game "Tetris".
+ * TCSS 305 - Winter 2023
+ * Final Group Project - Tetris
  */
 
 package view;
@@ -19,7 +18,7 @@ import javax.swing.Timer;
 //import javax.swing.JLabel;
 
 /**
- * This program defines the methods and behavior for Objects of the ButtonsPanel class.
+ * This program defines the methods and behavior for Objects of the ButtonsPanel class.*
  * The ButtonsPanel contains Buttons that allow the Tetris game-player to start, pause,
  * unpause, and end the game.
  *

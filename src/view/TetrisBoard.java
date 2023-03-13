@@ -1,7 +1,9 @@
-package view;
+/*
+ * TCSS 305 - Winter 2023
+ * Final Group Project - Tetris
+ */
 
-import model.Board;
-import model.Point;
+package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,14 +12,13 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
+import model.Board;
+import model.Point;
 
 /**
  * This program ...
@@ -35,6 +36,10 @@ public class TetrisBoard implements PropertyChangeListener {
      */
     private static final int TWO = 2;
     /**
+     * A constant for dividing the total height or width of the Board.
+     */
+    private static final int FIFTY = 50;
+    /**
      * The number of columns on the Tetris game board.
      */
     private static final int COLUMNS = 10;
@@ -48,7 +53,7 @@ public class TetrisBoard implements PropertyChangeListener {
     private static final String TETRIS_BOARD_PROPERTY = "TetrisBoardChange";
     /**make tetris board.*/
     private final JPanel myTetrisBoard = new JPanel();
-    /**The width of the baord.*/
+    /**The width of the board.*/
     private int myWidth;
     /**The height of the board.*/
     private int myHeight;
@@ -109,7 +114,7 @@ public class TetrisBoard implements PropertyChangeListener {
             myCellWidth = myWidth / COLUMNS;
             myCellHeight = myHeight / ROWS;
             myTetrisBoardJPanel.myMovingCells.clear();
-            Point p[] = (Point[]) theEvent.getNewValue();
+            final Point[] p = (Point[]) theEvent.getNewValue();
 
             for (Point p2 : p) {
                 final int x = myXOffset + (p2.x() * myCellWidth);
@@ -144,12 +149,12 @@ public class TetrisBoard implements PropertyChangeListener {
             myTetrisBoardJPanel.repaint();
         }
         if ("PlacedBlock".equals(theEvent.getPropertyName())) {
-            Point p[] = (Point[])theEvent.getNewValue();
+            final Point[] p = (Point[]) theEvent.getNewValue();
 
             for (Point p2 : p) {
                 final int x = myXOffset + (p2.x() * myCellWidth);
                 final int y = myYOffset + (p2.y() * myCellHeight);
-                final Rectangle r = new Rectangle(x,y);
+                final Rectangle r = new Rectangle(x, y);
                 r.setLocation(x, -(y - (myHeight - myCellHeight)));
                 r.setSize(myCellWidth, myCellHeight);
                 myTetrisBoardJPanel.myPlacedCells.add(r);
@@ -157,13 +162,14 @@ public class TetrisBoard implements PropertyChangeListener {
             myTetrisBoardJPanel.repaint();
         }
         if ("Row Location".equals(theEvent.getPropertyName())) {
-            ArrayList<Rectangle> rTemp = new ArrayList(COLUMNS * ROWS);
-            final int rowY = myHeight - myYOffset - ((int)theEvent.getNewValue() * (myHeight / ROWS));
+            final ArrayList<Rectangle> rTemp = new ArrayList(COLUMNS * ROWS);
+            final int rowY = myHeight - myYOffset
+                    - ((int) theEvent.getNewValue() * (myHeight / ROWS));
             System.out.println(rowY);
             for (Rectangle r : myTetrisBoardJPanel.myPlacedCells) {
-                if ((int)r.getY() != rowY) {
-                    System.out.println(rowY + " " + (int)r.getY());
-                    r.setLocation((int)r.getX(), (int)r.getY() + (myHeight / ROWS));
+                if ((int) r.getY() != rowY) {
+                    System.out.println(rowY + " " + (int) r.getY());
+                    r.setLocation((int) r.getX(), (int) r.getY() + (myHeight / ROWS));
                     rTemp.add(r);
                 }
             }
@@ -193,11 +199,11 @@ public class TetrisBoard implements PropertyChangeListener {
         /**
          * ...
          */
-        private int myColumnCount = 10;
+        private final int myColumnCount = 10;
         /**
          * ...
          */
-        private int myRowCount = 20;
+        private final int myRowCount = 20;
         /**
          * ...
          */
@@ -214,9 +220,9 @@ public class TetrisBoard implements PropertyChangeListener {
          * ...
          */
         TetrisBoardJPanel() {
-            myCells = new ArrayList<Rectangle>(myColumnCount * myRowCount);
-            myMovingCells = new ArrayList<Rectangle>(myColumnCount * myRowCount);
-            myPlacedCells = new ArrayList<Rectangle>(myColumnCount * myRowCount);
+            myCells = new ArrayList<>(myColumnCount * myRowCount);
+            myMovingCells = new ArrayList<>(myColumnCount * myRowCount);
+            myPlacedCells = new ArrayList<>(myColumnCount * myRowCount);
         }
 
         /**
@@ -234,7 +240,7 @@ public class TetrisBoard implements PropertyChangeListener {
         @Override
         public Dimension getPreferredSize() {
             return new Dimension(this.getParent().getHeight() / 2,
-                    this.getParent().getHeight() - 50);
+                    this.getParent().getHeight() - FIFTY);
         }
 
         /**
@@ -306,9 +312,8 @@ public class TetrisBoard implements PropertyChangeListener {
             final Clip clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(theFileName)));
             clip.start();
-        }
-         catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println("File not found");
-         }
+        }
     }
 }

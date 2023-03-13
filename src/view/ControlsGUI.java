@@ -1,7 +1,6 @@
 /*
- * TCSS 305
- *
- * An implementation of the classic game "Tetris".
+ * TCSS 305 - Winter 2023
+ * Final Group Project - Tetris
  */
 
 package view;
@@ -22,7 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- * This program ...
+ * This program defines the behavior and methods contained in objects of the ControlsGUI class.
+ * ... //more info about the class and the inner class
  *
  * @author Evan Abrahamson
  * @author Aryan Damle
@@ -86,7 +86,7 @@ public class ControlsGUI {
             (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 4,
             (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 4);
     /**
-     * The font size for the text.
+     * The font size for the text in the Controls menu.
      */
     private final int myFontSize = (int) (mySize.getWidth() / 10);
 
@@ -98,7 +98,7 @@ public class ControlsGUI {
     }
 
     /**
-     * ...
+     * Loads the GUI Controls.
      */
     void loadControlsGui() {
         SwingUtilities.invokeLater(() -> {
@@ -127,9 +127,9 @@ public class ControlsGUI {
     /**
      * ...
      *
-     * @param theButtKey ...
-     * @param theButtControl ...
-     * @param theCount ...
+     * @param theButtKey        ...
+     * @param theButtControl    ...
+     * @param theCount          ...
      */
     private void pressButt(final String theButtKey, final String theButtControl,
                            final int theCount) {
@@ -176,7 +176,7 @@ public class ControlsGUI {
         /**
          * ...
          *
-         * @param theEvent  the event to be processed.
+         * @param theEvent the event to be processed.
          */
         @Override
         public void keyPressed(final KeyEvent theEvent) {
@@ -202,8 +202,8 @@ public class ControlsGUI {
         /**
          * ...
          *
-         * @param theKey ...
-         * @param theControl ...
+         * @param theKey        ...
+         * @param theControl    ...
          */
         private void keyPress(final String theKey, final String theControl) {
             pressButt(theKey, theControl, myCount);
