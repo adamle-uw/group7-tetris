@@ -1,19 +1,27 @@
+/*
+ * TCSS 305
+ *
+ * An implementation of the classic game "Tetris".
+ */
+
 package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+//import java.awt.event.ItemEvent;
+//import java.awt.event.ItemListener;
+//import javax.swing.JComboBox;
+//import javax.swing.JLabel;
 
 /**
- * This program ...
+ * This program defines the methods and behavior for Objects of the ButtonsPanel class.
+ * The ButtonsPanel contains Buttons that allow the Tetris game-player to start, pause,
+ * unpause, and end the game.
  *
  * @author Evan Abrahamson
  * @author Aryan Damle
@@ -23,45 +31,52 @@ import javax.swing.Timer;
  */
 public class ButtonsPanel extends JPanel {
     /**
-     * ...
+     * A constant for dividing the total height or width of the Board.
      */
     private static final int FOUR = 4;
     /**
-     * ...
+     * The Button label for Start.
      */
     private static final String START = "Start";
     /**
-     * ...
+     * The Button label for Pause.
      */
     private static final String PAUSE = "Pause";
     /**
-     * ...
+     * The Button label for Unpause.
      */
     private static final String UNPAUSE = "Unpause";
     /**
-     * ...
+     * The Button label for End.
      */
     private static final String END = "End";
     /**
-     * ...
+     * Whether the game is currently paused.
      */
     private static boolean myIsPaused;
     /**
-     * ...
+     * The Panel of Buttons.
      */
     private JPanel myButtonsPanel;
     /**
-     * ...
+     * The Pause Button.
      */
     private JButton myPause = new JButton();
     /**
-     * ...
+     * Whether the game has started.
      */
     public static boolean myGameStart;
+
     /**
-     * ...
+     * A parameterless constructor for the class ButtonsPanel.
+     */
+    public ButtonsPanel() {
+    }
+
+    /**
+     * A constructor for the class ButtonsPanel.
      *
-     * @param theTimer ...
+     * @param theTimer the game timer.
      */
     public ButtonsPanel(final Timer theTimer) {
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,6 +93,7 @@ public class ButtonsPanel extends JPanel {
         start.addActionListener(e -> {
             myGameStart = true;
         });
+
         pause.addActionListener(e -> {
             if (myIsPaused) {
                 theTimer.start();
@@ -89,33 +105,22 @@ public class ButtonsPanel extends JPanel {
                 myIsPaused = true;
             }
         });
+
         end.addActionListener(e -> {
             theTimer.stop();
-
         });
-
 
         myButtonsPanel.add(start);
         myButtonsPanel.add(pause);
         myButtonsPanel.add(end);
-
     }
 
     /**
-     * ...
-     */
-    public ButtonsPanel() {
-
-    }
-
-    /**
-     * ...
+     * Returns the Panel of Buttons.
      *
-     * @return ...
+     * @return the Panel of Buttons.
      */
     public JPanel getMyButtonsPanel() {
         return myButtonsPanel;
     }
-
-
 }

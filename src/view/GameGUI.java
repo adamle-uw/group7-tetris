@@ -1,3 +1,9 @@
+/*
+ * TCSS 305
+ *
+ * An implementation of the classic game "Tetris".
+ */
+
 package view;
 
 
