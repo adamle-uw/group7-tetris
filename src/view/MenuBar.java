@@ -19,7 +19,7 @@ import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 /**
- * This program ...
+ * This program defines the methods and behavior for Objects of the MenuBar class.
  *
  * @author Evan Abrahamson
  * @author Aryan Damle
@@ -97,9 +97,9 @@ public class MenuBar extends JPanel {
      * Returns the fileMenu object that is created in this method.
      * Creates the file menu.
      *
-     * @param theFrame the object onto which all the menu items are loaded onto.
-     * @param theTimer ...
-     * @return returns the fileMenu object that is created in this method.
+     * @param theFrame  the Object onto which all the menu items are loaded.
+     * @param theTimer  the game Timer.
+     * @return          the fileMenu object that is created in this method.
      */
     public static JMenuBar createFileMenu(final JFrame theFrame, final Timer theTimer) {
         final JMenuBar fileMenu = new JMenuBar();
@@ -109,10 +109,12 @@ public class MenuBar extends JPanel {
         final JMenu newGameMenu = new JMenu(NEW_GAME);
         JMenuItem menuItem;
         menuItem = new JMenuItem(THIS_WINDOW);
-        //Sets a hotkey of CTRL + N to activate the event
+
+        // Sets a hotkey of CTRL + N to activate the event
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
-        //Activates the event upon clicking the button or pressing the hotkey
+
+        // Activates the event upon clicking the button or pressing the hotkey
         menuItem.addActionListener(
                 theEvent -> System.out.println(STARTING_NEW_GAME));
         newGameMenu.add(menuItem);
@@ -120,13 +122,14 @@ public class MenuBar extends JPanel {
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_N,
                         InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK));
-        //Activates the event upon clicking the button or pressing the hotkey
+
+        // Activates the event upon clicking the button or pressing the hotkey
         menuItem.addActionListener(
                 theEvent -> new GameGUI().start());
         newGameMenu.add(menuItem);
         gameMenu.add(newGameMenu);
-        //Adds item to the menu
-        //gameMenu.add(menuItem);
+
+        // adds the Pause option to the menu
         myIsPaused = false;
         final JMenuItem pauseMenuItem = new JMenuItem(PAUSE_GAME);
         pauseMenuItem.setAccelerator(
@@ -145,24 +148,32 @@ public class MenuBar extends JPanel {
             }
         });
         gameMenu.add(pauseMenuItem);
+
+        // adds Exit Game option to the menu
         menuItem = new JMenuItem(EXIT_GAME);
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_DOWN_MASK));
         menuItem.addActionListener(theEvent -> theFrame.dispatchEvent(
                 new WindowEvent(theFrame, WindowEvent.WINDOW_CLOSING)));
         gameMenu.add(menuItem);
+
+        // adds Controls Menu option to the menu
         menuItem = new JMenuItem(CONTROLS);
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         menuItem.addActionListener(
                 theEvent -> new ControlsGUI());
         aboutMenu.add(menuItem);
+
+        // adds Help option to the menu
         menuItem = new JMenuItem(HELP);
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_DOWN_MASK));
         menuItem.addActionListener(
                 theEvent -> System.out.println(GAME_INFO));
         aboutMenu.add(menuItem);
+
+        // adds Option 1 to the menu
         menuItem = new JMenuItem(OPTION_1);
         menuItem.addActionListener(
                 theEvent -> System.out.println(OPTION_1_WORKING));

@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JPanel;
 
 /**
- * This program ...
+ * This program defines the methods and behavior for Objects of the NextPiece class.
  *
  * @author Evan Abrahamson
  * @author Aryan Damle
@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  */
 public class NextPiece implements PropertyChangeListener {
     /**
-     * The property value for New Piece Create. //fix this description (unclear)
+     * The property value for the newly created Tetris piece.
      */
     private static final String NEW_PIECE_PROPERTY = "NewPieceCreate";
     /**
@@ -35,9 +35,9 @@ public class NextPiece implements PropertyChangeListener {
     private final JPanel myNextPiece;
 
     /**
-     * ...
+     * A constructor for class NextPiece.
      *
-     * @param theUserWidth ...
+     * @param theUserWidth  the width of the user's computer monitor.
      */
     public NextPiece(final int theUserWidth) {
         myNextPiece = new JPanel();
@@ -57,7 +57,7 @@ public class NextPiece implements PropertyChangeListener {
     }
 
     /**
-     * ...
+     * ... // need more specifics on this method
      *
      * @param theEvent A PropertyChangeEvent object describing the event source
      *          and the property that has changed.

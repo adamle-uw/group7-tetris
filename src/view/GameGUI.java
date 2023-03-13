@@ -24,7 +24,7 @@ import model.Board;
 import model.ModelTimer;
 
 /**
- * This program ...
+ * This program defines the behavior and methods contained in objects of the GameGUI class.
  *
  * @author Evan Abrahamson
  * @author Aryan Damle
@@ -73,8 +73,17 @@ public class GameGUI implements Observer {
      * The rate at which the Timer ticks.
      */
     private int myTimerTick;
+    /**
+     * ...
+     */
     private boolean myGameOver;
+    /**
+     * ...
+     */
     private GameGUI myGameGUI;
+    /**
+     * ...
+     */
     private TetrisBoard myTetrisBoard;
 
     /**
@@ -163,7 +172,7 @@ public class GameGUI implements Observer {
     /**
      * ...
      */
-    public void setup(Timer theTimer) {
+    public void setup(final Timer theTimer) {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myFrame.setSize(myUserWidth, myUserHeight);

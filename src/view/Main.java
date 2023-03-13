@@ -8,7 +8,7 @@ package view;
 import javax.swing.JPanel;
 
 /**
- * This program ...
+ * This program runs the Tetris game.
  *
  * @author Evan Abrahamson
  * @author Aryan Damle

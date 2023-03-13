@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * This program ...
+ * This program defines the behavior and methods contained in objects of the UserInfo class.
  *
  * @author Evan Abrahamson
  * @author Aryan Damle

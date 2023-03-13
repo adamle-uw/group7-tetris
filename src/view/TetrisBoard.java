@@ -21,7 +21,7 @@ import model.Board;
 import model.Point;
 
 /**
- * This program ...
+ * This program defines the behavior and methods contained in objects of the TetrisBoard class.
  *
  * @author Evan Abrahamson
  * @author Aryan Damle
@@ -302,7 +302,6 @@ public class TetrisBoard implements PropertyChangeListener {
 
             g2d.dispose();
         }
-
     }
 
     public void play(final String theFileName) {
