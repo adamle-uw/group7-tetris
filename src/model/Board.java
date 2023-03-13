@@ -174,7 +174,6 @@ public class Board implements BoardInterface {
         
         // TODO Publish Update!
         notifyObserversOfNewGame();
-
     }
 
     public void setPieceSequence(final List<TetrisPiece> thePieces) {

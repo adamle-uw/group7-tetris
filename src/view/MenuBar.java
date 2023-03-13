@@ -46,14 +46,6 @@ public class MenuBar extends JPanel {
      */
     private static final String NEW_GAME = "New Game";
     /**
-     * The Menu label for the new game in This Window option.
-     */
-    private static final String THIS_WINDOW = "This Window";
-    /**
-     * The Menu label for the new game in a New Window option.
-     */
-    private static final String NEW_WINDOW = "New Window";
-    /**
      * The Menu label for the Pause Game option.
      */
     private static final String PAUSE_GAME = "Pause Game";
@@ -61,10 +53,6 @@ public class MenuBar extends JPanel {
      * The Menu label for the Unpause Game option.
      */
     private static final String UNPAUSE_GAME = "Unpause Game";
-    /**
-     * The text for Starting a new game in this Window! notification.
-     */
-    private static final String STARTING_NEW_GAME = "Starting a new game in this window!";
     /**
      * The Menu label for the Help menu.
      */
@@ -100,26 +88,17 @@ public class MenuBar extends JPanel {
         final JMenu aboutMenu = new JMenu(ABOUT);
         final JMenu newGameMenu = new JMenu(NEW_GAME);
         JMenuItem menuItem;
-        menuItem = new JMenuItem(THIS_WINDOW);
-
-        // Sets a hotkey of CTRL + N to activate the event
-        menuItem.setAccelerator(
-                KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
-
-        // Activates the event upon clicking the button or pressing the hotkey
-        menuItem.addActionListener(
-                theEvent -> System.out.println(STARTING_NEW_GAME));
-        newGameMenu.add(menuItem);
-        menuItem = new JMenuItem(NEW_WINDOW);
+        menuItem = new JMenuItem(NEW_GAME);
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_N,
                         InputEvent.CTRL_DOWN_MASK + InputEvent.SHIFT_DOWN_MASK));
 
         // Activates the event upon clicking the button or pressing the hotkey
         menuItem.addActionListener(
+                theEvent -> theFrame.dispose());
+        menuItem.addActionListener(
                 theEvent -> new GameGUI().start());
-        newGameMenu.add(menuItem);
-        gameMenu.add(newGameMenu);
+        gameMenu.add(menuItem);
 
         // adds the Pause option to the menu
         myIsPaused = false;
@@ -179,6 +158,7 @@ public class MenuBar extends JPanel {
             helpWindow.setVisible(true);
         });
         aboutMenu.add(menuItem);
+
 
         //Adds the menus to the menu bar
         fileMenu.add(gameMenu);
