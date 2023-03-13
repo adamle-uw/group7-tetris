@@ -194,8 +194,14 @@ public class GameGUI implements PropertyChangeListener {
         myFrame.setVisible(true);
     }
 
+    /**
+     *
+     *
+     * @param theEvt A PropertyChangeEvent object describing the event source
+     *          and the property that has changed.
+     */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent theEvt) {
 
     }
 }

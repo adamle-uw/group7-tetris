@@ -191,7 +191,7 @@ public class ControlsGUI {
         }
 
         /**
-         * ...
+         * Changes the state when the key is released.
          *
          * @param theEvent the event to be processed
          */
@@ -204,10 +204,10 @@ public class ControlsGUI {
         }
 
         /**
-         * ...
+         * Passes information from the inner class to the outer class.
          *
-         * @param theKey        ...
-         * @param theControl    ...
+         * @param theKey        the key that is being typed.
+         * @param theControl    the second value for what each key is.
          */
         private void keyPress(final String theKey, final String theControl) {
             pressButt(theKey, theControl, myCount);

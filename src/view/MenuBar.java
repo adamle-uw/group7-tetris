@@ -86,7 +86,6 @@ public class MenuBar extends JPanel {
         final JMenuBar fileMenu = new JMenuBar();
         final JMenu gameMenu = new JMenu(GAME);
         final JMenu aboutMenu = new JMenu(ABOUT);
-        final JMenu newGameMenu = new JMenu(NEW_GAME);
         JMenuItem menuItem;
         menuItem = new JMenuItem(NEW_GAME);
         menuItem.setAccelerator(
