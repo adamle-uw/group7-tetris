@@ -3,7 +3,9 @@ package view;
 import static view.ButtonsPanel.myGameStart;
 import static view.MenuBar.createFileMenu;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
@@ -14,95 +16,117 @@ import javax.swing.Timer;
 import model.Board;
 import model.ModelTimer;
 
+/**
+ * This program ...
+ *
+ * @author Evan Abrahamson
+ * @author Aryan Damle
+ * @author Martha Emerson
+ * @author Keegan Sanders
+ * @version Winter 2023
+ */
 public class GameGUI implements Observer {
     /**
-     * Avoid checkstyle 'magic number' error.
+     * A constant for dividing the total height or width of the Board.
      */
     private static final int FOUR = 4;
     /**
-     * Avoid checkstyle 'magic number' error.
+     * The base timer tick.
      */
-    private static final int TIMER_TICK = 600;
+    private static final int BASE_TIMER_TICK = 600;
     /**
-     * Frame is user screen height.
+     * The height of the user's screen.
      */
     private int myUserHeight;
     /**
-     * Frame is user screen width.
+     * The width of the user's screen.
      */
     private int myUserWidth;
     /**
-     * GUI frame.
+     * The main GUI frame.
      */
     private JFrame myFrame;
     /**
-     * User info panel.
+     * The panel that displays user info.
      */
-    private JPanel myUserInfo;
+    private UserInfo myUserInfo;
     /**
-     * Right side region of Frame.
+     * The right-side panel.
      */
     private JPanel myRightRegion;
     /**
-     * Board instance variable.
+     * The Board panel.
      */
     private Board myBoard;
     /**
-     * TImer instance variable.
+     * The game Timer.
      */
     private Timer myTimer;
+    /**
+     * The rate at which the Timer ticks.
+     */
+    private int myTimerTick;
     private boolean myGameOver;
     private GameGUI myGameGUI;
 
     /**
-     * Constructor.
+     * A constructor for class GameGUI.
      */
     public GameGUI() {
         init();
     }
 
+    /**
+     * ...
+     */
     private void init() {
         myBoard = new Board();
         myBoard.newGame();
-        myTimer = new Timer(TIMER_TICK, new ModelTimer(myBoard));
+        myTimerTick = BASE_TIMER_TICK;
+        myTimer = new Timer(myTimerTick, new ModelTimer(myBoard));
+        myTimer.addActionListener(theEvent -> myTimer.setDelay(myUserInfo.getTimerTick()));
         myFrame = new JFrame();
         myGameOver = false;
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         myUserWidth = (int) size.getWidth();
         myUserHeight = (int) size.getHeight();
+        myUserInfo = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
+        myBoard.addPropertyChangeListener(myUserInfo);
         myFrame.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(final KeyEvent thePressedKey) {
-                //arrow key events
-                switch (thePressedKey.getKeyCode()) {
-                    case KeyEvent.VK_LEFT -> myBoard.left();
-                    case KeyEvent.VK_RIGHT -> myBoard.right();
-                    case KeyEvent.VK_UP -> myBoard.rotateCW();
-                    case KeyEvent.VK_DOWN -> myBoard.down();
-                    case KeyEvent.VK_ENTER -> start();
-                    case KeyEvent.VK_SPACE -> myBoard.drop();
-                    default -> {
-                        break;
+                if (myTimer.isRunning()) {
+                    //arrow key events
+                    switch (thePressedKey.getKeyCode()) {
+                        case KeyEvent.VK_LEFT -> myBoard.left();
+                        case KeyEvent.VK_RIGHT -> myBoard.right();
+                        case KeyEvent.VK_UP -> myBoard.rotateCW();
+                        case KeyEvent.VK_DOWN -> myBoard.down();
+                        case KeyEvent.VK_ENTER -> start();
+                        case KeyEvent.VK_SPACE -> myBoard.drop();
+                        default -> {
+                            break;
+                        }
                     }
-                }
 
-                switch (thePressedKey.getKeyChar()) {
-                    case 'a', 'A' -> myBoard.left();
-                    case 'd', 'D' -> myBoard.right();
-                    case 'w', 'W' -> myBoard.rotateCW();
-                    case 's', 'S' -> myBoard.down();
-                    default -> {
-                        break;
+                    switch (thePressedKey.getKeyChar()) {
+                        case 'a', 'A' -> myBoard.left();
+                        case 'd', 'D' -> myBoard.right();
+                        case 'w', 'W' -> myBoard.rotateCW();
+                        case 's', 'S' -> myBoard.down();
+                        default -> {
+                            break;
+                        }
                     }
                 }
             }
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyTyped(final KeyEvent theE) {
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {
+            public void keyReleased(final KeyEvent theE) {
             }
         });
         myFrame.setSize(myUserWidth, myUserHeight);
@@ -112,6 +136,9 @@ public class GameGUI implements Observer {
 
     }
 
+    /**
+     * ...
+     */
     public void start() {
         setup(myTimer);
         myFrame.setVisible(true);
@@ -121,6 +148,10 @@ public class GameGUI implements Observer {
 
     }
 
+    /**
+     * ...
+     */
+    public void setup() {
     public void setup(Timer theTimer) {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
@@ -128,10 +159,11 @@ public class GameGUI implements Observer {
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
 
         //panels
-        final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight);
+        final TetrisBoard tb = new TetrisBoard(myUserWidth, myUserHeight, myBoard);
         final NextPiece np = new NextPiece(myUserWidth);
         final ButtonsPanel bp = new ButtonsPanel(theTimer);
         final JPanel userInfo = new JPanel();
+        final UserInfo ui = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
         final JPanel rightRegion = new JPanel();
 
         userInfo.setBackground(Color.green);
@@ -142,20 +174,26 @@ public class GameGUI implements Observer {
         myFrame.add(rightRegion, BorderLayout.EAST);
         myFrame.add(userInfo, BorderLayout.WEST);
         rightRegion.add(bp.getMyButtonsPanel(), BorderLayout.SOUTH);
+        myFrame.add(ui.getUserInfo(), BorderLayout.WEST);
         rightRegion.add(np.getNextPiece(), BorderLayout.NORTH);
         rightRegion.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
-        userInfo.setPreferredSize(new Dimension(myUserWidth / FOUR, myUserHeight));
 
         myBoard.addPropertyChangeListener(np);
         myBoard.addPropertyChangeListener(tb);
+        myBoard.addPropertyChangeListener(ui);
 
         myFrame.setVisible(true);
     }
 
-
+    /**
+     * ...
+     *
+     * @param theObservable     the observable object.
+     * @param theArg   an argument passed to the {@code notifyObservers}
+     *                 method.
+     */
     @Override
     public void update(final Observable theObservable, final Object theArg) {
-
     }
 }
 
