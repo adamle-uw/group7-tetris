@@ -1,71 +1,134 @@
-/*
- * TCSS 305 - Winter 2023
- * Final Group Project - Tetris
- */
-
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import model.Board;
+import model.TetrisPiece;
+
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JPanel;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import javax.sound.sampled.Line;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
-/**
- * This program defines the methods and behavior for Objects of the NextPiece class.
- *
- * @author Evan Abrahamson
- * @author Aryan Damle
- * @author Martha Emerson
- * @author Keegan Sanders
- * @version Winter 2023
- */
-public class NextPiece implements PropertyChangeListener {
+import static java.awt.Color.RED;
+
+public class NextPiece implements PropertyChangeListener, Observer {
     /**
-     * The property value for the newly created Tetris piece.
+     * Property value for New Piece Create.
      */
     private static final String NEW_PIECE_PROPERTY = "NewPieceCreate";
     /**
-     * A constant for dividing the total height or width of the Board.
+     * Avoid checkstyle 'magic error' number.
      */
     private static final int FOUR = 4;
-    /**
-     * The JPanel that displays the next Tetris piece.
-     */
+    private static final int TEN = 10;
+    /**Next piece panel.*/
     private final JPanel myNextPiece;
 
-    /**
-     * A constructor for class NextPiece.
-     *
-     * @param theUserWidth  the width of the user's computer monitor.
-     */
-    public NextPiece(final int theUserWidth) {
+    private static final int COLUMNS = 5;
+    private static final int ROWS = 3;
+    private static final int TWO = 2;
+
+    private int myWidth;
+    private int myHeight;
+    private int myXOffset;
+    private int myYOffset;
+    private int myCellWidth;
+    private int myCellHeight;
+
+
+    private final NextPieceJPanel myNextPieceJPanel = new NextPieceJPanel();
+
+    public NextPiece(final int theUserWidth, final int theUserHeight, final Board theBoard) {
         myNextPiece = new JPanel();
-        this.myNextPiece.setBackground(Color.BLUE);
+        this.myNextPiece.setBackground(Color.blue);
         this.myNextPiece.addPropertyChangeListener(this);
         this.myNextPiece.setPreferredSize(
                 new Dimension(theUserWidth / FOUR, theUserWidth / FOUR));
+        myWidth = (int) myNextPieceJPanel.getCurrentSize().getWidth();
+        myHeight = (int) myNextPieceJPanel.getCurrentSize().getHeight();
+
+
     }
 
-    /**
-     * Returns the next Tetris piece.
-     *
-     * @return  the next Tetris piece.
-     */
     public JPanel getNextPiece() {
         return myNextPiece;
     }
 
-    /**
-     * ... // need more specifics on this method
-     *
-     * @param theEvent A PropertyChangeEvent object describing the event source
-     *          and the property that has changed.
-     */
+
+
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (NEW_PIECE_PROPERTY.equals(theEvent.getPropertyName())) {
-            this.myNextPiece.setBackground(Color.YELLOW);
             this.myNextPiece.setToolTipText("Next Piece: " + theEvent.getNewValue());
+
+            if ("Next Piece".equals(theEvent.getPropertyName())) {
+                myXOffset = (myWidth - (COLUMNS * (myWidth / COLUMNS))) / TWO;
+                myYOffset = (myHeight - (ROWS * (myHeight / ROWS))) / TWO;
+                myCellHeight = myHeight / ROWS;
+                myCellWidth = myWidth / COLUMNS;
+                myNextPieceJPanel.repaint();
+
+                myWidth = (int) myNextPieceJPanel.getCurrentSize().getWidth();
+                myHeight = (int) myNextPieceJPanel.getCurrentSize().getHeight();
+
+                myNextPieceJPanel.repaint();
+                System.out.println("fail");
+            }
+
         }
     }
+
+    public static class NextPieceJPanel extends JPanel {
+        private final int myColumnCount = 6;
+        private final int myRowCount = 3;
+        private final ArrayList<Rectangle> myCells;
+
+        NextPieceJPanel() {
+            myCells = new ArrayList<>(myColumnCount * myRowCount);
+        }
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(this.getParent().getHeight() / 2, this.getParent().getHeight() - TEN);
+        }
+        public Dimension getCurrentSize() {
+            return new Dimension(getWidth(), getHeight());
+        }
+
+        protected void paintComponent(final Graphics theGraphics) {
+            super.paintComponent(theGraphics);
+            final Graphics2D g2d = (Graphics2D) theGraphics.create();
+            final int width = getWidth();
+            final int height = getHeight();
+            final int cellWidth = width / myColumnCount;
+            final int cellHeight = height / myRowCount;
+
+            final int xOffset = (width - (myColumnCount * cellWidth)) / 2;
+            final int yOffset = (height - (myRowCount * cellHeight)) / 2;
+
+            for (int row = 0; row < myRowCount; row++) {
+                for (int col = 0; col < myColumnCount; col++) {
+                    final Rectangle cell = new Rectangle(xOffset + (col * cellWidth),
+                            yOffset + (row * cellHeight), cellWidth, cellHeight);
+                    myCells.add(cell);
+                }
+            }
+            g2d.setColor(Color.GRAY);
+            for (Rectangle cell : myCells) {
+                g2d.fill(cell);
+            }
+            g2d.setColor(Color.RED);
+            g2d.dispose();
+        }
+
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+    }
 }
+
