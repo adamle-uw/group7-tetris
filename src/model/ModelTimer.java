@@ -17,5 +17,6 @@ public class ModelTimer implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
         myBoard.step();
+        System.out.print(myBoard);
     }
 }

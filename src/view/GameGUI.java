@@ -14,8 +14,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Observable;
-import java.util.Observer;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -31,7 +31,7 @@ import model.ModelTimer;
  * @author Keegan Sanders
  * @version Winter 2023
  */
-public class GameGUI implements Observer {
+public class GameGUI implements PropertyChangeListener {
     /**
      * A constant for dividing the total height or width of the Board.
      */
@@ -116,7 +116,6 @@ public class GameGUI implements Observer {
                         case KeyEvent.VK_RIGHT -> myBoard.right();
                         case KeyEvent.VK_UP -> myBoard.rotateCW();
                         case KeyEvent.VK_DOWN -> myBoard.down();
-                        case KeyEvent.VK_ENTER -> start();
                         case KeyEvent.VK_SPACE -> myBoard.drop();
                         default -> {
                             break;
@@ -195,15 +194,9 @@ public class GameGUI implements Observer {
         myFrame.setVisible(true);
     }
 
-    /**
-     * ...
-     *
-     * @param theObservable the observable Object.
-     * @param theArg        an argument passed to the {@code notifyObservers}
-     *                      method.
-     */
     @Override
-    public void update(final Observable theObservable, final Object theArg) {
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }
 
