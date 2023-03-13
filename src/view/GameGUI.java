@@ -5,6 +5,7 @@ import static view.ButtonsPanel.myGameStart;
 import static view.MenuBar.createFileMenu;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -157,7 +158,6 @@ public class GameGUI implements Observer {
     /**
      * ...
      */
-    public void setup() {
     public void setup(Timer theTimer) {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
