@@ -11,9 +11,9 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import model.wallkicks.WallKick;
 
-import javax.swing.*;
 
 /**
  * Represents a Tetris board. Board objects communicate with clients via Observer pattern. 
@@ -302,16 +302,12 @@ public class Board implements BoardInterface {
             sb.append("|\n");
             if (i == this.myHeight) {
                 sb.append(' ');
-                for (int j = 0; j < this.myWidth; j++) {
-                    sb.append('-');
-                }
+                sb.append("-".repeat(this.myWidth));
                 sb.append('\n');
             }
         }
         sb.append('|');
-        for (int w = 0; w < myWidth; w++) {
-            sb.append('-');
-        }
+        sb.append("-".repeat(myWidth));
         sb.append('|');
         return sb.toString();
     }
