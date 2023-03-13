@@ -80,8 +80,8 @@ public class TetrisBoard implements PropertyChangeListener {
         myTetrisBoard.add(myTetrisBoardJPanel);
         myTetrisBoardJPanel.setVisible(true);
         myTetrisBoard.setVisible(true);
-        myWidth = (int)myTetrisBoardJPanel.getCurrentSize().getWidth();
-        myHeight = (int)myTetrisBoardJPanel.getCurrentSize().getHeight();
+        myWidth = (int) myTetrisBoardJPanel.getCurrentSize().getWidth();
+        myHeight = (int) myTetrisBoardJPanel.getCurrentSize().getHeight();
     }
 
     /**
@@ -109,18 +109,18 @@ public class TetrisBoard implements PropertyChangeListener {
             myCellWidth = myWidth / COLUMNS;
             myCellHeight = myHeight / ROWS;
             myTetrisBoardJPanel.myMovingCells.clear();
-            Point p[] = (Point[])theEvent.getNewValue();
+            Point p[] = (Point[]) theEvent.getNewValue();
 
             for (Point p2 : p) {
-                int x = myXOffset + (p2.x() * myCellWidth);
-                int y = myYOffset + (p2.y() * myCellHeight);
-                Rectangle r = new Rectangle(x,y);
+                final int x = myXOffset + (p2.x() * myCellWidth);
+                final int y = myYOffset + (p2.y() * myCellHeight);
+                final Rectangle r = new Rectangle(x, y);
                 r.setLocation(x, -(y - (myHeight - myCellHeight)));
                 r.setSize(myCellWidth, myCellHeight);
                 myTetrisBoardJPanel.myMovingCells.add(r);
             }
-            myWidth = (int)myTetrisBoardJPanel.getCurrentSize().getWidth();
-            myHeight = (int)myTetrisBoardJPanel.getCurrentSize().getHeight();
+            myWidth = (int) myTetrisBoardJPanel.getCurrentSize().getWidth();
+            myHeight = (int) myTetrisBoardJPanel.getCurrentSize().getHeight();
             System.out.println("Width: " + myWidth + " Height: " + myHeight);
 
             /*ArrayList<Rectangle> rList = new ArrayList(COLUMNS * ROWS);
@@ -147,9 +147,9 @@ public class TetrisBoard implements PropertyChangeListener {
             Point p[] = (Point[])theEvent.getNewValue();
 
             for (Point p2 : p) {
-                int x = myXOffset + (p2.x() * myCellWidth);
-                int y = myYOffset + (p2.y() * myCellHeight);
-                Rectangle r = new Rectangle(x,y);
+                final int x = myXOffset + (p2.x() * myCellWidth);
+                final int y = myYOffset + (p2.y() * myCellHeight);
+                final Rectangle r = new Rectangle(x,y);
                 r.setLocation(x, -(y - (myHeight - myCellHeight)));
                 r.setSize(myCellWidth, myCellHeight);
                 myTetrisBoardJPanel.myPlacedCells.add(r);

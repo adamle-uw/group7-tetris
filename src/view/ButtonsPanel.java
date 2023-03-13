@@ -53,7 +53,7 @@ public class ButtonsPanel extends JPanel {
     /**
      * ...
      */
-    private JButton myPause;
+    private JButton myPause = new JButton();
     /**
      * ...
      */
