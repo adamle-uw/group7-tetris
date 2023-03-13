@@ -5,12 +5,13 @@
 
 package view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -29,6 +30,10 @@ import javax.swing.Timer;
  */
 public class MenuBar extends JPanel {
     /**
+     * Avoid checkstyle 'magic error' number.
+     */
+    private static final int TWO = 2;
+    /**
      * The Menu label for the Game option.
      */
     private static final String GAME = "Game";
@@ -36,10 +41,6 @@ public class MenuBar extends JPanel {
      * The Menu label for the About menu.
      */
     private static final String ABOUT = "About";
-    /**
-     * The Menu label for the Options menu.
-     */
-    private static final String OPTIONS = "Options";
     /**
      * The Menu label for the New Game menu.
      */
@@ -77,21 +78,13 @@ public class MenuBar extends JPanel {
      */
     private static final String EXIT_GAME = "Exit Game";
     /**
-     * The Menu label for the game info menu.
-     */
-    private static final String GAME_INFO = "Information about the game!";
-    /**
-     * The Menu label for Option 1.
-     */
-    private static final String OPTION_1 = "Option 1";
-    /**
-     * The text for Option 1 working as intended notification.
-     */
-    private static final String OPTION_1_WORKING = "Option 1 working as intended";
-    /**
      * Whether the game is paused.
      */
     private static boolean myIsPaused;
+    /**
+     * The font size.
+     */
+    private static final int FONT_SIZE = 30;
 
     /**
      * Returns the fileMenu object that is created in this method.
@@ -105,7 +98,6 @@ public class MenuBar extends JPanel {
         final JMenuBar fileMenu = new JMenuBar();
         final JMenu gameMenu = new JMenu(GAME);
         final JMenu aboutMenu = new JMenu(ABOUT);
-        final JMenu optionsMenu = new JMenu(OPTIONS);
         final JMenu newGameMenu = new JMenu(NEW_GAME);
         JMenuItem menuItem;
         menuItem = new JMenuItem(THIS_WINDOW);
@@ -134,17 +126,15 @@ public class MenuBar extends JPanel {
         final JMenuItem pauseMenuItem = new JMenuItem(PAUSE_GAME);
         pauseMenuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_DOWN_MASK));
-        pauseMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent theEvent) {
-                if (myIsPaused) {
-                    theTimer.start();
-                    pauseMenuItem.setText(PAUSE_GAME);
-                    myIsPaused = false;
-                } else {
-                    theTimer.stop();
-                    pauseMenuItem.setText(UNPAUSE_GAME);
-                    myIsPaused = true;
-                }
+        pauseMenuItem.addActionListener(theEvent -> {
+            if (myIsPaused) {
+                theTimer.start();
+                pauseMenuItem.setText(PAUSE_GAME);
+                myIsPaused = false;
+            } else {
+                theTimer.stop();
+                pauseMenuItem.setText(UNPAUSE_GAME);
+                myIsPaused = true;
             }
         });
         gameMenu.add(pauseMenuItem);
@@ -169,20 +159,30 @@ public class MenuBar extends JPanel {
         menuItem = new JMenuItem(HELP);
         menuItem.setAccelerator(
                 KeyStroke.getKeyStroke(KeyEvent.VK_H, InputEvent.CTRL_DOWN_MASK));
-        menuItem.addActionListener(
-                theEvent -> System.out.println(GAME_INFO));
+        menuItem.addActionListener(e -> {
+            final JFrame helpWindow = new JFrame(HELP);
+            helpWindow.setSize((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()
+                            / TWO,
+                    (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight() / TWO);
+            helpWindow.setLocationRelativeTo(null);
+            final JLabel helpLabel = new JLabel("<html>How To Play:<br/> <br/> "
+                    + "Line up all the blocks to clear a line. Get bonus points for "
+                    + "clearing multiple lines! Gain 4 points for each block placed.<br/><br/>"
+                    + "1 Line: 40 Points per Level<br/>2 Lines: 100 Points per Level<br/>"
+                    + "3 Lines: 300 Points per Level<br/>4 Lines: 1200 Points per Level"
+                    + "<br/><br/>Credits:<br/>"
+                    + "Pac-Man Intro Music from Spykee75 on"
+                    + "YouTube (https://youtu.be/rnf0q1zOTXs)"
+                    , JLabel.CENTER);
+            helpLabel.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
+            helpWindow.add(helpLabel);
+            helpWindow.setVisible(true);
+        });
         aboutMenu.add(menuItem);
-
-        // adds Option 1 to the menu
-        menuItem = new JMenuItem(OPTION_1);
-        menuItem.addActionListener(
-                theEvent -> System.out.println(OPTION_1_WORKING));
-        optionsMenu.add(menuItem);
 
         //Adds the menus to the menu bar
         fileMenu.add(gameMenu);
         fileMenu.add(aboutMenu);
-        fileMenu.add(optionsMenu);
         theFrame.setVisible(true);
 
         return fileMenu;
