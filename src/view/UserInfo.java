@@ -37,27 +37,31 @@ public class UserInfo implements PropertyChangeListener {
      */
     private static final int FIVE = 5;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant multiplier to calculate points when 1 line is cleared.
      */
     private static final int FORTY = 40;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant multiplier to calculate points when 2 lines are cleared.
      */
     private static final int ONE_HUNDRED = 100;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant multiplier to calculate points when 3 lines are cleared.
      */
     private static final int THREE_HUNDRED = 300;
     /**
-     * Avoid checkstyle 'magic error' number.
+     * A constant multiplier to calculate points when 4 lines are cleared.
      */
     private static final int TWELVE_HUNDRED = 1200;
     /**
-     * Property value for New Piece Create.
+     * The font size.
+     */
+    private static final int FONT_SIZE = 40;
+    /**
+     * The property value for the newly created Tetris piece.
      */
     private static final String NEW_PIECE_PROPERTY = "NewPieceCreate";
     /**
-     * The amount of cleared lines needed to reach the next level.
+     * The number of cleared lines needed to reach the next level.
      */
     private static final int LINES_TO_LEVEL_UP = 5;
     /**
@@ -65,43 +69,43 @@ public class UserInfo implements PropertyChangeListener {
      */
     private static final double LEVEL_SPEEDUP_RATE = 1.2;
     /**
-     * Property value for Row Clear Change.
+     * The property value for Row Clear Change.
      */
     private static final String ROW_CLEAR = "Row Location";
     /**
-     * ...
+     * The String constant for Points.
      */
     private static final String POINTS = "<html>Points: ";
     /**
-     * ...
+     * The String constant for Level.
      */
     private static final String LEVEL = "<br/><br/>Level: ";
     /**
-     * ...
+     * The String constant for Lines Cleared.
      */
     private static final String LINES_CLEARED = "<br/><br/>Lines Cleared: ";
     /**
-     * ...
+     * The String constant for Lines until Next Level.
      */
     private static final String LINES_UNTIL_NEXT_LEVEL = "<br/><br/>Lines until Next Level: ";
     /**
-     * make user info.
+     * The panel that displays user info.
      */
     private final JPanel myUserInfo;
     /**
-     * User Points Value.
+     * The total points earned by the user.
      */
     private int myUserPoints;
     /**
-     * User Lines Cleared.
+     * The number of lines cleared by the user.
      */
     private int myLinesCleared;
     /**
-     * Timer delay instance variable.
+     * The timer delay.
      */
     private int myTimerTick;
     /**
-     * Difficulty level instance variable.
+     * The difficulty level.
      */
     private int myLevel;
     /**
@@ -118,11 +122,11 @@ public class UserInfo implements PropertyChangeListener {
     private final JLabel myLabel;
 
     /**
-     * ...
+     * A constructor for the class UserInfo.
      *
-     * @param theUserWidth  ...
-     * @param theUserHeight ...
-     * @param theTimerTick  ...
+     * @param theUserWidth  the width of the user's computer monitor.
+     * @param theUserHeight the height of the user's computer monitor.
+     * @param theTimerTick  the current Timer tick rate.
      */
     public UserInfo(final int theUserWidth, final int theUserHeight, final int theTimerTick) {
         myUserInfo = new JPanel();
@@ -137,23 +141,23 @@ public class UserInfo implements PropertyChangeListener {
                 + LEVEL + myLevel + LINES_CLEARED
                 + myLinesCleared + LINES_UNTIL_NEXT_LEVEL
                 + (FIVE - (myLinesCleared % FIVE)), JLabel.CENTER);
-        myLabel.setFont(new Font("Arial", Font.PLAIN, FORTY));
+        myLabel.setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
         myUserInfo.add(myLabel);
     }
 
     /**
-     * Returns ...
+     * Returns the user info.
      *
-     * @return ...
+     * @return the user info.
      */
     public JPanel getUserInfo() {
         return myUserInfo;
     }
 
     /**
-     * Returns ...
+     * Returns the current Timer tick rate.
      *
-     * @return ...
+     * @return the current Timer tick rate.
      */
     public int getTimerTick() {
         return myTimerTick;

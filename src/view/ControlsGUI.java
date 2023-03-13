@@ -22,7 +22,6 @@ import javax.swing.SwingUtilities;
 
 /**
  * This program defines the behavior and methods contained in objects of the ControlsGUI class.
- * ... //more info about the class and the inner class
  *
  * @author Evan Abrahamson
  * @author Aryan Damle
@@ -106,19 +105,24 @@ public class ControlsGUI {
             final ControlsKeyListener kList = new ControlsKeyListener();
             final JFrame controlsFrame = new JFrame(CONTROLS_MENU);
             final JPanel controlsPanel = new JPanel(new GridLayout(2, 3));
+
             controlsFrame.setMinimumSize(mySize);
+
             myButts.add(new Button(KEY_PRESS_W));
             myButts.add(new Button(KEY_PRESS_A));
             myButts.add(new Button(KEY_PRESS_S));
             myButts.add(new Button(KEY_PRESS_D));
+
             myButts.forEach(butt -> butt.addKeyListener(kList));
             myButts.forEach(butt -> butt.setFont(newButtonFont));
+
             controlsPanel.add(new Box(1));
             controlsPanel.add(myButts.get(0));
             controlsPanel.add(new Box(1));
             controlsPanel.add(myButts.get(1));
             controlsPanel.add(myButts.get(2));
             controlsPanel.add(myButts.get(THREE));
+
             controlsFrame.add(controlsPanel);
             controlsFrame.setVisible(true);
         });

@@ -5,7 +5,6 @@
 
 package view;
 
-
 import static view.ButtonsPanel.myGameStart;
 import static view.MenuBar.createFileMenu;
 
@@ -58,10 +57,6 @@ public class GameGUI implements Observer {
      */
     private UserInfo myUserInfo;
     /**
-     * The right-side panel.
-     */
-    private JPanel myRightRegion;
-    /**
      * The Board panel.
      */
     private Board myBoard;
@@ -74,15 +69,15 @@ public class GameGUI implements Observer {
      */
     private int myTimerTick;
     /**
-     * ...
+     * Whether the game has ended.
      */
     private boolean myGameOver;
     /**
-     * ...
+     * The GUI Object which shows the user's view of the Tetris game.
      */
     private GameGUI myGameGUI;
     /**
-     * ...
+     * The Tetris game board.
      */
     private TetrisBoard myTetrisBoard;
 
@@ -91,12 +86,10 @@ public class GameGUI implements Observer {
      */
     public GameGUI() {
         init();
-
     }
 
-
     /**
-     * ...
+     * Creates the initial conditions of the Tetris game.
      */
     private void init() {
         myBoard = new Board();
@@ -151,12 +144,10 @@ public class GameGUI implements Observer {
         });
         myFrame.setSize(myUserWidth, myUserHeight);
         myFrame.setJMenuBar(createFileMenu(myFrame, myTimer));
-
-
     }
 
     /**
-     * ...
+     * Starts the Tetris game.
      */
     public void start() {
         setup(myTimer);
@@ -166,11 +157,10 @@ public class GameGUI implements Observer {
         if (!myGameStart) {
             myTimer.start();
         }
-
     }
 
     /**
-     * ...
+     * Sets up the Tetris game.
      */
     public void setup(final Timer theTimer) {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -186,7 +176,7 @@ public class GameGUI implements Observer {
         final UserInfo ui = new UserInfo(myUserWidth, myUserHeight, myTimerTick);
         final JPanel rightRegion = new JPanel();
 
-        userInfo.setBackground(Color.green);
+        userInfo.setBackground(Color.LIGHT_GRAY);
         rightRegion.setLayout(new BorderLayout());
 
         //make the regions
@@ -208,9 +198,9 @@ public class GameGUI implements Observer {
     /**
      * ...
      *
-     * @param theObservable     the observable object.
-     * @param theArg   an argument passed to the {@code notifyObservers}
-     *                 method.
+     * @param theObservable the observable Object.
+     * @param theArg        an argument passed to the {@code notifyObservers}
+     *                      method.
      */
     @Override
     public void update(final Observable theObservable, final Object theArg) {

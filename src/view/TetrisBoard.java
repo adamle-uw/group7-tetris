@@ -51,58 +51,74 @@ public class TetrisBoard implements PropertyChangeListener {
      * Property value for Tetris Board Change property listener.
      */
     private static final String TETRIS_BOARD_PROPERTY = "TetrisBoardChange";
-    /**make tetris board.*/
-    private final JPanel myTetrisBoard = new JPanel();
-    /**The width of the board.*/
-    private int myWidth;
-    /**The height of the board.*/
-    private int myHeight;
-    /**X Offset of Cells in board.*/
-    private int myXOffset;
-    /**Y Offset of Cells in board.*/
-    private int myYOffset;
-    /**Cell width in board.*/
-    private int myCellWidth;
-    /**Cell height in board.*/
-    private int myCellHeight;
-
     /**
-     * The JPanel that displays the Tetris game board. //which does what?
+     * Creates the Tetris board.
+     */
+    private final JPanel myTetrisBoard = new JPanel();
+    /**
+     * The width of the Tetris board.
+     */
+    private int myWidth;
+    /**
+     * The height of the Tetris board.
+     */
+    private int myHeight;
+    /**
+     * The X Offset of the Cells in the Tetris board.
+     */
+    private int myXOffset;
+    /**
+     * The Y Offset of the Cells in the Tetris board.
+     */
+    private int myYOffset;
+    /**
+     * The width of the Cells in the Tetris board.
+     */
+    private int myCellWidth;
+    /**
+     * The height of the Cells in the Tetris board.
+     */
+    private int myCellHeight;
+    /**
+     * The JPanel that displays the Tetris game board.
      */
     private final TetrisBoardJPanel myTetrisBoardJPanel = new TetrisBoardJPanel();
 
     /**
-     * ...
+     * A constructor for the class ButtonsPanel.
      *
-     * @param theUserWidth ...
-     * @param theUserHeight ...
-     * @param theBoard ...
+     * @param theUserWidth  the width of the user's computer monitor
+     * @param theUserHeight the height of the user's computer monitor
+     * @param theBoard      ...
      */
     public TetrisBoard(final int theUserWidth, final int theUserHeight, final Board theBoard) {
-        this.myTetrisBoard.setBackground(Color.black);
+        this.myTetrisBoard.setBackground(Color.BLACK);
         this.myTetrisBoard.addPropertyChangeListener(this);
+
         myTetrisBoard.setPreferredSize(new Dimension(theUserWidth, theUserHeight));
         myTetrisBoard.add(myTetrisBoardJPanel);
         myTetrisBoardJPanel.setVisible(true);
         myTetrisBoard.setVisible(true);
+
         myWidth = (int) myTetrisBoardJPanel.getCurrentSize().getWidth();
         myHeight = (int) myTetrisBoardJPanel.getCurrentSize().getHeight();
     }
 
     /**
-     * ...
+     * Returns the Tetris board.
      *
-     * @return ...
+     * @return the Tetris board.
      */
     public JPanel getTetrisBoard() {
+
         return myTetrisBoard;
     }
 
     /**
      * ...
      *
-     * @param theEvent A PropertyChangeEvent object describing the event source
-     *          and the property that has changed.
+     * @param theEvent  A PropertyChangeEvent object describing the event source
+     *                  and the property that has changed.
      */
     public void propertyChange(final PropertyChangeEvent theEvent) {
         if (TETRIS_BOARD_PROPERTY.equals(theEvent.getPropertyName())) {
@@ -184,9 +200,9 @@ public class TetrisBoard implements PropertyChangeListener {
     }
 
     /**
-     * ...
+     * Returns the Cells in the Tetris board.
      *
-     * @return ...
+     * @return the Cells in the Tetris board.
      */
     public ArrayList<Rectangle> getCells() {
         return myTetrisBoardJPanel.getMyCells();
@@ -197,27 +213,27 @@ public class TetrisBoard implements PropertyChangeListener {
      */
     private static class TetrisBoardJPanel extends JPanel {
         /**
-         * ...
+         * The number of columns on the Tetris board.
          */
         private final int myColumnCount = 10;
         /**
-         * ...
+         * The number of rows on the Tetris board.
          */
         private final int myRowCount = 20;
         /**
-         * ...
+         * An ArrayList of Cells.
          */
         private final ArrayList<Rectangle> myCells;
         /**
-         * ...
+         * An ArrayList of moving Cells.
          */
         private final ArrayList<Rectangle> myMovingCells;
         /**
-         * ...
+         * An ArrayList of placed Cells.
          */
         private final ArrayList<Rectangle> myPlacedCells;
         /**
-         * ...
+         * A constructor for inner class TetrisBoardJPanel.
          */
         TetrisBoardJPanel() {
             myCells = new ArrayList<>(myColumnCount * myRowCount);
@@ -226,16 +242,18 @@ public class TetrisBoard implements PropertyChangeListener {
         }
 
         /**
-         * ...
-         * @return ...
+         * Returns the Cells on the Tetris board.
+         *
+         * @return the Cells on the Tetris board.
          */
         public ArrayList<Rectangle> getMyCells() {
             return myCells;
         }
 
         /**
-         * ...
-         * @return ...
+         * Returns the preferred size of the Tetris board.
+         *
+         * @return the preferred size of the Tetris board.
          */
         @Override
         public Dimension getPreferredSize() {
@@ -244,8 +262,9 @@ public class TetrisBoard implements PropertyChangeListener {
         }
 
         /**
-         * ...
-         * * @return ...
+         * Returns the current size of the Tetris board.
+         *
+         * @return the current size of the Tetris board.
          */
         public Dimension getCurrentSize() {
             return new Dimension(getWidth(), getHeight());
@@ -260,9 +279,9 @@ public class TetrisBoard implements PropertyChangeListener {
             super.invalidate();
         }
         /**
-         * ...
+         * Draws the Tetris pieces on the board.
          *
-         * @param theG the <code>Graphics</code> object to protect
+         * @param theG the Graphics2D object to protect
          */
         protected void paintComponent(final Graphics theG) {
             super.paintComponent(theG);
@@ -304,6 +323,11 @@ public class TetrisBoard implements PropertyChangeListener {
         }
     }
 
+    /**
+     * Plays background music during the Tetris game.
+     *
+     * @param theFileName the name of the music file.
+     */
     public void play(final String theFileName) {
 
         try {
